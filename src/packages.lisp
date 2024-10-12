@@ -11,6 +11,7 @@
   (:use cl)
   (:export
    ;; utils.lsip
+   setup
    load-system
    asd-files
    asd-test-files

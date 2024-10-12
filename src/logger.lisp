@@ -9,26 +9,28 @@
 
 (in-package :qob)
 
-(defun -print ()
-  ""
-  )
+(defvar log-level 0)
 
-(defun -trace ()
-  ""
-  )
+(defun -print (fmt &rest args)
+  "TODO: .."
+  (apply #'format t fmt args))
 
-(defun -debug ()
-  ""
-  )
+(defun -trace (fmt &rest args)
+  "TODO: .."
+  (apply #'format t fmt args))
 
-(defun -info ()
-  ""
-  )
+(defun -debug (fmt &rest args)
+  "TODO: .."
+  (apply #'format t fmt args))
 
-(defun -warning ()
-  ""
-  )
+(defun -info (fmt &rest args)
+  "TODO: .."
+  (apply #'format t fmt args))
 
-(defun -error ()
-  ""
-  )
+(defun -warning (fmt &rest args)
+  "TODO: .."
+  (apply #'format t fmt args))
+
+(defun -error (fmt &rest args)
+  "TODO: .."
+  (apply #'format t fmt args))

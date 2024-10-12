@@ -9,6 +9,7 @@
 ;;
 ;;  Optional arguments:
 ;;
+;;    --name, -n         path to the ASD file
 ;;    --output, -o       output directory
 ;;
 
@@ -54,6 +55,6 @@
   (clingon:make-command
    :name "build"
    :description "Build the executable"
-   :usage "-o /bin/program-name"
+   :usage "-n /path/to/file.asd -o /bin/program-name"
    :options (options)
    :handler #'handler))
