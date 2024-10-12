@@ -5,7 +5,9 @@
   :description "CLI for building, running, testing, and managing your Common Lisp dependencies"
   :depends-on ("cl-autorepo" "clingon")
   :serial t
-  :components ((:file "src/utils")
+  :components ((:file "src/packages")
+               (:file "src/logger")
+               (:file "src/utils")
                (:file "src/cmds/build")
                (:file "src/main"))
   :build-operation "program-op"

@@ -11,7 +11,6 @@ NOTE: This will soon be replace with this build tools!
 ;;(ql:quickload "cl-autorepo")
 ;;(ql:quickload "clingon")
 
-
 ;;(load "./src/build.lisp")
 ;;(load "./src/main.lisp")
 
@@ -19,4 +18,4 @@ NOTE: This will soon be replace with this build tools!
 
 ;;(uiop:dump-image "./bin/qob.exe" :executable t)
 
-(asdf:operate :build-op :qob)
+(asdf:operate :build-op "qob")

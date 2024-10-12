@@ -7,10 +7,6 @@
 
 ;;; Code
 
-(defpackage qob
-  (:use cl)
-  (:export main))
-
 (in-package :qob)
 
 (defun handler (cmd)
