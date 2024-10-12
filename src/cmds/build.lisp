@@ -54,6 +54,6 @@
   (clingon:make-command
    :name "build"
    :description "Build the executable"
-   :usage "-o /bin/name.exe"
+   :usage "-o /bin/program-name"
    :options (options)
    :handler #'handler))
