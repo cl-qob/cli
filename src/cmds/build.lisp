@@ -26,7 +26,7 @@
   (list
    (clingon:make-option
     :string
-    :description "path to the ASD file"
+    :description "system name"
     :short-name #\n
     :long-name "name"
     :required t
@@ -42,12 +42,11 @@
 (defun handler (cmd)
   "Handler for the `build' command."
   (let* ((name   (clingon:getopt cmd :name))
-         (output (clingon:getopt cmd :output))
-         (name   (qob:load-system name)))
-    (format t "~A" (asdf/system-registry:registered-system name))
-    (format t "~A" output)
-    ;;(setq asdf/system:build-pathname output)
-    ;;(asdf:operate :build-op name)
+         (output (clingon:getopt cmd :output)))
+    ;;(format t "~A" (asdf/system-registry:registered-system name))
+    ;;(format t "~A" output)
+    (qob:setup)
+    (asdf:operate :build-op name)
     ))
 
 (defun command ()
@@ -55,6 +54,6 @@
   (clingon:make-command
    :name "build"
    :description "Build the executable"
-   :usage "-n /path/to/file.asd -o /bin/program-name"
+   :usage "-n <name> -o <path>"
    :options (options)
    :handler #'handler))

@@ -18,7 +18,7 @@
   (let ((files (asd-files t)))
     (mapc (lambda (file)
             (load-system file)
-            (-info ""))
+            (-info "Load ASD file ~A" file))
           files)))
 
 (defun load-system (filename)
