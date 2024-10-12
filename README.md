@@ -4,6 +4,8 @@
 # qob-cli
 > CLI for building, running, testing, and managing your Common Lisp dependencies
 
+[![CI](https://github.com/jcs090218/qob-cli/actions/workflows/test.yml/badge.svg)](https://github.com/jcs090218/qob-cli/actions/workflows/test.yml)
+
 ## ⚜️ License
 
 Permission is hereby granted, free of charge, to any person obtaining a copy 
