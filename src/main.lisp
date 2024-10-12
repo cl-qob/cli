@@ -1,48 +1,34 @@
-#| src/main.lisp
+;;;; src/main.lisp --- Program entry
 
-Program entry
+;;; Commentary
+;;
+;; Where the program start the execution.
+;;
 
-Where the program start the execution.
-|#
+;;; Code
 
 (defpackage qob
-  (:nicknames qlot/main)
   (:use cl)
   (:export main))
 
 (in-package :qob)
 
-(ql:quickload "clingon")
+(defun handler (cmd)
+  "Handler for the `qob' command."
+  (clingon:print-usage-and-exit cmd t))
 
-(defun greet/options ()
-  "Returns the options for the `greet' command"
-  (list
-   (clingon:make-option
-    :string
-    :description "Person to greet"
-    :short-name #\u
-    :long-name "user"
-    :initial-value "stranger"
-    :env-vars '("USER")
-    :key :user)))
-
-(defun greet/handler (cmd)
-  "Handler for the `greet' command"
-  (let ((who (clingon:getopt cmd :user)))
-    (format t "Hello, ~A!~%" who)))
-
-(defun greet/command ()
+(defun command ()
   "A command to greet someone."
   (clingon:make-command
-   :name "greet"
-   :description "greets people"
+   :name "qob"
+   :description "CLI for building, running, testing, and managing your Common Lisp dependencies"
    :version "0.1.0"
-   :authors '("John Doe <john.doe@example.org")
-   :license "BSD 2-Clause"
-   :options (greet/options)
-   :handler #'greet/handler))
+   :authors '("Jen-Chieh Shen <jcs090218@gmail.com>")
+   :license "MIT"
+   :handler #'handler
+   :sub-commands `(,(qob/build:command))))
 
 (defun main ()
-  "The main entrypoint of our CLI program"
-  (let ((app (greet/command)))
+  "The main entry point of our CLI program."
+  (let ((app (command)))
     (clingon:run app)))

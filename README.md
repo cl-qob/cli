@@ -1,2 +1,2 @@
 # qob-cli
-CLI for building, running, testing, and managing your Common Lisp packages
+> CLI for building, running, testing, and managing your Common Lisp dependencies

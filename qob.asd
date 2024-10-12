@@ -3,4 +3,11 @@
   :author "Jen-Chieh Shen"
   :license "MIT"
   :description "CLI for building, running, testing, and managing your Common Lisp dependencies"
-  :pathname "src")
+  :depends-on ("cl-autorepo" "clingon")
+  :serial t
+  :components ((:file "src/utils")
+               (:file "src/cmds/build")
+               (:file "src/main"))
+  :build-operation "program-op"
+  :build-pathname "bin/qob"
+  :entry-point "qob:main")
