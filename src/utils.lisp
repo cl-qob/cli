@@ -9,10 +9,6 @@
 
 (in-package :qob)
 
-(defun setup ()
-  "Setup system."
-  (push '*default-pathname-defaults* asdf:*central-registry*))
-
 (defun load-system (filename)
   "Load the system from ASD's FILENAME."
   (let ((dir (uiop:pathname-parent-directory-pathname filename))

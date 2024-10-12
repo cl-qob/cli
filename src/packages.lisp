@@ -9,16 +9,19 @@
 
 (defpackage qob
   (:use cl)
-  (:export main
-           setup
-           load-system
-           asd-files
-           asd-test-files
-           print
-           trace
-           debug
-           info
-           warning
-           error))
+  (:export
+   ;; utils.lsip
+   load-system
+   asd-files
+   asd-test-files
+   ;; logger.lsip
+   print
+   trace
+   debug
+   info
+   warning
+   error
+   ;; main.lsip
+   main))
 
 (in-package :qob)
