@@ -1,4 +1,6 @@
-#| # Program entry
+#| src/main.lisp
+
+Program entry
 
 Where the program start the execution.
 |#
@@ -30,7 +32,7 @@ Where the program start the execution.
     (format t "Hello, ~A!~%" who)))
 
 (defun greet/command ()
-  "A command to greet someone"
+  "A command to greet someone."
   (clingon:make-command
    :name "greet"
    :description "greets people"
