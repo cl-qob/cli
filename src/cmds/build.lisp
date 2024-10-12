@@ -22,7 +22,7 @@
 (in-package :qob/build)
 
 (defun options ()
-  "Returns the options for the `build' command."
+  "Options for the `build' command."
   (list
    (clingon:make-option
     :string
@@ -45,12 +45,13 @@
          (output (clingon:getopt cmd :output)))
     ;;(format t "~A" (asdf/system-registry:registered-system name))
     ;;(format t "~A" output)
+    ;; TODO: Change build path.
     (qob:setup)
     (asdf:operate :build-op name)
     ))
 
 (defun command ()
-  "Build the executable."
+  "Build command."
   (clingon:make-command
    :name "build"
    :description "Build the executable"

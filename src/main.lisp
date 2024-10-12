@@ -22,7 +22,8 @@
    :authors '("Jen-Chieh Shen <jcs090218@gmail.com>")
    :license "MIT"
    :handler #'handler
-   :sub-commands `(,(qob/build:command))))
+   :sub-commands `(,(qob/build:command)
+                   ,(qob/list:command))))
 
 (defun main ()
   "The main entry point of our CLI program."

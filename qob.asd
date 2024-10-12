@@ -9,6 +9,7 @@
                (:file "src/logger")
                (:file "src/utils")
                (:file "src/cmds/build")
+               (:file "src/cmds/list")
                (:file "src/main"))
   :build-operation "program-op"
   :build-pathname "bin/qob"

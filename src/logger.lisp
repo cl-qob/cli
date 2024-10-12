@@ -41,16 +41,16 @@
 (defvar minimum-reported-time 0.1
   "Minimal load time that will be reported.")
 
-(defmacro with-progress (msg-start body msg-end)
-  "Progress BODY wrapper with prefix (MSG-START) and suffix (MSG-END) messages."
-  (declare (indent 0) (debug t))
-  `(if elapsed-time
-       (let ((now (current-time)))
-         (ignore-errors (-write ,msg-start)) ,body
-         (let ((elapsed (float-time (time-subtract (current-time) now))))
-           (if (< elapsed minimum-reported-time)
-               (ignore-errors (-msg ,msg-end))
-               (ignore-errors (-write ,msg-end))
-               (-msg (ansi-white (format " (%.3fs)" elapsed))))))
-       (ignore-errors (-write ,msg-start)) ,body
-       (ignore-errors (-msg ,msg-end))))
+;; (defmacro with-progress (msg-start body msg-end)
+;;   "Progress BODY wrapper with prefix (MSG-START) and suffix (MSG-END) messages."
+;;   (declare (indent 0) (debug t))
+;;   `(if elapsed-time
+;;        (let ((now (current-time)))
+;;          (ignore-errors (-write ,msg-start)) ,body
+;;          (let ((elapsed (float-time (time-subtract (current-time) now))))
+;;            (if (< elapsed minimum-reported-time)
+;;                (ignore-errors (-msg ,msg-end))
+;;                (ignore-errors (-write ,msg-end))
+;;                (-msg (ansi-white (format " (%.3fs)" elapsed))))))
+;;        (ignore-errors (-write ,msg-start)) ,body
+;;        (ignore-errors (-msg ,msg-end))))
