@@ -9,10 +9,6 @@
 
 (in-package :qob)
 
-(defun memq (elt list)
-  "Mimic `memq' function."
-  (member elt list :test #'eq))
-
 (defun setup ()
   "Setup the system."
   (let ((files (asd-files t)))

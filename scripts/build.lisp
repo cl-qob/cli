@@ -5,6 +5,10 @@ Build the source to executable.
 NOTE: This will soon be replace with this build tools!
 |#
 
+(load "./src/el-lib.lisp")
+
+(delete-file (el-lib:expand-fn "./bin/qob.exe"))
+
 (push '*default-pathname-defaults* asdf:*central-registry*)
 (asdf:load-system "qob")
 
