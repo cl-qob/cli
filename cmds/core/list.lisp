@@ -1,4 +1,4 @@
-;;;; src/cmds/list.lisp --- Build executable
+;;;; cmds/core/list.lisp --- Build executable
 
 ;;; Commentary
 ;;
@@ -16,11 +16,12 @@
 (in-package :qob/list)
 
 (defun options ()
-  "Options for the `list' command."
+  "Options for `list' command."
   (list ))
 
 (defun handler (cmd)
-  "Handler for the `list' command."
+  "Handler for `list' command."
+  (declare (ignore cmd))
   (qob:setup)
   (format t "~A" (asdf/system-registry:registered-systems)))
 

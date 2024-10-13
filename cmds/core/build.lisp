@@ -1,4 +1,4 @@
-;;;; src/cmds/build.lisp --- Build executable
+;;;; cmds/core/build.lisp --- Build executable
 
 ;;; Commentary
 ;;
@@ -22,7 +22,7 @@
 (in-package :qob/build)
 
 (defun options ()
-  "Options for the `build' command."
+  "Options for `build' command."
   (list
    (clingon:make-option
     :string
@@ -40,15 +40,15 @@
     :key :output)))
 
 (defun handler (cmd)
-  "Handler for the `build' command."
+  "Handler for `build' command."
   (let* ((name   (clingon:getopt cmd :name))
          (output (clingon:getopt cmd :output)))
-    ;;(format t "~A" (asdf/system-registry:registered-system name))
-    ;;(format t "~A" output)
     ;; TODO: Change build path.
+    (format t "~A" output)
+
+
     (qob:setup)
-    (asdf:operate :build-op name)
-    ))
+    (asdf:operate :build-op name)))
 
 (defun command ()
   "Build command."

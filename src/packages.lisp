@@ -10,19 +10,21 @@
 (defpackage qob
   (:use cl)
   (:export
-   ;; utils.lsip
+   ;; src/utils.lsip
    setup
    load-system
    asd-files
    asd-test-files
-   ;; logger.lsip
+   ;; src/logger.lsip
    print
    trace
    debug
    info
    warning
    error
-   ;; main.lsip
+   ;; cmds/qob.lisp
+   command
+   ;; src/main.lsip
    main))
 
 (in-package :qob)

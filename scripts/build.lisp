@@ -1,13 +1,11 @@
-#| scripts/build.lisp
+;;;; scripts/build.lisp --- Build the source to executable
 
-Build the source to executable.
+;;; Commentary
+;;
+;; NOTE: This will soon be replace with this build tools!
+;;
 
-NOTE: This will soon be replace with this build tools!
-|#
-
-(load "./src/el-lib.lisp")
-
-(delete-file (el-lib:expand-fn "./bin/qob.exe"))
+;;; Code
 
 (push '*default-pathname-defaults* asdf:*central-registry*)
 (asdf:load-system "qob")
@@ -21,5 +19,11 @@ NOTE: This will soon be replace with this build tools!
 ;;(setq uiop:*image-entry-point* #'qob:main)
 
 ;;(uiop:dump-image "./bin/qob.exe" :executable t)
+
+(let ((exec (el-lib:el-expand-fn (if (uiop:os-windows-p)
+                                     "./bin/qob.exe"
+                                     "./bin/qob"))))
+  (when (uiop:file-exists-p exec)
+    (delete-file exec)))
 
 (asdf:operate :build-op "qob")

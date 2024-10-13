@@ -9,16 +9,20 @@
 
 (defpackage el-lib
   (:use cl)
-  (:export memq
-           expand-fn))
+  (:export el-memq
+           el-expand-fn
+           el-member))
 
 (in-package :el-lib)
 
-(defun memq (elt list)
+(defun el-memq (elt list)
   "Mimic `memq' function."
   (member elt list :test #'eq))
 
-(defun expand-fn (path-string &optional (dir-name (uiop:getcwd)))
+(defun el-member (elt list)
+  (member elt list :test #'string=))
+
+(defun el-expand-fn (path-string &optional (dir-name (uiop:getcwd)))
   "Like `expand-file-name' function."
   (uiop:unix-namestring
    (uiop:ensure-absolute-pathname

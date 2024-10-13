@@ -36,7 +36,7 @@ If optional argument WITH-TEST is non-nil; include test ASD files as well."
   (uiop:if-let ((files (directory "*.asd"))
                 (_ (not with-test))
                 (tests (asd-test-files)))
-    (remove-if (lambda (filename) (memq filename tests)) files)
+    (remove-if (lambda (filename) (el-lib:el-memq filename tests)) files)
     files))
 
 (defun asd-test-files ()

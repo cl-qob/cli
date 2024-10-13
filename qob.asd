@@ -5,12 +5,16 @@
   :description "CLI for building, running, testing, and managing your Common Lisp dependencies"
   :depends-on ("cl-autorepo" "clingon")
   :serial t
-  :components ((:file "src/el-lib")
+  :components (;; Utils
+               (:file "src/el-lib")
                (:file "src/packages")
                (:file "src/logger")
                (:file "src/utils")
-               (:file "src/cmds/build")
-               (:file "src/cmds/list")
+               ;; Commands
+               (:file "cmds/core/build")
+               (:file "cmds/core/list")
+               (:file "cmds/qob")
+               ;; Program
                (:file "src/main"))
   :build-operation "program-op"
   :build-pathname "bin/qob"
