@@ -9,6 +9,33 @@
 
 (in-package :qob)
 
+(defvar *lisp-root* "lisp/"
+  "Directory path points to the lisp folder.")
+
+(defun program-name ()
+  "Lisp program we target to run."
+  (or (uiop:getenv "QOB_LISP")
+      "sbcl"))
+
+(defun lisp-script (name)
+  "Form lisp script path."
+  (concatenate 'string name ".lisp"))
+
+(defun call-lisp (script &rest args)
+  "Run the lisp implementation."
+  (let ((lisp-impls (program-name)))
+    (unless (el-lib:el-executable-find lisp-impls)
+      (error "Defined Lisp implementation is not installed: ~A" lisp-impls))
+    (let* ((lisp-dir (el-lib:el-expand-fn *lisp-root* sb-ext:*runtime-pathname*))
+           (script (lisp-script script)))
+      (format t "~A" (el-lib:el-expand-fn script lisp-dir))
+      ;; (uiop:run-program (list lisp-impls
+      ;;                         "--load" (el-lib:el-expand-fn script *lisp-root*)
+      ;;                         )
+      ;;                   :output t
+      ;;                   :force-shell t)
+      )))
+
 (defun setup ()
   "Setup the system."
   (let ((files (asd-files t)))

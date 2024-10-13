@@ -11,17 +11,18 @@
   (:use cl)
   (:export
    ;; src/utils.lsip
-   setup
-   load-system
-   asd-files
-   asd-test-files
+   call-lisp
+   setup           ; TODO: move to prepare.lisp
+   load-system     ; TODO: move to prepare.lisp
+   asd-files       ; TODO: move to prepare.lisp
+   asd-test-files  ; TODO: move to prepare.lisp
    ;; src/logger.lsip
-   print
-   trace
-   debug
-   info
-   warning
-   error
+   print           ; TODO: move to prepare.lisp
+   trace           ; TODO: move to prepare.lisp
+   debug           ; TODO: move to prepare.lisp
+   info            ; TODO: move to prepare.lisp
+   warning         ; TODO: move to prepare.lisp
+   error           ; TODO: move to prepare.lisp
    ;; cmds/qob.lisp
    command
    ;; src/main.lsip

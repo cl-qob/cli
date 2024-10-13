@@ -36,17 +36,16 @@
     :description "output directory"
     :short-name #\o
     :long-name "output"
-    :required t
     :key :output)))
 
 (defun handler (cmd)
   "Handler for `build' command."
   (let* ((name   (clingon:getopt cmd :name))
          (output (clingon:getopt cmd :output)))
+    ;; Delete if exists to prevent errors.
+    (when (uiop:file-exists-p output)
+      (delete-file output))
     ;; TODO: Change build path.
-    (format t "~A" output)
-
-
     (qob:setup)
     (asdf:operate :build-op name)))
 
