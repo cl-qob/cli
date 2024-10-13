@@ -1,10 +1,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-[![Release](https://img.shields.io/github/tag/jcs090218/qob-cli.svg?label=release&logo=github)](https://github.com/jcs090218/qob-cli/releases/latest)
+[![Release](https://img.shields.io/github/tag/cl-qob/cli.svg?label=release&logo=github)](https://github.com/cl-qob/cli/releases/latest)
 
 # Qob
 > CLI for building, running, testing, and managing your Common Lisp dependencies
 
-[![CI](https://github.com/jcs090218/qob-cli/actions/workflows/test.yml/badge.svg)](https://github.com/jcs090218/qob-cli/actions/workflows/test.yml)
+[![CI](https://github.com/cl-qob/cli/actions/workflows/test.yml/badge.svg)](https://github.com/cl-qob/cli/actions/workflows/test.yml)
 
 ## ⚜️ License
 
@@ -27,3 +27,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 See [`LICENSE`](./LICENSE) for details.
+
+
+<!-- Links -->
