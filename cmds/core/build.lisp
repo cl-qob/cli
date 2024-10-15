@@ -32,7 +32,7 @@
 
 (defun handler (cmd)
   "Handler for `build' command."
-  (qob:call-lisp "core/build"))
+  (qob:call-script "core/build"))
 
 (defun command ()
   "Build command."

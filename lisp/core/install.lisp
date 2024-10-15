@@ -14,4 +14,5 @@
 
 ;;; Code
 
-(format t "Installlllll")
+(qob-start
+ (format t "Installlllll"))

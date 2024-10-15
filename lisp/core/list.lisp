@@ -9,4 +9,6 @@
 
 ;;; Code
 
-(format t "Listing...")
+(qob-start
+ (qob-setup)
+ (format t "~A" (asdf/system-registry:registered-systems)))

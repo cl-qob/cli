@@ -20,7 +20,7 @@
 (defun handler (cmd)
   "Handler for `list' command."
   (declare (ignore cmd))
-  (qob:call-lisp "core/install"))
+  (qob:call-script "core/install"))
 
 (defun command ()
   "List command."

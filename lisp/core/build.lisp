@@ -22,5 +22,5 @@
    (when (uiop:file-exists-p output)
      (delete-file output))
    ;; TODO: Change build path.
-   (qob:setup)
+   (qob-setup)
    (asdf:operate :build-op name)))

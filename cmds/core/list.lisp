@@ -20,9 +20,7 @@
 (defun handler (cmd)
   "Handler for `list' command."
   (declare (ignore cmd))
-  ;;(qob:setup)
-  ;;(format t "~A" (asdf/system-registry:registered-systems))
-  (qob:call-lisp "core/list"))
+  (qob:call-script "core/list"))
 
 (defun command ()
   "List command."

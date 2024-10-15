@@ -11,7 +11,8 @@
   (:use cl)
   (:export
    ;; src/utils.lsip
-   call-lisp
+   call-script
+   call-impls
    setup           ; TODO: move to prepare.lisp
    load-system     ; TODO: move to prepare.lisp
    asd-files       ; TODO: move to prepare.lisp

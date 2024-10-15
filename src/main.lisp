@@ -9,9 +9,6 @@
 
 (in-package :qob)
 
-(defvar *dot-root* ".qob/"
-  "The .qob directory.")
-
 (defun make-dot-folder ()
   "Create the dot folder."
   (ensure-directories-exist *dot-root*))
