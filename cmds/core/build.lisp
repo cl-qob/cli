@@ -2,15 +2,7 @@
 
 ;;; Commentary
 ;;
-;; Command use to build the executable
-;;
-;;   $ qob build
-;;
-;;
-;;  Optional arguments:
-;;
-;;    --name, -n         path to the ASD file
-;;    --output, -o       output directory
+;; The `build' command definition.
 ;;
 
 ;;; Code
@@ -40,14 +32,7 @@
 
 (defun handler (cmd)
   "Handler for `build' command."
-  (let* ((name   (clingon:getopt cmd :name))
-         (output (clingon:getopt cmd :output)))
-    ;; Delete if exists to prevent errors.
-    (when (uiop:file-exists-p output)
-      (delete-file output))
-    ;; TODO: Change build path.
-    (qob:setup)
-    (asdf:operate :build-op name)))
+  (qob:call-lisp "core/build"))
 
 (defun command ()
   "Build command."

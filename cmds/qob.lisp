@@ -23,4 +23,5 @@
    :license "MIT"
    :handler #'handler
    :sub-commands `(,(qob/build:command)
+                   ,(qob/install:command)
                    ,(qob/list:command))))

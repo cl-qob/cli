@@ -11,23 +11,24 @@
 
 (push '*default-pathname-defaults* asdf:*central-registry*)
 (asdf:load-system "qob")
+(asdf:load-system "copy-directory")
 
 ;;(ql:quickload "cl-autorepo")
 ;;(ql:quickload "clingon")
+;;(ql:quickload "copy-directory")
 
-;;(load "./src/build.lisp")
-;;(load "./src/main.lisp")
+;;; Copy lisp directory
+(progn
+  (el-lib:el-delete-directory "bin/lisp/")
+  (copy-directory:copy (el-lib:el-expand-fn "lisp/")
+                       (el-lib:el-expand-fn "bin/lisp/")))
 
-;;(setq uiop:*image-entry-point* #'qob:main)
-
-;;(uiop:dump-image "./bin/qob.exe" :executable t)
-
-(el-lib:el-copy-directory "lisp/" "bin/lisp/")
-
+;; Delete executable
 (let ((exec (el-lib:el-expand-fn (if (uiop:os-windows-p)
                                      "bin/qob.exe"
                                      "bin/qob"))))
   (when (uiop:file-exists-p exec)
     (delete-file exec)))
 
+;; Build executable
 (asdf:operate :build-op "qob")

@@ -2,9 +2,7 @@
 
 ;;; Commentary
 ;;
-;; Command use to list the registered system
-;;
-;;   $ qob list
+;; The `list' command definition.
 ;;
 
 ;;; Code

@@ -12,6 +12,7 @@
                (:file "src/utils")
                ;; Commands
                (:file "cmds/core/build")
+               (:file "cmds/core/install")
                (:file "cmds/core/list")
                (:file "cmds/qob")
                ;; Program
