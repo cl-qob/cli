@@ -9,9 +9,9 @@
 
 (require 'asdf)
 
-(push (concatenate 'string (uiop:getcwd) "extern"
-                   "clingon")
-      asdf:*central-registry*)
+;;(push (concatenate 'string (uiop:getcwd) "extern"
+;;                   "clingon")
+;;      asdf:*central-registry*)
 
 (push '*default-pathname-defaults* asdf:*central-registry*)
 (asdf:load-system "qob")
