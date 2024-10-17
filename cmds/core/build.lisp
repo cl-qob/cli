@@ -21,7 +21,6 @@
     :description "system name"
     :short-name #\n
     :long-name "name"
-    :required t
     :key :name)
    (clingon:make-option
     :string
@@ -32,6 +31,7 @@
 
 (defun handler (cmd)
   "Handler for `build' command."
+  (format t "~A" clingon:command-arguments)
   (qob:call-script "core/build"))
 
 (defun command ()
