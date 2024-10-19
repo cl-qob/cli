@@ -23,16 +23,13 @@
 
 (defun qob-import (url)
   "Load and eval the script from a URL."
-  (with-open-file (qob-temp-filename
-                   :direction :output
-                   :if-does-not-exist :create
-                   :if-exists :supersede
-                   :element-type '(unsigned-byte 8))
-    (let ((input (drakma:http-request url
-                                      :want-stream t)))
-      (awhile (read-byte input nil nil)
-              (write-byte it file))
-      (close input))))
+  (let ((bytes (dex:get url)))
+    (with-open-file (out qob-temp-filename
+                         :direction :output
+                         :if-exists :supersede
+                         :if-does-not-exist :create
+                         :element-type 'unsigned-byte)
+      (write-sequence bytes out))))
 
 ;;
 ;;; Package
@@ -40,8 +37,7 @@
 (defun qob-install-quicklisp ()
   "Install Quicklisp."
   ;; TODO: ..
-
-  )
+  (quicklisp-quickstart:install))
 
 ;;
 ;;; Verbose
