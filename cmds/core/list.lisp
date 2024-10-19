@@ -23,7 +23,7 @@
   (qob:call-script "core/list"))
 
 (defun command ()
-  "List command."
+  "The `list' command."
   (clingon:make-command
    :name "list"
    :description "List the registered system"

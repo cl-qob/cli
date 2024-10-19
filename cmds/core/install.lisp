@@ -18,12 +18,12 @@
   (list ))
 
 (defun handler (cmd)
-  "Handler for `list' command."
+  "Handler for `install' command."
   (declare (ignore cmd))
   (qob:call-script "core/install"))
 
 (defun command ()
-  "List command."
+  "The `install' command."
   (clingon:make-command
    :name "install"
    :description "Install packages"

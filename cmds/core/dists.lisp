@@ -1,0 +1,32 @@
+;;;; cmds/core/dists.lisp --- Build executable
+
+;;; Commentary
+;;
+;; The `dists' command definition.
+;;
+
+;;; Code
+
+(defpackage qob/dists
+  (:use cl)
+  (:export command))
+
+(in-package :qob/dists)
+
+(defun options ()
+  "Options for `dists' command."
+  (list ))
+
+(defun handler (cmd)
+  "Handler for `dists' command."
+  (declare (ignore cmd))
+  (qob:call-script "core/dists"))
+
+(defun command ()
+  "The `dists' command."
+  (clingon:make-command
+   :name "dists"
+   :description "List out all dists"
+   :usage ""
+   :options (options)
+   :handler #'handler))

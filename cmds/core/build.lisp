@@ -35,7 +35,7 @@
   (qob:call-script "core/build"))
 
 (defun command ()
-  "Build command."
+  "The `build' command."
   (clingon:make-command
    :name "build"
    :description "Build the executable"

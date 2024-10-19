@@ -12,6 +12,7 @@
   (:export el-memq
            el-member
            el-expand-fn
+           el-expand-file-name
            el-executable-find
            el-move-path
            el-delete-directory
@@ -48,8 +49,12 @@
   (member elt list :test #'string=))
 
 (defun el-expand-fn (path &optional (dir-name (uiop:getcwd)))
-  "Like `expand-file-name' function."
+  "Like `expand-file-name' function but return path object instead."
   (uiop:ensure-absolute-pathname (uiop:merge-pathnames* path dir-name)))
+
+(defun el-expand-file-name (path &optional (dir-name (uiop:getcwd)))
+  "Like `expand-file-name' function; returns a string."
+  (namestring (el-expand-fn path dir-name)))
 
 (defun el-delete-directory (dir)
   "Delete the DIR."

@@ -8,10 +8,10 @@
   :components (;; Utils
                (:file "src/el-lib")
                (:file "src/packages")
-               (:file "src/logger")
                (:file "src/utils")
                ;; Commands
                (:file "cmds/core/build")
+               (:file "cmds/core/dists")
                (:file "cmds/core/install")
                (:file "cmds/core/list")
                (:file "cmds/qob")

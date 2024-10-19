@@ -10,5 +10,5 @@
 ;;; Code
 
 (qob-start
- (qob-setup)
+ ;;(qob-setup)
  (format t "~A" (asdf/system-registry:registered-systems)))

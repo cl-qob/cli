@@ -4,9 +4,85 @@
 
 (require "asdf")
 
+(defvar qob-dot-global (uiop:getenv "QOB_DOT_GLOBAL")
+  "Return the global .qob directory.")
+
+(defvar qob-dot-local (uiop:getenv "QOB_DOT_LOCAL")
+  "Return the local .qob directory.")
+
+(defvar qob-temp-filename (uiop:merge-pathnames* qob-dot-global "TMP")
+  "Return the temp buffer filename.")
+
+;;
+;;; Utils
+
+(defun qob--sinr (len-or-list form-1 form-2)
+  "If LEN-OR-LIST has length of 1; return FORM-1, else FORM-2."
+  (let ((len (if (numberp len-or-list) len-or-list (length len-or-list))))
+    (if (<= len 1) form-1 form-2)))
+
+(defun qob-import (url)
+  "Load and eval the script from a URL."
+  (with-open-file (qob-temp-filename
+                   :direction :output
+                   :if-does-not-exist :create
+                   :if-exists :supersede
+                   :element-type '(unsigned-byte 8))
+    (let ((input (drakma:http-request url
+                                      :want-stream t)))
+      (awhile (read-byte input nil nil)
+              (write-byte it file))
+      (close input))))
+
+;;
+;;; Package
+
+(defun qob-install-quicklisp ()
+  "Install Quicklisp."
+  ;; TODO: ..
+
+  )
+
+;;
+;;; Verbose
+
+(defun qob-princ (stream fmt &rest args)
+  "Root print function with STREAM.
+
+The argument STREAM is used to decide weather the stream should be standard
+output or standard error.
+
+The arguments FMT and ARGS are used to form the output message."
+  (apply #'format (case stream
+                    (`stdout *standard-output*)
+                    (`stderr *error-output*)
+                    (t t))
+         fmt args))
+
+(defun qob-print (msg &rest args)
+  "Standard output print MSG and ARGS."
+  (apply #'qob-princ 'stdout msg args))
+
+(defun qob-println (msg &rest args)
+  "Like function `qob-print' but with newline at the end."
+  (apply #'qob-print msg args)
+  (terpri))
+
+(defun qob-msg (msg &rest args)
+  "Standard error print MSG and ARGS."
+  (apply #'qob-princ 'stderr msg args)
+  (terpri))
+
+(defun qob-info (msg &rest args)
+  ""
+  (qob-princ )
+  )
+
+;;
+;;; Core
+
 (defmacro qob-start (&rest body)
   "Execute BODY with workspace setup."
-  (declare (indent 0) (debug t))
   `(progn
      (push (uiop:getcwd) asdf:*central-registry*)
      ,@body))

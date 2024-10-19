@@ -11,7 +11,7 @@
 
 (defun make-dot-folder ()
   "Create the dot folder."
-  (ensure-directories-exist *dot-root*))
+  (ensure-directories-exist (dot-local)))
 
 (defun main ()
   "The main entry point of our CLI program."
