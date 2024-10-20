@@ -7,11 +7,11 @@
 
 ;;; Code
 
-(defpackage qob/list
+(defpackage qob-cli/list
   (:use cl)
   (:export command))
 
-(in-package :qob/list)
+(in-package :qob-cli/list)
 
 (defun options ()
   "Options for `list' command."
@@ -20,7 +20,7 @@
 (defun handler (cmd)
   "Handler for `list' command."
   (declare (ignore cmd))
-  (qob:call-script "core/list"))
+  (qob-cli:call-script "core/list"))
 
 (defun command ()
   "The `list' command."

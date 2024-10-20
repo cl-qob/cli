@@ -1,4 +1,4 @@
-(defsystem "qob"
+(defsystem "qob-cli"
   :version "0.1.0"
   :author "Jen-Chieh Shen"
   :license "MIT"
@@ -19,4 +19,4 @@
                (:file "src/main"))
   :build-operation "program-op"
   :build-pathname "bin/qob"
-  :entry-point "qob:main")
+  :entry-point "qob-cli:main")

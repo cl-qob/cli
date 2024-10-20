@@ -7,7 +7,7 @@
 
 ;;; Code
 
-(in-package :qob)
+(in-package :qob-cli)
 
 (defun make-dot-folder ()
   "Create the dot folder."

@@ -7,7 +7,7 @@
 
 ;;; Code
 
-(in-package :qob)
+(in-package :qob-cli)
 
 (defun dot-global ()
   "Return the global .qob directory."

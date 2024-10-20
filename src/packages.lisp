@@ -7,7 +7,7 @@
 
 ;;; Code
 
-(defpackage qob
+(defpackage qob-cli
   (:use cl)
   (:export
    ;; src/utils.lsip
@@ -29,4 +29,4 @@
    ;; src/main.lsip
    main))
 
-(in-package :qob)
+(in-package :qob-cli)

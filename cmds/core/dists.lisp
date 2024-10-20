@@ -7,11 +7,11 @@
 
 ;;; Code
 
-(defpackage qob/dists
+(defpackage qob-cli/dists
   (:use cl)
   (:export command))
 
-(in-package :qob/dists)
+(in-package :qob-cli/dists)
 
 (defun options ()
   "Options for `dists' command."
@@ -20,7 +20,7 @@
 (defun handler (cmd)
   "Handler for `dists' command."
   (declare (ignore cmd))
-  (qob:call-script "core/dists"))
+  (qob-cli:call-script "core/dists"))
 
 (defun command ()
   "The `dists' command."

@@ -7,11 +7,11 @@
 
 ;;; Code
 
-(defpackage qob/build
+(defpackage qob-cli/build
   (:use cl)
   (:export command))
 
-(in-package :qob/build)
+(in-package :qob-cli/build)
 
 (defun options ()
   "Options for `build' command."
@@ -31,8 +31,8 @@
 
 (defun handler (cmd)
   "Handler for `build' command."
-  (format t "~A" clingon:command-arguments)
-  (qob:call-script "core/build"))
+  ;;(format t "~A" clingon:command-arguments)
+  (qob-cli:call-script "core/build"))
 
 (defun command ()
   "The `build' command."

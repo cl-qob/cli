@@ -14,7 +14,7 @@
 ;;      asdf:*central-registry*)
 
 (push '*default-pathname-defaults* asdf:*central-registry*)
-(asdf:load-system "qob")
+(asdf:load-system "qob-cli")
 (asdf:load-system "copy-directory")
 
 ;;(ql:quickload "cl-autorepo")
@@ -35,4 +35,4 @@
     (delete-file exec)))
 
 ;; Build executable
-(asdf:operate :build-op "qob")
+(asdf:operate :build-op "qob-cli")

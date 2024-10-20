@@ -2,7 +2,14 @@
 ;;; Commentary: Prepare to setup Qob environment for sandboxing
 ;;; Code:
 
+
+;;
+;;; Includes
+
 (require "asdf")
+
+;;
+;;; Environment
 
 (defvar qob-dot-global (uiop:getenv "QOB_DOT_GLOBAL")
   "Return the global .qob directory.")
@@ -12,6 +19,23 @@
 
 (defvar qob-temp-filename (uiop:merge-pathnames* qob-dot-global "TMP")
   "Return the temp buffer filename.")
+
+(defun qob-dot ()
+  "Return the current .qob directory."
+  (if (qob-global-p) qob-dot-global qob-dot-local))
+
+;;
+;;; Flags
+
+(defun qob-global-p ()
+  "Non-nil when in global space (`-g', `--global')."
+  ;; TODO: ..
+  nil)
+
+(defun qob-local-p ()
+  "Non-nil when in local space (default)."
+  ;; TODO: ..
+  t)
 
 ;;
 ;;; Utils
@@ -34,10 +58,16 @@
 ;;
 ;;; Package
 
+(defun qob-quicklisp-installed-p ()
+  "Return non-nil if Quicklisp is already installed."
+  (uiop:file-exists-p (concatenate 'string (qob-dot) "quicklisp.lisp")))
+
 (defun qob-install-quicklisp ()
-  "Install Quicklisp."
-  ;; TODO: ..
-  (quicklisp-quickstart:install))
+  "Install Quicklisp if not installed."
+  (alexandria:when-let ((ql (qob-quicklisp-installed-p)))
+    (load ql)
+    (quicklisp-quickstart:install)
+    (ql:add-to-init-file)))
 
 ;;
 ;;; Verbose

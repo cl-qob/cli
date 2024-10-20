@@ -7,7 +7,7 @@
 
 ;;; Code
 
-(in-package :qob)
+(in-package :qob-cli)
 
 (defun options ()
   "Options for `qob' command."
@@ -33,7 +33,7 @@
    :license "MIT"
    :options (options)
    :handler #'handler
-   :sub-commands `(,(qob/build:command)
-                   ,(qob/dists:command)
-                   ,(qob/install:command)
-                   ,(qob/list:command))))
+   :sub-commands `(,(qob-cli/build:command)
+                   ,(qob-cli/dists:command)
+                   ,(qob-cli/install:command)
+                   ,(qob-cli/list:command))))
