@@ -16,7 +16,8 @@
            el-executable-find
            el-move-path
            el-delete-directory
-           el-directory-files))
+           el-directory-files
+           el-file-name-directory))
 
 (in-package :el-lib)
 
@@ -39,6 +40,16 @@
   (find name el-executables
         :test #'equalp
         :key #'pathname-name))
+
+(defun el-2str (object)
+  "Convert to string."
+  (cond ((stringp object)   object)
+        ((pathnamep object) (namestring object))
+        (t (error "Unknown type to convert to string: ~A" object))))
+
+(defun el-2pathname (str)
+  "Convert STR to pathname."
+  (if (pathnamep str) str (make-pathname :directory str)))
 
 (defun el-memq (elt list)
   "Mimic `memq' function."
@@ -64,3 +75,14 @@
   "Return a list of names of files in DIR."
   (append (uiop:subdirectories dir)
           (directory-files dir)))
+
+(defun el-file-name-directory (filename)
+  "Return the directory component in file name FILENAME."
+  (setq filename (el-2str filename))
+  (let ((dir (directory-namestring filename))
+        (dirve (char filename 0)))
+    (if (uiop:os-windows-p)
+        (concatenate 'string (string dirve) ":" dir)
+        dir)))
+
+;;; End of src/el-lib.lisp

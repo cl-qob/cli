@@ -1,4 +1,4 @@
-;;;; lisp/core/dists.lisp --- Build executable
+;;;; core/dists.lisp --- Build executable
 
 ;;; Commentary
 ;;
@@ -9,15 +9,18 @@
 
 ;;; Code
 
+(qob-setup)
+
 (defun qob-dists--print (dists)
   "Print list of dists."
   (dolist (dist dists)
     (qob-println "~A" dist)))
 
-(qob-start
- (let ((dists (ql-dist:all-dists)))
-   (qob-info "Available dists:")
-   (qob-msg "")
-   (qob-dists--print dists)
-   (qob-info "(Total of ~A dist~A available)" (length dists)
-             (qob--sinr dists))))
+(let ((dists (ql-dist:all-dists)))
+  (qob-info "Available dists:")
+  (qob-msg "")
+  (qob-dists--print dists)
+  (qob-info "(Total of ~A dist~A available)" (length dists)
+            (qob--sinr dists "" "s")))
+
+;;; End of core/dists.lisp

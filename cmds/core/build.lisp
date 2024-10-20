@@ -31,8 +31,7 @@
 
 (defun handler (cmd)
   "Handler for `build' command."
-  ;;(format t "~A" clingon:command-arguments)
-  (qob-cli:call-script "core/build"))
+  (qob-cli:call-script "core/build" cmd))
 
 (defun command ()
   "The `build' command."

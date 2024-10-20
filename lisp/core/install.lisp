@@ -1,4 +1,4 @@
-;;;; lisp/core/install.lisp --- Build executable
+;;;; core/install.lisp --- Build executable
 
 ;;; Commentary
 ;;
@@ -14,5 +14,10 @@
 
 ;;; Code
 
-(qob-start
- (format t "Installlllll"))
+(qob-setup)
+
+;; TODO: Install package.
+
+(ql:quickload "vecto")
+
+;;; End of core/install.lisp

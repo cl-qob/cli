@@ -18,3 +18,5 @@
   (make-dot-folder)
   (let ((app (command)))
     (clingon:run app)))
+
+;;; End of src/main.lisp

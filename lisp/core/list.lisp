@@ -1,4 +1,4 @@
-;;;; lisp/core/list.lisp --- Build executable
+;;;; core/list.lisp --- Build executable
 
 ;;; Commentary
 ;;
@@ -9,6 +9,9 @@
 
 ;;; Code
 
-(qob-start
- ;;(qob-setup)
- (format t "~A" (asdf/system-registry:registered-systems)))
+(qob-setup)
+
+;; TODO: ..
+(format t "~A" (asdf/system-registry:registered-systems))
+
+;;; End of core/list.lisp

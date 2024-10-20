@@ -30,3 +30,5 @@
    main))
 
 (in-package :qob-cli)
+
+;;; End of src/packages.lisp

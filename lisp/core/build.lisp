@@ -1,4 +1,4 @@
-;;;; lisp/core/build.lisp --- Build executable
+;;;; core/build.lisp --- Build executable
 
 ;;; Commentary
 ;;
@@ -24,3 +24,5 @@
    ;; TODO: Change build path.
    (qob-setup)
    (asdf:operate :build-op name)))
+
+;;; End of core/build.lisp

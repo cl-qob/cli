@@ -19,8 +19,7 @@
 
 (defun handler (cmd)
   "Handler for `dists' command."
-  (declare (ignore cmd))
-  (qob-cli:call-script "core/dists"))
+  (qob-cli:call-script "core/dists" cmd))
 
 (defun command ()
   "The `dists' command."

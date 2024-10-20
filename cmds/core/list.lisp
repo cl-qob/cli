@@ -20,7 +20,7 @@
 (defun handler (cmd)
   "Handler for `list' command."
   (declare (ignore cmd))
-  (qob-cli:call-script "core/list"))
+  (qob-cli:call-script "core/list" cmd))
 
 (defun command ()
   "The `list' command."

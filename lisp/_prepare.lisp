@@ -2,27 +2,93 @@
 ;;; Commentary: Prepare to setup Qob environment for sandboxing
 ;;; Code:
 
-
 ;;
 ;;; Includes
 
 (require "asdf")
 
 ;;
+;;; Verbose
+
+(defun qob-princ (stream fmt &rest args)
+  "Root print function with STREAM.
+
+The argument STREAM is used to decide weather the stream should be standard
+output or standard error.
+
+The arguments FMT and ARGS are used to form the output message."
+  (let ((object (apply #'format nil fmt args))
+        (stream (case stream
+                  (stdout *standard-output*)
+                  (stderr *error-output*)
+                  (t t))))
+    (princ object stream)
+    (force-output stream)
+    ))
+
+(defun qob-print (msg &rest args)
+  "Standard output print MSG and ARGS."
+  (apply #'qob-princ 'stdout msg args))
+
+(defun qob-println (msg &rest args)
+  "Like function `qob-print' but with newline at the end."
+  (apply #'qob-print msg args)
+  (qob-print "~%"))
+
+(defun qob-msg (msg &rest args)
+  "Standard error print MSG and ARGS."
+  (apply #'qob-princ 'stderr msg args)
+  (qob-princ 'stderr "~%"))
+
+(defun qob-trace (msg &rest args)
+  ""
+  ;; TODO: ..
+  (apply #'qob-msg msg args))
+
+(defun qob-debug (msg &rest args)
+  ""
+  ;; TODO: ..
+  (apply #'qob-msg msg args)
+  )
+
+(defun qob-info (msg &rest args)
+  ""
+  ;; TODO: ..
+  (apply #'qob-msg msg args)
+  )
+
+(defun qob-warn (msg &rest args)
+  ""
+  ;; TODO: ..
+  (apply #'qob-msg msg args)
+  )
+
+(defun qob-error (msg &rest args)
+  ""
+  ;; TODO: ..
+  (apply #'qob-msg msg args)
+  )
+
+;;
 ;;; Environment
 
-(defvar qob-dot-global (uiop:getenv "QOB_DOT_GLOBAL")
-  "Return the global .qob directory.")
+(defvar qob-lisp (uiop:getenv "QOB_LISP")
+  "Return the current lisp implementation.")
 
-(defvar qob-dot-local (uiop:getenv "QOB_DOT_LOCAL")
-  "Return the local .qob directory.")
+(defvar qob-dot (uiop:getenv "QOB_DOT")
+  "Return the current .qob directory.")
 
-(defvar qob-temp-filename (uiop:merge-pathnames* qob-dot-global "TMP")
+(defvar qob-temp-filename (uiop:getenv "QOB_TEMP_FILE")
   "Return the temp buffer filename.")
 
-(defun qob-dot ()
-  "Return the current .qob directory."
-  (if (qob-global-p) qob-dot-global qob-dot-local))
+(defvar qob-lisp-root (uiop:getenv "QOB_LISP_ROOT")
+  "Source `lisp' directory; should always end with slash.")
+
+(defvar qob-user-init (uiop:getenv "QOB_USER_INIT")
+  "Return the user init file.")
+
+(defvar qob-quicklisp-installed-p (uiop:getenv "QOB_QUICKLISP_INSTALLED")
+  "Return non-nil if Quicklisp is already installed.")
 
 ;;
 ;;; Flags
@@ -38,6 +104,13 @@
   t)
 
 ;;
+;;; Elisp Layer
+
+(defun el-memq (elt list)
+  "Mimic `memq' function."
+  (member elt list :test #'eq))
+
+;;
 ;;; Utils
 
 (defun qob--sinr (len-or-list form-1 form-2)
@@ -45,104 +118,79 @@
   (let ((len (if (numberp len-or-list) len-or-list (length len-or-list))))
     (if (<= len 1) form-1 form-2)))
 
-(defun qob-import (url)
-  "Load and eval the script from a URL."
-  (let ((bytes (dex:get url)))
-    (with-open-file (out qob-temp-filename
-                         :direction :output
-                         :if-exists :supersede
-                         :if-does-not-exist :create
-                         :element-type 'unsigned-byte)
-      (write-sequence bytes out))))
+(defvar qob-loading-file-p nil
+  "This became t; if we are loading script from another file and not expecting
+the `qob-start' execution.")
+
+(defun qob-script (script)
+  "Return full SCRIPT filename."
+  (concatenate 'string qob-lisp-root script ".lisp"))
+
+(defun qob-call (script)
+  "Call another qob SCRIPT."
+  (let ((script-file (qob-script script)))
+    (when (uiop:file-exists-p script-file)
+      (load script-file)
+      (qob-error "Script missing %s" script-file))))
+
+(defun qob-load (script)
+  "Load another eask SCRIPT; so we can reuse functions across all scripts."
+  (let ((qob-loading-file-p t)) (qob-call script)))
 
 ;;
 ;;; Package
 
-(defun qob-quicklisp-installed-p ()
-  "Return non-nil if Quicklisp is already installed."
-  (uiop:file-exists-p (concatenate 'string (qob-dot) "quicklisp.lisp")))
-
 (defun qob-install-quicklisp ()
   "Install Quicklisp if not installed."
-  (alexandria:when-let ((ql (qob-quicklisp-installed-p)))
-    (load ql)
-    (quicklisp-quickstart:install)
-    (ql:add-to-init-file)))
-
-;;
-;;; Verbose
-
-(defun qob-princ (stream fmt &rest args)
-  "Root print function with STREAM.
-
-The argument STREAM is used to decide weather the stream should be standard
-output or standard error.
-
-The arguments FMT and ARGS are used to form the output message."
-  (apply #'format (case stream
-                    (`stdout *standard-output*)
-                    (`stderr *error-output*)
-                    (t t))
-         fmt args))
-
-(defun qob-print (msg &rest args)
-  "Standard output print MSG and ARGS."
-  (apply #'qob-princ 'stdout msg args))
-
-(defun qob-println (msg &rest args)
-  "Like function `qob-print' but with newline at the end."
-  (apply #'qob-print msg args)
-  (terpri))
-
-(defun qob-msg (msg &rest args)
-  "Standard error print MSG and ARGS."
-  (apply #'qob-princ 'stderr msg args)
-  (terpri))
-
-(defun qob-info (msg &rest args)
-  ""
-  (qob-princ )
-  )
+  (let* ((quicklisp-dir  (uiop:merge-pathnames* "quicklisp/" qob-dot))
+         (quicklisp-init (uiop:merge-pathnames* "setup.lisp" quicklisp-dir)))
+    (unless qob-quicklisp-installed-p
+      (qob-quicklisp-install quicklisp-dir))
+    (when (probe-file quicklisp-init)
+      (load quicklisp-init))))
 
 ;;
 ;;; Core
 
-(defmacro qob-start (&rest body)
-  "Execute BODY with workspace setup."
-  `(progn
-     (push (uiop:getcwd) asdf:*central-registry*)
-     ,@body))
+(defun qob-asd-test-files ()
+  "Return a list of ASD test files."
+  (directory "*-test*.asd"))
 
-;; (defun qob-setup ()
-;;   "Setup the system."
-;;   (let ((files (asd-files t)))
-;;     (mapc (lambda (file)
-;;             (load-system file)
-;;             (-info "Load ASD file ~A" file))
-;;           files)))
+(defun qob-asd-files (&optional with-test)
+  "Return a list of ASD files.
+
+If optional argument WITH-TEST is non-nil; include test ASD files as well."
+  (uiop:if-let ((files (directory "*.asd"))
+                (_ (not with-test))
+                (tests (qob-asd-test-files)))
+    (remove-if (lambda (filename) (el-memq filename tests)) files)
+    files))
+
+(defun qob-load-system (filename)
+  "Load the system from ASD's FILENAME; and return the registered name."
+  (let ((dir (uiop:pathname-parent-directory-pathname filename))
+        (file (pathname-name filename)))
+    (push dir asdf:*central-registry*)
+    (asdf:load-system file)
+    file))  ; registered name
+
+(defun qob-find-system (name)
+  "Return a system of given NAME."
+  (asdf/system-registry:registered-system name))
+
+(defun qob-setup ()
+  "Setup the system."
+  (qob-install-quicklisp)
+  ;; (let ((files (qob-asd-files t)))
+  ;;   (mapc (lambda (file)
+  ;;           (qob-load-system file)
+  ;;           (qob-info "Load ASD file ~A" file))
+  ;;         files))
+  )
+
 ;;
-;; (defun qob-load-system (filename)
-;;   "Load the system from ASD's FILENAME; and return the registered name."
-;;   (let ((dir (uiop:pathname-parent-directory-pathname filename))
-;;         (file (pathname-name filename)))
-;;     (push dir asdf:*central-registry*)
-;;     (asdf:load-system file)
-;;     file))  ; registered name
-;;
-;; (defun qob-find-system (name)
-;;   "Return a system of given NAME."
-;;   (asdf/system-registry:registered-system name))
-;;
-;; (defun qob-asd-files (&optional with-test)
-;;   "Return a list of ASD files.
-;;
-;; If optional argument WITH-TEST is non-nil; include test ASD files as well."
-;;   (uiop:if-let ((files (directory "*.asd"))
-;;                 (_ (not with-test))
-;;                 (tests (asd-test-files)))
-;;     (remove-if (lambda (filename) (el-lib:el-memq filename tests)) files)
-;;     files))
-;;
-;; (defun qob-asd-test-files ()
-;;   "Return a list of ASD test files."
-;;   (directory "*-test*.asd"))
+;;; Externals
+
+;;(qob-load "extern/alexandria")
+
+;;; End of _prepare.lisp

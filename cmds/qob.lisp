@@ -17,6 +17,8 @@
     :description "set verbosity from 0 to 5"
     :short-name #\v
     :long-name "verbose"
+    :initial-value 3
+    :env-vars '("QOB_VERBOSE")
     :key :verbose)))
 
 (defun handler (cmd)
