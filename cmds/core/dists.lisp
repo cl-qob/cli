@@ -25,7 +25,6 @@
   "The `dists' command."
   (clingon:make-command
    :name "dists"
-   :description "List out all dists"
-   :usage ""
+   :description "List out all installed dists"
    :options (options)
    :handler #'handler))

@@ -82,19 +82,6 @@ The arguments FMT and ARGS are used to form the output message."
   "Return non-nil if Quicklisp is already installed.")
 
 ;;
-;;; Flags
-
-(defun qob-global-p ()
-  "Non-nil when in global space (`-g', `--global')."
-  ;; TODO: ..
-  nil)
-
-(defun qob-local-p ()
-  "Non-nil when in local space (default)."
-  ;; TODO: ..
-  t)
-
-;;
 ;;; Elisp Layer
 
 (defun el-memq (elt list)
@@ -129,7 +116,25 @@ the `qob-start' execution.")
   (let ((qob-loading-file-p t)) (qob-call script)))
 
 ;;
+;;; Flags
+
+(defun qob-global-p ()
+  "Non-nil when in global space (`-g', `--global')."
+  ;; TODO: ..
+  nil)
+
+(defun qob-local-p ()
+  "Non-nil when in local space (default)."
+  ;; TODO: ..
+  t)
+
+;;
 ;;; Package
+
+(defconstant qob-source-mapping
+  `((quicklisp . "https://elpa.gnu.org/packages/")
+    (ultralisp . "http://dist.ultralisp.org/"))
+  "Mapping of source name and url.")
 
 (defun qob-install-quicklisp ()
   "Install Quicklisp if not installed."

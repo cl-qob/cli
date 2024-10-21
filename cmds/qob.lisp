@@ -18,7 +18,7 @@
     :short-name #\v
     :long-name "verbose"
     :initial-value 3
-    :env-vars '("QOB_VERBOSE")
+    :persistent t
     :key :verbose)))
 
 (defun handler (cmd)

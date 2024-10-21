@@ -35,8 +35,14 @@
   "Return the lisp scripts' root directory."
   (el-lib:el-expand-file-name "lisp/" (exec-dir)))
 
-(defun setup-environment ()
-  "Setup the enviornment variables."
+(defun setup-environment (cmd)
+  "Setup the enviornment variables.
+
+Argument CMD is used to extract positional arguments and options."
+  (progn
+    ;; TODO: ..
+    (format t "~A~%" (clingon:command-arguments cmd))
+    (format t "~A~%" (clingon:getopt cmd :verbose)))
   (setf (uiop:getenv "QOB_LISP")                (program-name))
   (setf (uiop:getenv "QOB_DOT")                 (dot))
   (setf (uiop:getenv "QOB_TEMP_FILE")           (el-lib:el-expand-file-name "tmp" (dot-global)))
@@ -70,31 +76,27 @@
          (name (el-lib:el-expand-fn name lisp-dir)))
     (namestring name)))
 
-(defun call-script (script &rest cmd)
+(defun call-script (script cmd)
   "Run the lisp implementation with the SCRIPT and CMD."
   (let ((prepare (lisp-script "_prepare"))
         (no-ql   (lisp-script "_no_ql"))
         (ql      (lisp-script "_ql"))
         (script  (lisp-script script)))
-    (apply #'call-impls
-           (concatenate 'list
-                        (if (quicklisp-installed-p)
-                            (list "--load" no-ql)
-                            (list "--load" (quicklisp-lisp)
-                                  "--load" ql))
-                        (list "--load"   prepare
-                              "--script" script))
-           cmd)))
+    (call-impls (concatenate 'list
+                             (if (quicklisp-installed-p)
+                                 (list "--load" no-ql)
+                                 (list "--load" (quicklisp-lisp)
+                                       "--load" ql))
+                             (list "--load"   prepare
+                                   "--script" script))
+                cmd)))
 
-(defun call-impls (args &rest cmd)
+(defun call-impls (args cmd)
   "Run the lisp implementation with ARGS and CMD."
   (let ((lisp-impls (program-name)))
     (unless (el-lib:el-executable-find lisp-impls)
       (error "Defined Lisp implementation is not installed: ~A" lisp-impls))
-    ;; TODO: Turn cmd to file.
-    ;;(format t "~A~%" (clingon:command-arguments cmd))
-    ;;(format t "~A~%" (clingon:getopt cmd :verbose))
-    (setup-environment)
+    (setup-environment cmd)
     (uiop:run-program (concatenate 'list
                                    (list lisp-impls)
                                    (list "--noinform"
