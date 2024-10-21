@@ -100,8 +100,8 @@
                                    (list "--noinform"
                                          "--userinit" (user-init))
                                    args)
-                      :output *standard-output*
-                      :error-output *error-output*
+                      :output :interactive
+                      :error-output :interactive
                       :force-shell t)))
 
 ;;

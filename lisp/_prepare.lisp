@@ -17,14 +17,11 @@ The argument STREAM is used to decide weather the stream should be standard
 output or standard error.
 
 The arguments FMT and ARGS are used to form the output message."
-  (let ((object (apply #'format nil fmt args))
-        (stream (case stream
+  (let ((stream (case stream
                   (stdout *standard-output*)
                   (stderr *error-output*)
                   (t t))))
-    (princ object stream)
-    (force-output stream)
-    ))
+    (apply #'format stream fmt args)))
 
 (defun qob-print (msg &rest args)
   "Standard output print MSG and ARGS."
@@ -32,42 +29,36 @@ The arguments FMT and ARGS are used to form the output message."
 
 (defun qob-println (msg &rest args)
   "Like function `qob-print' but with newline at the end."
-  (apply #'qob-print msg args)
-  (qob-print "~%"))
+  (apply #'qob-print (concatenate 'string msg "~%") args))
 
 (defun qob-msg (msg &rest args)
   "Standard error print MSG and ARGS."
-  (apply #'qob-princ 'stderr msg args)
-  (qob-princ 'stderr "~%"))
+  (apply #'qob-princ 'stderr (concatenate 'string msg "~%") args))
 
 (defun qob-trace (msg &rest args)
-  ""
+  "Send trace message; see function `qob--msg' for arguments MSG and ARGS."
   ;; TODO: ..
   (apply #'qob-msg msg args))
 
 (defun qob-debug (msg &rest args)
-  ""
+  "Send debug message; see function `qob--msg' for arguments MSG and ARGS."
   ;; TODO: ..
-  (apply #'qob-msg msg args)
-  )
+  (apply #'qob-msg msg args))
 
 (defun qob-info (msg &rest args)
-  ""
+  "Send info message; see function `qob--msg' for arguments MSG and ARGS."
   ;; TODO: ..
-  (apply #'qob-msg msg args)
-  )
+  (apply #'qob-msg msg args))
 
 (defun qob-warn (msg &rest args)
-  ""
+  "Send warning message; see function `qob--msg' for arguments MSG and ARGS."
   ;; TODO: ..
-  (apply #'qob-msg msg args)
-  )
+  (apply #'qob-msg msg args))
 
 (defun qob-error (msg &rest args)
-  ""
+  "Send error message; see function `qob--msg' for arguments MSG and ARGS."
   ;; TODO: ..
-  (apply #'qob-msg msg args)
-  )
+  (apply #'qob-msg msg args))
 
 ;;
 ;;; Environment

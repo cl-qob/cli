@@ -20,6 +20,7 @@
   (qob-info "Available dists:")
   (qob-msg "")
   (qob-dists--print dists)
+  (qob-msg "")
   (qob-info "(Total of ~A dist~A available)" (length dists)
             (qob--sinr dists "" "s")))
 
