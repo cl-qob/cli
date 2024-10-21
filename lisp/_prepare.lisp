@@ -132,7 +132,7 @@ the `qob-start' execution.")
 ;;; Package
 
 (defconstant qob-source-mapping
-  `((quicklisp . "https://elpa.gnu.org/packages/")
+  `((quicklisp . "https://www.quicklisp.org/")
     (ultralisp . "http://dist.ultralisp.org/"))
   "Mapping of source name and url.")
 
