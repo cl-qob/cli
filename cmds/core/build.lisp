@@ -41,3 +41,5 @@
    :usage "-n <name> -o <path>"
    :options (options)
    :handler #'handler))
+
+;;; End of cmds/core/build.lisp

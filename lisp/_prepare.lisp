@@ -37,23 +37,28 @@ The arguments FMT and ARGS are used to form the output message."
 
 (defun qob-trace (msg &rest args)
   "Send trace message; see function `qob--msg' for arguments MSG and ARGS."
-  (apply #'qob-msg msg args))
+  (let ((msg (apply #'format nil msg args)))
+    (qob-msg (qob-ansi-white msg))))
 
 (defun qob-debug (msg &rest args)
   "Send debug message; see function `qob--msg' for arguments MSG and ARGS."
-  (apply #'qob-msg msg args))
+  (let ((msg (apply #'format nil msg args)))
+    (qob-msg (qob-ansi-blue msg))))
 
 (defun qob-info (msg &rest args)
   "Send info message; see function `qob--msg' for arguments MSG and ARGS."
-  (qob-msg (qob-ansi-cyan (format nil msg args))))
+  (let ((msg (apply #'format nil msg args)))
+    (qob-msg (qob-ansi-cyan msg))))
 
 (defun qob-warn (msg &rest args)
   "Send warning message; see function `qob--msg' for arguments MSG and ARGS."
-  (qob-msg (qob-ansi-yellow (format nil msg args))))
+  (let ((msg (apply #'format nil msg args)))
+    (qob-msg (qob-ansi-yellow msg))))
 
 (defun qob-error (msg &rest args)
   "Send error message; see function `qob--msg' for arguments MSG and ARGS."
-  (qob-msg (qob-ansi-red (format nil msg args))))
+  (let ((msg (apply #'format nil msg args)))
+    (qob-msg (qob-ansi-red msg))))
 
 ;;
 ;;; Environment
@@ -170,9 +175,12 @@ the `qob-start' execution.")
 ;;; Package
 
 (defconstant qob-source-mapping
-  `((quicklisp . "https://www.quicklisp.org/")
+  `((quicklisp . "http://beta.quicklisp.org/")
     (ultralisp . "http://dist.ultralisp.org/"))
   "Mapping of source name and url.")
+
+(defvar qob-ql-init-p nil
+  "Set to t when QuickLisp is initialized.")
 
 (defun qob-ql-installed-dir ()
   "Return the QuickLisp installed directory base on scope."
@@ -180,17 +188,20 @@ the `qob-start' execution.")
                                           (user-homedir-pathname)
                                           (qob-dot-home))))
 
-(defun qob-init-ql ()
+(defun qob-init-ql (&optional force)
   "Initialize QuickLisp."
-  (let* ((ql-dir (qob-ql-installed-dir))
-         (ql-init (uiop:merge-pathnames* "setup.lisp" ql-dir)))
-    (unless qob-quicklisp-installed-p
-      (qob-quicklisp-install ql-dir))
-    (when (probe-file ql-init)
-      (load ql-init))))
+  (when (or (not qob-ql-init-p)
+            force)
+    (let* ((ql-dir (qob-ql-installed-dir))
+           (ql-init (uiop:merge-pathnames* "setup.lisp" ql-dir)))
+      (unless qob-quicklisp-installed-p
+        (qob-quicklisp-install ql-dir))
+      (when (probe-file ql-init)
+        (load ql-init)))
+    (setq qob-ql-init-p t)))
 
 ;;
-;;; Core
+;;; ASDF file
 
 (defun qob-asd-test-files ()
   "Return a list of ASD test files."
@@ -206,6 +217,30 @@ If optional argument WITH-TEST is non-nil; include test ASD files as well."
     (remove-if (lambda (filename) (qob-el-memq filename tests)) files)
     files))
 
+(defvar qob-asds-init-p nil
+  "Set to t when ASDF files are initialized.")
+
+(defvar qob-loaded-asds nil
+  "Loaded ASD files.")
+
+(defun qob-init-asds (&optional force)
+  "Initialize the ASD files."
+  (when (and (qob-local-p)
+             (or (not qob-asds-init-p)
+                 force))
+    (setq qob-loaded-asds nil)  ; reset
+    (let ((files (qob-asd-files t)))
+      (mapc (lambda (file)
+              (push (asdf:load-asd file) qob-loaded-asds)
+              (qob-info "Loaded ASD file ~A" file))
+            files))))
+
+;;
+;;; ASDF system
+
+(defvar qob-systems-init-p nil
+  "Set to t when system is initialized.")
+
 (defun qob-load-system (filename)
   "Load the system from ASD's FILENAME; and return the registered name."
   (let ((dir (qob-el-file-name-directory filename))
@@ -218,14 +253,21 @@ If optional argument WITH-TEST is non-nil; include test ASD files as well."
   "Return a system of given NAME."
   (asdf/system-registry:registered-system name))
 
-(defun qob-init-system ()
-  "Setup the system."
-  (qob-init-ql)
-  (let ((files (qob-asd-files t)))
-    (mapc (lambda (file)
-            (qob-load-system file)
-            (qob-info "Load ASD file ~A" file))
-          files)))
+(defvar qob-loaded-systems nil
+  "List of loaded systems.")
+
+(defun qob-init-systems(&optional force)
+  "Initialize the ASD systems."
+  (when (and (qob-local-p)
+             (or (not qob-systems-init-p)
+                 force))
+    (setq qob-loaded-systems nil)  ; reset
+    (let ((files (qob-asd-files t)))
+      (mapc (lambda (file)
+              (push (qob-load-system file) qob-loaded-systems)
+              (qob-info "Loaded system file ~A" file))
+            files))
+    (setq qob-systems-init-p t)))
 
 ;;
 ;;; Externals

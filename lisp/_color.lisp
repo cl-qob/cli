@@ -26,20 +26,13 @@
               #\Esc (qob-color-code color) str #\Esc)
       str))
 
-(defun qob-ansi-red (str)
-  "Color STR in red."
-  (qob-color-it :red str))
-
-(defun qob-ansi-green (str)
-  "Color STR in green."
-  (qob-color-it :green str))
-
-(defun qob-ansi-yellow (str)
-  "Color STR in yellow."
-  (qob-color-it :yellow str))
-
-(defun qob-ansi-cyan (str)
-  "Color STR in cyan."
-  (qob-color-it :cyan str))
+(defun qob-ansi-black (str) (qob-color-it :black str))
+(defun qob-ansi-red (str) (qob-color-it :red str))
+(defun qob-ansi-green (str) (qob-color-it :green str))
+(defun qob-ansi-yellow (str) (qob-color-it :yellow str))
+(defun qob-ansi-blue (str) (qob-color-it :blue str))
+(defun qob-ansi-magenta (str) (qob-color-it :magenta str))
+(defun qob-ansi-cyan (str) (qob-color-it :cyan str))
+(defun qob-ansi-white (str) (qob-color-it :white str))
 
 ;;; End of lisp/_color.lisp

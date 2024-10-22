@@ -28,3 +28,5 @@
    :description "List the registered system"
    :options (options)
    :handler #'handler))
+
+;;; End of cmds/core/list.lisp

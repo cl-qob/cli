@@ -14,8 +14,10 @@
 (defun qob-dists--print (dists)
   "Print list of dists."
   (dolist (dist dists)
-    ;; TODO: Print useful information.
-    (qob-println "~A" (ql-dist:archive-url dist))))
+    (let ((name    (slot-value dist 'ql-dist:name))
+          (version (slot-value dist 'ql-dist:version))
+          (url     (slot-value dist 'ql-dist::distinfo-subscription-url)))
+      (qob-println "   ~A  ~A  ~A" name version url))))
 
 (let ((dists (ql-dist:all-dists)))
   (qob-info "Available dists:")

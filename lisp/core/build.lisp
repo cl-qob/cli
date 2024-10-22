@@ -10,12 +10,11 @@
 ;;  Optional arguments:
 ;;
 ;;    --name, -n         path to the ASD file
-;;    --output, -o       output directory
 ;;
 
 ;;; Code
 
-(qob-init-system)
+(qob-init-systems)
 
 (let ((names qob-args))
   ;; Delete if exists to prevent errors.

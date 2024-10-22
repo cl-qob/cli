@@ -28,3 +28,5 @@
    :description "List out all installed dists"
    :options (options)
    :handler #'handler))
+
+;;; End of cmds/core/dist.lisp

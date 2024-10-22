@@ -29,3 +29,5 @@
    :usage "[names..]"
    :options (options)
    :handler #'handler))
+
+;;; End of cmds/core/install.lisp
