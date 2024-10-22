@@ -1,4 +1,4 @@
-;;; lisp/_prepare.el --- Prepare for command tasks
+;;; lisp/_prepare.lisp --- Prepare for command tasks
 ;;; Commentary: Prepare to setup Qob environment for sandboxing
 ;;; Code:
 
@@ -37,28 +37,23 @@ The arguments FMT and ARGS are used to form the output message."
 
 (defun qob-trace (msg &rest args)
   "Send trace message; see function `qob--msg' for arguments MSG and ARGS."
-  ;; TODO: ..
   (apply #'qob-msg msg args))
 
 (defun qob-debug (msg &rest args)
   "Send debug message; see function `qob--msg' for arguments MSG and ARGS."
-  ;; TODO: ..
   (apply #'qob-msg msg args))
 
 (defun qob-info (msg &rest args)
   "Send info message; see function `qob--msg' for arguments MSG and ARGS."
-  ;; TODO: ..
-  (apply #'qob-msg msg args))
+  (qob-msg (qob-ansi-cyan (format nil msg args))))
 
 (defun qob-warn (msg &rest args)
   "Send warning message; see function `qob--msg' for arguments MSG and ARGS."
-  ;; TODO: ..
-  (apply #'qob-msg msg args))
+  (qob-msg (qob-ansi-yellow (format nil msg args))))
 
 (defun qob-error (msg &rest args)
   "Send error message; see function `qob--msg' for arguments MSG and ARGS."
-  ;; TODO: ..
-  (apply #'qob-msg msg args))
+  (qob-msg (qob-ansi-red (format nil msg args))))
 
 ;;
 ;;; Environment
@@ -94,6 +89,15 @@ Argument ENV-NAME is used to get the argument string."
 
 (defvar qob-quicklisp-installed-p (uiop:getenv "QOB_QUICKLISP_INSTALLED")
   "Return non-nil if Quicklisp is already installed.")
+
+(defun qob-dot-home ()
+  "Return the directory path to `.qob/type/version'.
+
+For example, `.qob/sbcl/2.4.9/'."
+  (uiop:merge-pathnames* (concatenate 'string
+                                      (lisp-implementation-type) "/"
+                                      (lisp-implementation-version) "/")
+                         qob-dot))
 
 ;;
 ;;; Utils
@@ -153,6 +157,10 @@ the `qob-start' execution.")
   "Non-nil when flag is on (`-a', `--all')."
   (qob--flag "--all"))
 
+(defun qob-no-color-p ()
+  "Non-nil when flag is on (`--no-color')."
+  (qob--flag "--no-color"))
+
 ;;; Number (with arguments)
 (defun qob-verbose ()
   "Non-nil when flag has value (`-v', `--verbose')."
@@ -170,13 +178,12 @@ the `qob-start' execution.")
   "Return the QuickLisp installed directory base on scope."
   (uiop:merge-pathnames* "quicklisp/" (if (qob-global-p)
                                           (user-homedir-pathname)
-                                          qob-dot)))
+                                          (qob-dot-home))))
 
 (defun qob-init-ql ()
   "Initialize QuickLisp."
   (let* ((ql-dir (qob-ql-installed-dir))
          (ql-init (uiop:merge-pathnames* "setup.lisp" ql-dir)))
-    (qob-info "~A" ql-dir)
     (unless qob-quicklisp-installed-p
       (qob-quicklisp-install ql-dir))
     (when (probe-file ql-init)
@@ -224,5 +231,10 @@ If optional argument WITH-TEST is non-nil; include test ASD files as well."
 ;;; Externals
 
 ;;(qob-load "extern/alexandria")
+
+;;
+;;; Initialization
+
+(setq qob-enable-color (not (qob-no-color-p)))
 
 ;;; End of lisp/_prepare.lisp

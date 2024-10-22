@@ -27,6 +27,12 @@
     :persistent t
     :key :all)
    (clingon:make-option
+    :flag
+    :description "enable/disable color output"
+    :long-name "no-color"
+    :persistent t
+    :key :no-color)
+   (clingon:make-option
     :integer
     :description "set verbosity from 0 to 5"
     :short-name #\v

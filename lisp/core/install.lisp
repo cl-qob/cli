@@ -1,15 +1,15 @@
-;;;; lisp/core/install.lisp --- Build executable
+;;;; lisp/core/install.lisp --- Install systems
 
 ;;; Commentary
 ;;
-;; Command use to install packages,
+;; Command use to install systems,
 ;;
 ;;   $ qob install [names..]
 ;;
 ;;
 ;;  Optional arguments:
 ;;
-;;    [names..]     name of the package(s) to install
+;;    [names..]     name of the system(s) to install
 ;;
 
 ;;; Code

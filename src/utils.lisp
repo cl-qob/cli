@@ -56,6 +56,8 @@
       (nconc opts `("--global")))
     (when (clingon:getopt cmd :all)
       (nconc opts `("--all")))
+    (when (clingon:getopt cmd :no-color)
+      (nconc opts `("--no-color")))
     ;; Number (with value)
     (let ((verbose (verbose cmd)))
       (when verbose
@@ -106,6 +108,7 @@ Argument CMD is used to extract positional arguments and options."
 (defun call-script (script cmd)
   "Run the lisp implementation with the SCRIPT and CMD."
   (let ((el      (lisp-script "_el_lib"))
+        (color   (lisp-script "_color"))
         (prepare (lisp-script "_prepare"))
         (no-ql   (lisp-script "_no_ql"))
         (ql      (lisp-script "_ql"))
@@ -116,6 +119,7 @@ Argument CMD is used to extract positional arguments and options."
                                  (list "--load" (quicklisp-lisp cmd)
                                        "--load" ql))
                              (list "--load"   el
+                                   "--load"   color
                                    "--load"   prepare
                                    "--script" script))
                 cmd)))
