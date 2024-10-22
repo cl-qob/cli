@@ -1,4 +1,4 @@
-;;; _no_ql.el --- Functions overwrite when no Quicklisp is loaded
+;;; lisp/_no_ql.el --- Functions overwrite when no Quicklisp is loaded
 ;;; Commentary:
 ;;; Code:
 
@@ -6,4 +6,4 @@
   "For `_ql.lisp'."
   (declare (ignore dir)))
 
-;;; End of _no_ql.lisp
+;;; End of lisp/_no_ql.lisp

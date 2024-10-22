@@ -1,4 +1,4 @@
-;;; _ql.el --- Functions overwrite when Quicklisp is loaded
+;;; lisp/_ql.el --- Functions overwrite when Quicklisp is loaded
 ;;; Commentary:
 ;;; Code:
 
@@ -6,5 +6,4 @@
   "For `_no_ql.lisp'."
   (quicklisp-quickstart:install :path dir))
 
-;;; End of _ql.lisp
-
+;;; End of lisp/_ql.lisp

@@ -1,4 +1,4 @@
-;;;; core/install.lisp --- Build executable
+;;;; lisp/core/install.lisp --- Build executable
 
 ;;; Commentary
 ;;
@@ -20,4 +20,4 @@
   (qob-info "Installing package ~A..." name)
   (ql:quickload name))
 
-;;; End of core/install.lisp
+;;; End of lisp/core/install.lisp

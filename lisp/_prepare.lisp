@@ -1,4 +1,4 @@
-;;; _prepare.el --- Prepare for command tasks
+;;; lisp/_prepare.el --- Prepare for command tasks
 ;;; Commentary: Prepare to setup Qob environment for sandboxing
 ;;; Code:
 
@@ -100,7 +100,7 @@ Argument ENV-NAME is used to get the argument string."
 
 (defun qob-2str (object)
   "Convert to string."
-  (apply #'qob-el-2str object))
+  (funcall #'qob-el-2str object))
 
 (defun qob--sinr (len-or-list form-1 form-2)
   "If LEN-OR-LIST has length of 1; return FORM-1, else FORM-2."
@@ -149,6 +149,10 @@ the `qob-start' execution.")
   "Non-nil when in local space (default)."
   (not (qob-global-p)))
 
+(defun qob-all-p ()
+  "Non-nil when flag is on (`-a', `--all')."
+  (qob--flag "--all"))
+
 ;;; Number (with arguments)
 (defun qob-verbose ()
   "Non-nil when flag has value (`-v', `--verbose')."
@@ -162,14 +166,21 @@ the `qob-start' execution.")
     (ultralisp . "http://dist.ultralisp.org/"))
   "Mapping of source name and url.")
 
+(defun qob-ql-installed-dir ()
+  "Return the QuickLisp installed directory base on scope."
+  (uiop:merge-pathnames* "quicklisp/" (if (qob-global-p)
+                                          (user-homedir-pathname)
+                                          qob-dot)))
+
 (defun qob-init-ql ()
-  "Install Quicklisp if not installed."
-  (let* ((quicklisp-dir  (uiop:merge-pathnames* "quicklisp/" qob-dot))
-         (quicklisp-init (uiop:merge-pathnames* "setup.lisp" quicklisp-dir)))
+  "Initialize QuickLisp."
+  (let* ((ql-dir (qob-ql-installed-dir))
+         (ql-init (uiop:merge-pathnames* "setup.lisp" ql-dir)))
+    (qob-info "~A" ql-dir)
     (unless qob-quicklisp-installed-p
-      (qob-quicklisp-install quicklisp-dir))
-    (when (probe-file quicklisp-init)
-      (load quicklisp-init))))
+      (qob-quicklisp-install ql-dir))
+    (when (probe-file ql-init)
+      (load ql-init))))
 
 ;;
 ;;; Core
@@ -214,4 +225,4 @@ If optional argument WITH-TEST is non-nil; include test ASD files as well."
 
 ;;(qob-load "extern/alexandria")
 
-;;; End of _prepare.lisp
+;;; End of lisp/_prepare.lisp

@@ -1,4 +1,4 @@
-;;; _el_lib.el --- Emacs Lisp Layer
+;;; lisp/_el_lib.el --- Emacs Lisp Layer
 ;;; Commentary:
 ;;; Code:
 
@@ -33,4 +33,4 @@
         (concatenate 'string (string dirve) ":" dir)
         dir)))
 
-;;; End of _el_lib.lisp
+;;; End of lisp/_el_lib.lisp

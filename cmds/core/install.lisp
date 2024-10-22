@@ -19,7 +19,6 @@
 
 (defun handler (cmd)
   "Handler for `install' command."
-  (declare (ignore cmd))
   (qob-cli:call-script "core/install" cmd))
 
 (defun command ()

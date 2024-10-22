@@ -1,4 +1,4 @@
-;;;; core/build.lisp --- Build executable
+;;;; lisp/core/build.lisp --- Build executable
 
 ;;; Commentary
 ;;
@@ -15,14 +15,14 @@
 
 ;;; Code
 
-(qob-start
- (let* ((name   (clingon:getopt cmd :name))
-        (output (clingon:getopt cmd :output)))
-   ;; Delete if exists to prevent errors.
-   (when (uiop:file-exists-p output)
-     (delete-file output))
-   ;; TODO: Change build path.
-   (qob-setup)
-   (asdf:operate :build-op name)))
+(qob-init-system)
 
-;;; End of core/build.lisp
+(let ((names qob-args))
+  ;; Delete if exists to prevent errors.
+  ;; (when (uiop:file-exists-p output)
+  ;;   (delete-file output))
+  (dolist (name names)
+    (qob-info "Building  system ~A" name)
+    (asdf:operate :build-op name)))
+
+;;; End of lisp/core/build.lisp

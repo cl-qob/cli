@@ -1,4 +1,4 @@
-;;;; core/dists.lisp --- Build executable
+;;;; lisp/core/dists.lisp --- Build executable
 
 ;;; Commentary
 ;;
@@ -25,4 +25,4 @@
   (qob-info "(Total of ~A dist~A available)" (length dists)
             (qob--sinr dists "" "s")))
 
-;;; End of core/dists.lisp
+;;; End of lisp/core/dists.lisp

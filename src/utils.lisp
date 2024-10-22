@@ -10,6 +10,21 @@
 (in-package :qob-cli)
 
 ;;
+;;; Flags
+
+(defun global-p (cmd)
+  "Non-nil when in global space (`-g', `--global')."
+  (clingon:getopt cmd :global))
+
+(defun local-p (cmd)
+  "Non-nil when in local space (default)."
+  (not (global-p cmd)))
+
+(defun verbose (cmd)
+  "Non-nil when flag has value (`-v', `--verbose')."
+  (clingon:getopt cmd :verbose))
+
+;;
 ;;; Environment
 
 (defun exec-dir ()
@@ -25,11 +40,9 @@
   "Return the local .qob directory."
   (el-lib:el-expand-file-name ".qob/"))
 
-(defun dot ()
+(defun dot (cmd)
   "Return the current .qob directory."
-  ;; TODO: Add global/local logic.
-  (let ((global-p nil))
-    (if global-p (dot-global) (dot-local))))
+  (if (global-p cmd) (dot-global) (dot-local)))
 
 (defun lisp-root ()
   "Return the lisp scripts' root directory."
@@ -39,10 +52,12 @@
   "Prepare options string from CMD."
   (let ((opts (list -1)))  ; Assign -1 for `nconc' operation
     ;; Boolean
-    (when (clingon:getopt cmd :global)
+    (when (global-p cmd)
       (nconc opts `("--global")))
+    (when (clingon:getopt cmd :all)
+      (nconc opts `("--all")))
     ;; Number (with value)
-    (let ((verbose (clingon:getopt cmd :verbose)))
+    (let ((verbose (verbose cmd)))
       (when verbose
         (nconc opts `("--verbose" ,(el-lib:el-2str verbose)))))
     (pop opts)  ; pop -1
@@ -52,16 +67,17 @@
   "Setup the enviornment variables.
 
 Argument CMD is used to extract positional arguments and options."
+  (ensure-directories-exist (dot cmd))
   (setf (uiop:getenv "QOB_ARGS")      (el-lib:el-2str (clingon:command-arguments cmd)))
   (setf (uiop:getenv "QOB_OPTS")      (el-lib:el-2str (prepare-options cmd)))
-  (setf (uiop:getenv "QOB_LISP")      (program-name))
-  (setf (uiop:getenv "QOB_DOT")       (dot))
+  (setf (uiop:getenv "QOB_LISP")      (program-name))  ; Update itself.
+  (setf (uiop:getenv "QOB_DOT")       (dot cmd))
   (setf (uiop:getenv "QOB_TEMP_FILE") (el-lib:el-expand-file-name "tmp" (dot-global)))
   (setf (uiop:getenv "QOB_LISP_ROOT") (lisp-root))
   (setf (uiop:getenv "QOB_USER_INIT") (user-init))
-  (if (quicklisp-installed-p)
+  (if (quicklisp-installed-p cmd)
       (setf (uiop:getenv "QOB_QUICKLISP_INSTALLED") "t")
-      (quicklisp-download)))
+      (quicklisp-download cmd)))
 
 (defun program-name ()
   "Lisp program we target to run."
@@ -95,9 +111,9 @@ Argument CMD is used to extract positional arguments and options."
         (ql      (lisp-script "_ql"))
         (script  (lisp-script script)))
     (call-impls (concatenate 'list
-                             (if (quicklisp-installed-p)
+                             (if (quicklisp-installed-p cmd)
                                  (list "--load" no-ql)
-                                 (list "--load" (quicklisp-lisp)
+                                 (list "--load" (quicklisp-lisp cmd)
                                        "--load" ql))
                              (list "--load"   el
                                    "--load"   prepare
@@ -110,32 +126,36 @@ Argument CMD is used to extract positional arguments and options."
     (unless (el-lib:el-executable-find lisp-impls)
       (error "Defined Lisp implementation is not installed: ~A" lisp-impls))
     (setup-environment cmd)
-    (uiop:run-program (concatenate 'list
-                                   (list lisp-impls)
-                                   (list "--noinform"
-                                         "--userinit" (user-init))
-                                   args)
-                      :output :interactive
-                      :error-output :interactive
-                      :force-shell t)))
+    (let ((command (concatenate 'list
+                                (list lisp-impls)
+                                (list "--noinform")
+                                (when (local-p cmd)
+                                  (list "--userinit" (user-init)))
+                                args)))
+      (when (<= 5 (verbose cmd))
+        (format t "~A~%" command))
+      (uiop:run-program command
+                        :output :interactive
+                        :error-output :interactive
+                        :force-shell t))))
 
 ;;
 ;;; Package
 
-(defun quicklisp-lisp ()
+(defun quicklisp-lisp (cmd)
   "Return Quicklisp's file location."
-  (concatenate 'string (dot) "quicklisp.lisp"))
+  (concatenate 'string (dot cmd) "quicklisp.lisp"))
 
-(defun quicklisp-installed-p ()
+(defun quicklisp-installed-p (cmd)
   "Return non-nil if Quicklisp is already installed."
-  (uiop:file-exists-p (quicklisp-lisp)))
+  (uiop:file-exists-p (quicklisp-lisp cmd)))
 
-(defun quicklisp-download ()
+(defun quicklisp-download (cmd)
   "Download quicklisp."
   (uiop:run-program `("curl"
                       "https://beta.quicklisp.org/quicklisp.lisp"
                       "--output"
-                      ,(quicklisp-lisp))
+                      ,(quicklisp-lisp cmd))
                     :output *standard-output*
                     :error-output *error-output*
                     :force-shell t))
