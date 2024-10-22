@@ -9,7 +9,9 @@
 
 (defpackage el-lib
   (:use cl)
-  (:export el-memq
+  (:export el-2str
+           el-2pathname
+           el-memq
            el-member
            el-expand-fn
            el-expand-file-name
@@ -43,9 +45,9 @@
 
 (defun el-2str (object)
   "Convert to string."
-  (cond ((stringp object)   object)
+  (cond ((stringp   object) object)
         ((pathnamep object) (namestring object))
-        (t (error "Unknown type to convert to string: ~A" object))))
+        (t                  (format nil "~A" object))))
 
 (defun el-2pathname (str)
   "Convert STR to pathname."

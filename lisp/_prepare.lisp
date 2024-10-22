@@ -63,6 +63,20 @@ The arguments FMT and ARGS are used to form the output message."
 ;;
 ;;; Environment
 
+(defun qob-parse-args (env-name)
+  "Parse arguments.
+
+Argument ENV-NAME is used to get the argument string."
+  (let* ((args (uiop:getenv env-name))
+         (args (concatenate 'string "'" args)))
+    (eval (read-from-string args))))
+
+(defvar qob-args (qob-parse-args "QOB_ARGS")
+  "Positionl arguments (no options).")
+
+(defvar qob-opts (qob-parse-args "QOB_OPTS")
+  "Options (no positional arguments).")
+
 (defvar qob-lisp (uiop:getenv "QOB_LISP")
   "Return the current lisp implementation.")
 
@@ -84,12 +98,22 @@ The arguments FMT and ARGS are used to form the output message."
 ;;
 ;;; Elisp Layer
 
-(defun el-memq (elt list)
+(defun qob-el-memq (elt list)
   "Mimic `memq' function."
   (member elt list :test #'eq))
 
+(defun qob-el-member (elt list)
+  "Mimic `member' function."
+  (member elt list :test #'string=))
+
 ;;
 ;;; Utils
+
+(defun qob-2str (object)
+  "Convert to string."
+  (cond ((stringp   object) object)
+        ((pathnamep object) (namestring object))
+        (t                  (format nil "~A" object))))
 
 (defun qob--sinr (len-or-list form-1 form-2)
   "If LEN-OR-LIST has length of 1; return FORM-1, else FORM-2."
@@ -112,21 +136,36 @@ the `qob-start' execution.")
       (qob-error "Script missing %s" script-file))))
 
 (defun qob-load (script)
-  "Load another eask SCRIPT; so we can reuse functions across all scripts."
+  "Load another qob SCRIPT; so we can reuse functions across all scripts."
   (let ((qob-loading-file-p t)) (qob-call script)))
 
 ;;
 ;;; Flags
 
+(defun qob--flag (flag)
+  "Return non-nil if FLAG exists."
+  (member flag qob-opts :test (lambda (a b)
+                                ;; `string-equal' is not case-sensitive
+                                (string-equal (qob-2str a)
+                                              (qob-2str b)))))
+
+(defun qob--flag-value (flag)
+  "Return value for FLAG."
+  (nth 1 (qob--flag flag)))
+
+;;; Boolean
 (defun qob-global-p ()
   "Non-nil when in global space (`-g', `--global')."
-  ;; TODO: ..
-  nil)
+  (qob--flag "--global"))
 
 (defun qob-local-p ()
   "Non-nil when in local space (default)."
-  ;; TODO: ..
-  t)
+  (not (qob-global-p)))
+
+;;; Number (with arguments)
+(defun qob-verbose ()
+  "Non-nil when flag has value (`-v', `--verbose')."
+  (qob--flag-value "--verbose"))
 
 ;;
 ;;; Package
@@ -159,7 +198,7 @@ If optional argument WITH-TEST is non-nil; include test ASD files as well."
   (uiop:if-let ((files (directory "*.asd"))
                 (_ (not with-test))
                 (tests (qob-asd-test-files)))
-    (remove-if (lambda (filename) (el-memq filename tests)) files)
+    (remove-if (lambda (filename) (qob-el-memq filename tests)) files)
     files))
 
 (defun qob-load-system (filename)

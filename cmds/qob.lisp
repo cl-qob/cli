@@ -13,6 +13,13 @@
   "Options for `qob' command."
   (list
    (clingon:make-option
+    :boolean/false
+    :description "change default workspace to ~/.qob/"
+    :short-name #\g
+    :long-name "global"
+    :persistent t
+    :key :global)
+   (clingon:make-option
     :integer
     :description "set verbosity from 0 to 5"
     :short-name #\v

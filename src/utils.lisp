@@ -35,19 +35,30 @@
   "Return the lisp scripts' root directory."
   (el-lib:el-expand-file-name "lisp/" (exec-dir)))
 
+(defun prepare-options (cmd)
+  "Prepare options string from CMD."
+  (let ((opts (list -1)))  ; Assign -1 for `nconc' operation
+    ;; Boolean
+    (when (clingon:getopt cmd :global)
+      (nconc opts `("--global")))
+    ;; Number (with value)
+    (let ((verbose (clingon:getopt cmd :verbose)))
+      (when verbose
+        (nconc opts `("--verbose" ,(el-lib:el-2str verbose)))))
+    (pop opts)  ; pop -1
+    opts))
+
 (defun setup-environment (cmd)
   "Setup the enviornment variables.
 
 Argument CMD is used to extract positional arguments and options."
-  (progn
-    ;; TODO: ..
-    (format t "~A~%" (clingon:command-arguments cmd))
-    (format t "~A~%" (clingon:getopt cmd :verbose)))
-  (setf (uiop:getenv "QOB_LISP")                (program-name))
-  (setf (uiop:getenv "QOB_DOT")                 (dot))
-  (setf (uiop:getenv "QOB_TEMP_FILE")           (el-lib:el-expand-file-name "tmp" (dot-global)))
-  (setf (uiop:getenv "QOB_LISP_ROOT")           (lisp-root))
-  (setf (uiop:getenv "QOB_USER_INIT")           (user-init))
+  (setf (uiop:getenv "QOB_ARGS")      (el-lib:el-2str (clingon:command-arguments cmd)))
+  (setf (uiop:getenv "QOB_OPTS")      (el-lib:el-2str (prepare-options cmd)))
+  (setf (uiop:getenv "QOB_LISP")      (program-name))
+  (setf (uiop:getenv "QOB_DOT")       (dot))
+  (setf (uiop:getenv "QOB_TEMP_FILE") (el-lib:el-expand-file-name "tmp" (dot-global)))
+  (setf (uiop:getenv "QOB_LISP_ROOT") (lisp-root))
+  (setf (uiop:getenv "QOB_USER_INIT") (user-init))
   (if (quicklisp-installed-p)
       (setf (uiop:getenv "QOB_QUICKLISP_INSTALLED") "t")
       (quicklisp-download)))
