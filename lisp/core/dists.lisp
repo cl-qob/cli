@@ -9,7 +9,7 @@
 
 ;;; Code
 
-(qob-setup)
+(qob-init-ql)
 
 (defun qob-dists--print (dists)
   "Print list of dists."

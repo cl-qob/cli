@@ -96,24 +96,11 @@ Argument ENV-NAME is used to get the argument string."
   "Return non-nil if Quicklisp is already installed.")
 
 ;;
-;;; Elisp Layer
-
-(defun qob-el-memq (elt list)
-  "Mimic `memq' function."
-  (member elt list :test #'eq))
-
-(defun qob-el-member (elt list)
-  "Mimic `member' function."
-  (member elt list :test #'string=))
-
-;;
 ;;; Utils
 
 (defun qob-2str (object)
   "Convert to string."
-  (cond ((stringp   object) object)
-        ((pathnamep object) (namestring object))
-        (t                  (format nil "~A" object))))
+  (apply #'qob-el-2str object))
 
 (defun qob--sinr (len-or-list form-1 form-2)
   "If LEN-OR-LIST has length of 1; return FORM-1, else FORM-2."
@@ -175,7 +162,7 @@ the `qob-start' execution.")
     (ultralisp . "http://dist.ultralisp.org/"))
   "Mapping of source name and url.")
 
-(defun qob-install-quicklisp ()
+(defun qob-init-ql ()
   "Install Quicklisp if not installed."
   (let* ((quicklisp-dir  (uiop:merge-pathnames* "quicklisp/" qob-dot))
          (quicklisp-init (uiop:merge-pathnames* "setup.lisp" quicklisp-dir)))
@@ -203,7 +190,7 @@ If optional argument WITH-TEST is non-nil; include test ASD files as well."
 
 (defun qob-load-system (filename)
   "Load the system from ASD's FILENAME; and return the registered name."
-  (let ((dir (uiop:pathname-parent-directory-pathname filename))
+  (let ((dir (qob-el-file-name-directory filename))
         (file (pathname-name filename)))
     (push dir asdf:*central-registry*)
     (asdf:load-system file)
@@ -213,15 +200,14 @@ If optional argument WITH-TEST is non-nil; include test ASD files as well."
   "Return a system of given NAME."
   (asdf/system-registry:registered-system name))
 
-(defun qob-setup ()
+(defun qob-init-system ()
   "Setup the system."
-  (qob-install-quicklisp)
-  ;; (let ((files (qob-asd-files t)))
-  ;;   (mapc (lambda (file)
-  ;;           (qob-load-system file)
-  ;;           (qob-info "Load ASD file ~A" file))
-  ;;         files))
-  )
+  (qob-init-ql)
+  (let ((files (qob-asd-files t)))
+    (mapc (lambda (file)
+            (qob-load-system file)
+            (qob-info "Load ASD file ~A" file))
+          files)))
 
 ;;
 ;;; Externals

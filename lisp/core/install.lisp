@@ -14,10 +14,10 @@
 
 ;;; Code
 
-(qob-setup)
+(qob-init-ql)
 
-;; TODO: Install package.
-
-(ql:quickload "vecto")
+(dolist (name qob-args)
+  (qob-info "Installing package ~A..." name)
+  (ql:quickload name))
 
 ;;; End of core/install.lisp

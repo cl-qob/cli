@@ -89,7 +89,8 @@ Argument CMD is used to extract positional arguments and options."
 
 (defun call-script (script cmd)
   "Run the lisp implementation with the SCRIPT and CMD."
-  (let ((prepare (lisp-script "_prepare"))
+  (let ((el      (lisp-script "_el_lib"))
+        (prepare (lisp-script "_prepare"))
         (no-ql   (lisp-script "_no_ql"))
         (ql      (lisp-script "_ql"))
         (script  (lisp-script script)))
@@ -98,7 +99,8 @@ Argument CMD is used to extract positional arguments and options."
                                  (list "--load" no-ql)
                                  (list "--load" (quicklisp-lisp)
                                        "--load" ql))
-                             (list "--load"   prepare
+                             (list "--load"   el
+                                   "--load"   prepare
                                    "--script" script))
                 cmd)))
 
