@@ -21,7 +21,8 @@ The arguments FMT and ARGS are used to form the output message."
                   (stdout *standard-output*)
                   (stderr *error-output*)
                   (t t))))
-    (apply #'format stream fmt args)))
+    (apply #'format stream fmt args)
+    (force-output stream)))
 
 (defun qob-print (msg &rest args)
   "Standard output print MSG and ARGS."
@@ -31,9 +32,13 @@ The arguments FMT and ARGS are used to form the output message."
   "Like function `qob-print' but with newline at the end."
   (apply #'qob-print (concatenate 'string msg "~%") args))
 
-(defun qob-msg (msg &rest args)
+(defun qob-write (msg &rest args)
   "Standard error print MSG and ARGS."
-  (apply #'qob-princ 'stderr (concatenate 'string msg "~%") args))
+  (apply #'qob-princ 'stderr msg args))
+
+(defun qob-msg (msg &rest args)
+  "Standard error print line MSG and ARGS."
+  (apply #'qob-write (concatenate 'string msg "~%") args))
 
 (defun qob-trace (msg &rest args)
   "Send trace message; see function `qob--msg' for arguments MSG and ARGS."
@@ -58,7 +63,8 @@ The arguments FMT and ARGS are used to form the output message."
 (defun qob-error (msg &rest args)
   "Send error message; see function `qob--msg' for arguments MSG and ARGS."
   (let ((msg (apply #'format nil msg args)))
-    (qob-msg (qob-ansi-red msg))))
+    (qob-msg (qob-ansi-red msg)))
+  (uiop:quit 1))
 
 ;;
 ;;; Environment
@@ -107,6 +113,14 @@ For example, `.qob/sbcl/2.4.9/'."
 ;;
 ;;; Utils
 
+(defmacro qob-silent (&rest body)
+  "Execute BODY without output."
+  `(with-open-stream (*standard-output* (make-broadcast-stream)) ,@body))
+
+(defun qob-format (string &rest objects)
+  "Format string."
+  (apply #'qob-el-format string objects))
+
 (defun qob-2str (object)
   "Convert to string."
   (funcall #'qob-el-2str object))
@@ -127,9 +141,9 @@ the `qob-start' execution.")
 (defun qob-call (script)
   "Call another qob SCRIPT."
   (let ((script-file (qob-script script)))
-    (when (uiop:file-exists-p script-file)
-      (load script-file)
-      (qob-error "Script missing %s" script-file))))
+    (if (uiop:file-exists-p script-file)
+        (load script-file)
+        (qob-error "Script missing %s" script-file))))
 
 (defun qob-load (script)
   "Load another qob SCRIPT; so we can reuse functions across all scripts."
@@ -170,6 +184,39 @@ the `qob-start' execution.")
 (defun qob-verbose ()
   "Non-nil when flag has value (`-v', `--verbose')."
   (qob--flag-value "--verbose"))
+
+;;
+;;; Verbose
+
+(defun qob--verb2lvl (symbol)
+  "Convert verbosity SYMBOL to level."
+  (case symbol
+    (all   5)
+    (debug 4)
+    (log   3)
+    (info  2)
+    (warn  1)
+    (error 0)
+    (t symbol)))
+
+(defun qob-reach-verbosity-p (symbol)
+  "Return t if SYMBOL reach verbosity (should be printed)."
+  (>= (qob-verbose) (qob--verb2lvl symbol)))
+
+(defmacro qob-with-verbosity (symbol &rest body)
+  "Define verbosity scope.
+
+Execute forms BODY limit by the verbosity level (SYMBOL)."
+  `(if (qob-reach-verbosity-p ,symbol)
+       (progn ,@body)
+       (qob-silent ,@body)))
+
+;;
+;;; Progress
+
+(defmacro qob-with-progress (msg-start body msg-end)
+  "Progress BODY wrapper with prefix (MSG-START) and suffix (MSG-END) messages."
+  `(progn (qob-write ,msg-start) ,body (qob-msg ,msg-end)))
 
 ;;
 ;;; Package
@@ -224,16 +271,26 @@ If optional argument WITH-TEST is non-nil; include test ASD files as well."
   "Loaded ASD files.")
 
 (defun qob-init-asds (&optional force)
-  "Initialize the ASD files."
+  "Initialize the ASD files.
+
+This function only loads the ASD file but doesn't actually try to
+set up the system.  You should use the function `qob-init-systems'
+to actually set up the systems."
   (when (and (qob-local-p)
              (or (not qob-asds-init-p)
                  force))
     (setq qob-loaded-asds nil)  ; reset
-    (let ((files (qob-asd-files t)))
-      (mapc (lambda (file)
-              (push (asdf:load-asd file) qob-loaded-asds)
-              (qob-info "Loaded ASD file ~A" file))
-            files))))
+    (qob-with-progress
+     (qob-ansi-green "Loading ASDF files... ")
+     (qob-with-verbosity
+      'debug
+      (let ((files (qob-asd-files t)))
+        (mapc (lambda (file)
+                (push (asdf:load-asd file) qob-loaded-asds)
+                (qob-println "Loaded ASD file ~A" file))
+              files)))
+     (qob-ansi-green "done"))
+    (setq qob-loaded-asds t)))
 
 ;;
 ;;; ASDF system
@@ -256,17 +313,25 @@ If optional argument WITH-TEST is non-nil; include test ASD files as well."
 (defvar qob-loaded-systems nil
   "List of loaded systems.")
 
-(defun qob-init-systems(&optional force)
-  "Initialize the ASD systems."
+(defun qob-init-systems (&optional force)
+  "Initialize the ASD systems.
+
+Set up the systems; on contrary, you should use the function
+`qob-init-asds' if you only want the ASD files to be loaded."
   (when (and (qob-local-p)
              (or (not qob-systems-init-p)
                  force))
     (setq qob-loaded-systems nil)  ; reset
-    (let ((files (qob-asd-files t)))
-      (mapc (lambda (file)
-              (push (qob-load-system file) qob-loaded-systems)
-              (qob-info "Loaded system file ~A" file))
-            files))
+    (qob-with-progress
+     (qob-ansi-green "Loading ASDF systems... ")
+     (qob-with-verbosity
+      'debug
+      (let ((files (qob-asd-files t)))
+        (mapc (lambda (file)
+                (push (qob-load-system file) qob-loaded-systems)
+                (qob-println "Loaded system file ~A" file))
+              files)))
+     (qob-ansi-green "done"))
     (setq qob-systems-init-p t)))
 
 ;;

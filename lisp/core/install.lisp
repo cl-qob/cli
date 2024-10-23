@@ -16,12 +16,12 @@
 
 (qob-init-ql)
 
+(qob-load "shared")
+
 (let ((names qob-args))
   (cond ((zerop (length names))
          (qob-help "core/install"))
         (t
-         (dolist (name names)
-           (qob-info "Installing package ~A..." name)
-           (ql:quickload name)))))
+         (qob-install-systems names))))
 
 ;;; End of lisp/core/install.lisp

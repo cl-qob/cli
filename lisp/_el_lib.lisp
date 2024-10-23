@@ -10,6 +10,10 @@
 ;;
 ;;; Core
 
+(defun qob-el-format (string &rest objects)
+  "Mimic `format' function."
+  (apply #'format nil string objects))
+
 (defun qob-el-2str (object)
   "Convert to string."
   (cond ((stringp   object) object)

@@ -31,6 +31,7 @@
   (clingon:make-command
    :name "install-deps"
    :description "Automatically install system dependencies"
+   :usage "[names..]"
    :options (options)
    :handler #'handler))
 

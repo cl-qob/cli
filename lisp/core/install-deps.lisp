@@ -4,7 +4,7 @@
 ;;
 ;; Command use to install dependent systems,
 ;;
-;;   $ qob install-deps
+;;   $ qob install-deps [names..]
 ;;
 
 ;;; Code
@@ -12,8 +12,15 @@
 (qob-init-ql)
 (qob-init-asds)
 
-(dolist (asd qob-loaded-asds)
-  (qob-println "ASD: ~A" (asdf:component-depends-on asd nil))
-  )
+(qob-load "shared")
+
+(cond ((zerop (length qob-args))
+       (qob-help "core/install-deps"))
+      (t
+       (let ((systems qob-args))
+         (dolist (system-name systems)
+           (let* ((system (asdf:find-system system-name))
+                  (deps   (asdf:system-depends-on system)))
+             (qob-install-systems deps))))))
 
 ;;; End of lisp/core/install-deps.lisp
