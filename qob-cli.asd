@@ -14,6 +14,7 @@
                (:file "cmds/core/dists")
                (:file "cmds/core/install")
                (:file "cmds/core/install-deps")
+               (:file "cmds/core/uninstall")
                (:file "cmds/core/list")
                (:file "cmds/qob")
                ;; Program
