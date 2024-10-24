@@ -14,7 +14,7 @@ Qob attempts to be good at these things:
 
 We aim to make Qob an all-in-one tool so users no longer need to install tools like [Roswell] and [Qlot][], which only serve specific goals.
 
-# 🚧 State of the project
+## 🚧 State of the project
 
 We are currently in a *early-development* phase.  API, and commands are not stable.
 
