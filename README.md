@@ -6,6 +6,10 @@
 
 [![CI](https://github.com/cl-qob/cli/actions/workflows/test.yml/badge.svg)](https://github.com/cl-qob/cli/actions/workflows/test.yml)
 
+## 🏆 Features
+
+WIP
+
 ## 🔧 Usage
 
 ```
@@ -63,4 +67,8 @@ See [`LICENSE`](./LICENSE) for details.
 
 <!-- Links -->
 
+[ASDF]: https://asdf.common-lisp.dev/
 [Quicklisp]: https://www.quicklisp.org/beta/
+
+[Roswell]: https://roswell.github.io/
+[Qlot]: https://github.com/fukamachi/qlot

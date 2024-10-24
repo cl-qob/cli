@@ -57,6 +57,7 @@
    :handler #'handler
    :sub-commands `(,(qob-cli/build:command)
                    ,(qob-cli/dists:command)
+                   ,(qob-cli/info:command)
                    ,(qob-cli/install:command)
                    ,(qob-cli/install-deps:command)
                    ,(qob-cli/uninstall:command)

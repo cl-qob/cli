@@ -1,4 +1,4 @@
-;;;; lisp/core/dists.lisp --- Build executable
+;;;; lisp/core/dists.lisp --- List out all dists
 
 ;;; Commentary
 ;;

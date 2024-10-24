@@ -296,6 +296,15 @@ Execute forms BODY limit by the verbosity level (SYMBOL)."
   `(progn (qob-write ,msg-start) ,body (qob-msg ,msg-end)))
 
 ;;
+;;; ASDF
+
+(defun qob-system-version (name)
+  "Get the system version."
+  (let ((system (asdf:find-system name nil)))
+    (when (and system (slot-boundp system 'asdf:version))
+      (asdf:component-version system))))
+
+;;
 ;;; Package
 
 (defconstant qob-source-mapping

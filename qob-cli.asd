@@ -3,6 +3,7 @@
   :author "Jen-Chieh Shen"
   :license "MIT"
   :description "CLI for building, running, testing, and managing your Common Lisp dependencies"
+  :homepage "https://github.com/cl-qob/cli"
   :depends-on ("cl-autorepo" "clingon")
   :serial t
   :components (;; Utils
@@ -12,6 +13,7 @@
                ;; Commands
                (:file "cmds/core/build")
                (:file "cmds/core/dists")
+               (:file "cmds/core/info")
                (:file "cmds/core/install")
                (:file "cmds/core/install-deps")
                (:file "cmds/core/uninstall")
