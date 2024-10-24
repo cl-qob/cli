@@ -31,12 +31,12 @@ COMMANDS:
   build          Build the executable
   dists          List out all installed dists
   info           Display information about the current system(s)
-  install        Install packages
+  install        Install systems
   install-deps   Automatically install system dependencies
   install-dists  Install dists
   list           List the registered system
-  status         Display the state of the workspac
-  uninstall      Uninstall packages
+  status         Display the state of the workspace
+  uninstall      Uninstall systems
 
 AUTHORS:
   Jen-Chieh Shen <jcs090218@gmail.com>
@@ -44,6 +44,10 @@ AUTHORS:
 LICENSE:
   MIT
 ```
+
+## 🔨 Development
+
+WIP
 
 ## ⚜️ License
 

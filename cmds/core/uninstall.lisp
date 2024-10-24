@@ -1,4 +1,4 @@
-;;;; cmds/core/uninstall.lisp --- Uninstall dependencies
+;;;; cmds/core/uninstall.lisp --- Uninstall systems
 
 ;;; Commentary
 ;;
@@ -25,7 +25,7 @@
   "The `uninstall' command."
   (clingon:make-command
    :name "uninstall"
-   :description "Uninstall packages"
+   :description "Uninstall systems"
    :usage "[names..]"
    :options (options)
    :handler #'handler))

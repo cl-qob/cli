@@ -25,7 +25,7 @@
   "The `status' command."
   (clingon:make-command
    :name "status"
-   :description "Display the state of the workspac"
+   :description "Display the state of the workspace"
    :options (options)
    :handler #'handler))
 

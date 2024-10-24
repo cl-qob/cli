@@ -1,4 +1,4 @@
-;;;; cmds/core/install.lisp --- Build executable
+;;;; cmds/core/install.lisp --- Install systems
 
 ;;; Commentary
 ;;
@@ -25,7 +25,7 @@
   "The `install' command."
   (clingon:make-command
    :name "install"
-   :description "Install packages"
+   :description "Install systems"
    :usage "[names..]"
    :options (options)
    :handler #'handler))
