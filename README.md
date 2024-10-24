@@ -2,6 +2,7 @@
 > CLI for building, running, testing, and managing your Common Lisp dependencies
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![SBCL Version](https://img.shields.io/badge/SBCL-2.2.9+-white.svg?logo=awslambda&logoColor=white)](https://www.gnu.org/software/emacs/download.html)
 [![Release](https://img.shields.io/github/tag/cl-qob/cli.svg?label=release&logo=github)](https://github.com/cl-qob/cli/releases/latest)
 [![CI](https://github.com/cl-qob/cli/actions/workflows/test.yml/badge.svg)](https://github.com/cl-qob/cli/actions/workflows/test.yml)
 
