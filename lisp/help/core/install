@@ -1,0 +1,4 @@
+
+💡 You can specify systems you want to install:
+
+   $ qob install <system-1> <system-2>

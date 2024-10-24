@@ -37,6 +37,20 @@
                      (subseq str (+ pos (length old))))
         str)))  ; Return original if substring not found
 
+(defun qob-file-get-lines (filename)
+  "Get FILENAME's contents in list of lines."
+  (with-open-file (stream filename)
+    (loop for line = (read-line stream nil)
+          while line
+          collect line)))
+
+(defun qob-file-get-contents (filename)
+  "Get FILENAME's contents in string."
+  (with-open-file (stream filename)
+    (let ((contents (make-string (file-length stream))))
+      (read-sequence contents stream)
+      contents)))
+
 (defun qob--sinr (len-or-list form-1 form-2)
   "If LEN-OR-LIST has length of 1; return FORM-1, else FORM-2."
   (let ((len (if (numberp len-or-list) len-or-list (length len-or-list))))
@@ -152,7 +166,7 @@ Argument ENV-NAME is used to get the argument string."
 (defvar qob-quicklisp-installed-p (uiop:getenv "QOB_QUICKLISP_INSTALLED")
   "Return non-nil if Quicklisp is already installed.")
 
-(defun qob-dot-home ()
+(defun qob-dot-impls ()
   "Return the directory path to `.qob/type/version'.
 
 For example, `.qob/sbcl/2.4.9/'."
@@ -160,6 +174,35 @@ For example, `.qob/sbcl/2.4.9/'."
                                       (lisp-implementation-type) "/"
                                       (lisp-implementation-version) "/")
                          qob-dot))
+
+;;
+;;; Help
+
+(defun qob--help-display (lines)
+  "Display help instruction.
+
+The argument LINES is the content strings."
+  (let ((max-width 0)
+        (section-sep))
+    (dolist (line lines)
+      (setq max-width (max max-width (length line))))
+    (setq section-sep
+          (concatenate 'string
+                       "''" (make-string max-width :initial-element #\Space) "''"))
+    (qob-msg section-sep)
+    (dolist (line lines)
+      (qob-msg "  ~A  " (qob-ansi-white line)))
+    (qob-msg "")
+    (qob-msg section-sep)))
+
+(defun qob-help (command)
+  "Show COMMAND's help instruction."
+  (let* ((command (qob-2str command))  ; convert to string
+         (help-file (concatenate 'string qob-lisp-root "help/" command)))
+    (if (uiop:file-exists-p help-file)
+        (let ((lines (qob-file-get-lines help-file)))
+          (qob--help-display lines))
+        (qob-error "Help manual missig %s" help-file))))
 
 ;;
 ;;; Load file
@@ -267,7 +310,7 @@ Execute forms BODY limit by the verbosity level (SYMBOL)."
   "Return the QuickLisp installed directory base on scope."
   (uiop:merge-pathnames* "quicklisp/" (if (qob-global-p)
                                           (user-homedir-pathname)
-                                          (qob-dot-home))))
+                                          (qob-dot-impls))))
 
 (defun qob-init-ql (&optional force)
   "Initialize QuickLisp."
