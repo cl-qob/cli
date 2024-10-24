@@ -11,8 +11,7 @@ Qob attempts to be good at these things:
 - Support project local like [Qlot][] and support global scope facilities
 - Works on all modern operating systems: Linux, macOS, and Windows
 
-We aim to make Qob the all-in-one tool so users no longer need to install
-tools like roswell, qlot, for only sets of goals.
+We aim to make Qob an all-in-one tool so users no longer need to install tools like [Roswell] and [Qlot][], which only serve specific goals.
 
 ## 🏆 Features
 
