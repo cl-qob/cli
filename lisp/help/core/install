@@ -1,4 +1,4 @@
 
-💡 You can specify systems you want to install:
+💡 You need to specify the systems you want to install:
 
-   $ qob install <system-1> <system-2>
+   $ qob install <system-1> <system-2> ...
