@@ -42,7 +42,7 @@
        (post-systems)
        (local-p (qob-local-p)))
   (when local-p
-    (qob-init-system))
+    (qob-init-systems))
 
   (setq post-systems (remove-if (lambda (system)
                                   (qob-el-memq system pre-systems))

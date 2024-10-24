@@ -22,8 +22,6 @@
   (cond ((zerop (length names))
          (qob-help "core/uninstall"))
         (t
-         ;; TODO: ..
-         ;;(qob-install-systems names)
-         )))
+         (qob-uninstall-systems names))))
 
 ;;; End of lisp/core/uninstall.lisp

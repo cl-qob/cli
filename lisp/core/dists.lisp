@@ -16,7 +16,9 @@
   (dolist (dist dists)
     (let ((name    (slot-value dist 'ql-dist:name))
           (version (slot-value dist 'ql-dist:version))
-          (url     (slot-value dist 'ql-dist::distinfo-subscription-url)))
+          (url     (or (qob-ignore-errors
+                        (slot-value dist 'ql-dist::archive-base-url))
+                       "n/a")))
       (qob-println "   ~A  ~A  ~A" name version url))))
 
 (let ((dists (ql-dist:all-dists)))

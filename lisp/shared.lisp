@@ -14,22 +14,47 @@
          (count 1)
          (installed 0)
          (skipped 0))
-    (qob-msg "Installing 2 systems... ")
+    (qob-msg "Installing ~A system~A... " total (qob--sinr total "" "s"))
     (qob-msg "")
     (dolist (name names)
-      (let* ((system (asdf:find-system name))
-             (version (asdf:component-version system))
-             (already-installed-p (asdf:find-system name)))
+      (let* ((system (ql-dist:find-system name))
+             ;;(version (slot-value system 'ql-dist:version))
+             (version "0")
+             (already-installed-p (qob-ignore-errors (asdf:find-system name))))
         (if already-installed-p (incf skipped) (incf installed))
         (qob-with-progress
          (qob-format "  - [~A/~A] Installing ~A (~A)... "
                      count total
                      (qob-ansi-green name)
                      (qob-ansi-yellow version))
-         (qob-silent (ql:quickload name))
+         (qob-with-verbosity 'debug (ql:quickload name))
          (if already-installed-p "skipped ✗" "done ✓")))
       (incf count))
     (qob-msg "")
     (qob-info "(Total of ~A systems installed; ~A skipped)" installed skipped)))
+
+(defun qob-uninstall-systems (names)
+  "Uninstall systesm by NAMES."
+  (let* ((total (length names))
+         (count 1)
+         (installed 0)
+         (skipped 0))
+    (qob-msg "Uninstalling ~A system~A... " total (qob--sinr total "" "s"))
+    (qob-msg "✗💡✓")
+    (dolist (name names)
+      (let* ((system (qob-ignore-errors (asdf:find-system name)))
+             (version (if system (asdf:component-version system)
+                          "0")))
+        (if system (incf installed) (incf skipped))
+        (qob-with-progress
+         (qob-format "  - [~A/~A] Uninstalling ~A (~A)... "
+                     count total
+                     (qob-ansi-green name)
+                     (qob-ansi-yellow version))
+         (qob-with-verbosity 'debug (ql:uninstall name))
+         (if system "done ✓" "skipped ✗")))
+      (incf count))
+    (qob-msg "")
+    (qob-info "(Total of ~A systems uninstalled; ~A skipped)" installed skipped)))
 
 ;;; End of lisp/shared.lisp

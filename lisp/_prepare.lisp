@@ -8,6 +8,57 @@
 (require "asdf")
 
 ;;
+;;; Utils
+
+(defmacro qob-ignore-errors (&rest forms)
+  "Ignore errors."
+  `(handler-case (progn ,@forms)
+     (error (condition) (values nil condition))))
+
+(defmacro qob-silent (&rest body)
+  "Execute BODY without output."
+  `(with-open-stream (*standard-output* (make-broadcast-stream)) ,@body))
+
+(defun qob-format (string &rest objects)
+  "Format string."
+  (apply #'qob-el-format string objects))
+
+(defun qob-2str (object)
+  "Convert to string."
+  (funcall #'qob-el-2str object))
+
+(defun qob-s-replace (old new str)
+  "Replaces OLD with NEW in S."
+  (let ((pos (search old str)))
+    (if pos
+        (concatenate 'string
+                     (subseq str 0 pos)
+                     new
+                     (subseq str (+ pos (length old))))
+        str)))  ; Return original if substring not found
+
+(defun qob--sinr (len-or-list form-1 form-2)
+  "If LEN-OR-LIST has length of 1; return FORM-1, else FORM-2."
+  (let ((len (if (numberp len-or-list) len-or-list (length len-or-list))))
+    (if (<= len 1) form-1 form-2)))
+
+;;
+;;; Color
+
+(defun qob--msg-paint-kwds (string)
+  "Paint keywords from STRING."
+  (let* ((string (qob-s-replace "✓" (qob-ansi-green "✓") string))
+         (string (qob-s-replace "✗" (qob-ansi-red "✗") string))
+         (string (qob-s-replace "💡" (qob-ansi-yellow "💡") string)))
+    string))
+
+(defun qob--format-paint-kwds (msg &rest args)
+  "Paint keywords after format MSG and ARGS."
+  (let* ((string (apply #'qob-el-format msg args))
+         (string (qob--msg-paint-kwds string)))
+    string))
+
+;;
 ;;; Verbose
 
 (defun qob-princ (stream fmt &rest args)
@@ -26,7 +77,7 @@ The arguments FMT and ARGS are used to form the output message."
 
 (defun qob-print (msg &rest args)
   "Standard output print MSG and ARGS."
-  (apply #'qob-princ 'stdout msg args))
+  (qob-princ 'stdout (apply #'qob--format-paint-kwds msg args)))
 
 (defun qob-println (msg &rest args)
   "Like function `qob-print' but with newline at the end."
@@ -34,7 +85,7 @@ The arguments FMT and ARGS are used to form the output message."
 
 (defun qob-write (msg &rest args)
   "Standard error print MSG and ARGS."
-  (apply #'qob-princ 'stderr msg args))
+  (qob-princ 'stderr (apply #'qob--format-paint-kwds msg args)))
 
 (defun qob-msg (msg &rest args)
   "Standard error print line MSG and ARGS."
@@ -111,24 +162,7 @@ For example, `.qob/sbcl/2.4.9/'."
                          qob-dot))
 
 ;;
-;;; Utils
-
-(defmacro qob-silent (&rest body)
-  "Execute BODY without output."
-  `(with-open-stream (*standard-output* (make-broadcast-stream)) ,@body))
-
-(defun qob-format (string &rest objects)
-  "Format string."
-  (apply #'qob-el-format string objects))
-
-(defun qob-2str (object)
-  "Convert to string."
-  (funcall #'qob-el-2str object))
-
-(defun qob--sinr (len-or-list form-1 form-2)
-  "If LEN-OR-LIST has length of 1; return FORM-1, else FORM-2."
-  (let ((len (if (numberp len-or-list) len-or-list (length len-or-list))))
-    (if (<= len 1) form-1 form-2)))
+;;; Load file
 
 (defvar qob-loading-file-p nil
   "This became t; if we are loading script from another file and not expecting
@@ -239,12 +273,15 @@ Execute forms BODY limit by the verbosity level (SYMBOL)."
   "Initialize QuickLisp."
   (when (or (not qob-ql-init-p)
             force)
-    (let* ((ql-dir (qob-ql-installed-dir))
-           (ql-init (uiop:merge-pathnames* "setup.lisp" ql-dir)))
-      (unless qob-quicklisp-installed-p
-        (qob-quicklisp-install ql-dir))
-      (when (probe-file ql-init)
-        (load ql-init)))
+    (qob-with-progress
+     (qob-ansi-green "Setting up QuickLisp... ")
+     (let* ((ql-dir (qob-ql-installed-dir))
+            (ql-init (uiop:merge-pathnames* "setup.lisp" ql-dir)))
+       (unless qob-quicklisp-installed-p
+         (qob-quicklisp-install ql-dir))
+       (when (probe-file ql-init)
+         (load ql-init)))
+     (qob-ansi-green "done ✓"))
     (setq qob-ql-init-p t)))
 
 ;;
@@ -289,7 +326,7 @@ to actually set up the systems."
                 (push (asdf:load-asd file) qob-loaded-asds)
                 (qob-println "Loaded ASD file ~A" file))
               files)))
-     (qob-ansi-green "done"))
+     (qob-ansi-green "done ✓"))
     (setq qob-loaded-asds t)))
 
 ;;
@@ -331,7 +368,7 @@ Set up the systems; on contrary, you should use the function
                 (push (qob-load-system file) qob-loaded-systems)
                 (qob-println "Loaded system file ~A" file))
               files)))
-     (qob-ansi-green "done"))
+     (qob-ansi-green "done ✓"))
     (setq qob-systems-init-p t)))
 
 ;;
