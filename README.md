@@ -7,9 +7,9 @@
 
 Qob attempts to be good at these things:
 
-- Play nicely with [ASDF][] and [Quicklisp][]
-- Support project local like [Qlot][] and support global scope facilities
-- Works on all modern operating systems: Linux, macOS, and Windows
+- Play nicely with [ASDF][] and [Quicklisp][].
+- Support project local like [Qlot][] and support global scope facilities.
+- Works on all modern operating systems: [Linux][], [macOS][], and [Windows][].
 
 We aim to make Qob an all-in-one tool so users no longer need to install tools like [Roswell] and [Qlot][], which only serve specific goals.
 
@@ -76,6 +76,10 @@ See [`LICENSE`](./LICENSE) for details.
 
 
 <!-- Links -->
+
+[Linux]: https://en.wikipedia.org/wiki/Linux
+[macOS]: https://en.wikipedia.org/wiki/MacOS
+[Windows]: https://en.wikipedia.org/wiki/Microsoft_Windows
 
 [ASDF]: https://asdf.common-lisp.dev/
 [Quicklisp]: https://www.quicklisp.org/beta/
