@@ -5,6 +5,12 @@
 [![Release](https://img.shields.io/github/tag/cl-qob/cli.svg?label=release&logo=github)](https://github.com/cl-qob/cli/releases/latest)
 [![CI](https://github.com/cl-qob/cli/actions/workflows/test.yml/badge.svg)](https://github.com/cl-qob/cli/actions/workflows/test.yml)
 
+Qob attempts to be good at these things:
+
+- Play nicely with [ASDF][] and [Quicklisp][]
+- Support project local like [Qlot][] and support global scope facilities
+- Works on all modern operating systems: Linux, macros, and Windows
+
 ## 🏆 Features
 
 WIP
