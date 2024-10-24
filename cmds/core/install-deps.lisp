@@ -1,4 +1,4 @@
-;;;; cmds/core/install-deps.lisp --- Build executable
+;;;; cmds/core/install-deps.lisp --- Install dependencies
 
 ;;; Commentary
 ;;

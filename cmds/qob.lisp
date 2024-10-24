@@ -60,7 +60,9 @@
                    ,(qob-cli/info:command)
                    ,(qob-cli/install:command)
                    ,(qob-cli/install-deps:command)
-                   ,(qob-cli/uninstall:command)
-                   ,(qob-cli/list:command))))
+                   ,(qob-cli/install-dists:command)
+                   ,(qob-cli/list:command)
+                   ,(qob-cli/status:command)
+                   ,(qob-cli/uninstall:command))))
 
 ;;; End of cmds/qob.lisp

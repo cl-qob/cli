@@ -1,4 +1,4 @@
-;;;; cmds/core/uninstall.lisp --- Build executable
+;;;; cmds/core/uninstall.lisp --- Uninstall dependencies
 
 ;;; Commentary
 ;;

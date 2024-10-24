@@ -1,0 +1,4 @@
+
+💡 You need to specify the systems you want to print the info:
+
+   $ qob info <system-1> <system-2> ...

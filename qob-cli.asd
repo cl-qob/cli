@@ -16,8 +16,10 @@
                (:file "cmds/core/info")
                (:file "cmds/core/install")
                (:file "cmds/core/install-deps")
-               (:file "cmds/core/uninstall")
+               (:file "cmds/core/install-dists")
                (:file "cmds/core/list")
+               (:file "cmds/core/status")
+               (:file "cmds/core/uninstall")
                (:file "cmds/qob")
                ;; Program
                (:file "src/main"))

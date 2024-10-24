@@ -1,4 +1,4 @@
-;;;; cmds/core/info.lisp --- Build executable
+;;;; cmds/core/info.lisp --- Print the system info
 
 ;;; Commentary
 ;;

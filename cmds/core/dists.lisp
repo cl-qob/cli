@@ -1,4 +1,4 @@
-;;;; cmds/core/dists.lisp --- Build executable
+;;;; cmds/core/dists.lisp --- Print all dists info
 
 ;;; Commentary
 ;;

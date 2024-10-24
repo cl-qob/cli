@@ -28,12 +28,15 @@ OPTIONS:
   -v, --verbose <INT>  set verbosity from 0 to 5 [default: 3]
 
 COMMANDS:
-  build         Build the executable
-  dists         List out all installed dists
-  install       Install packages
-  install-deps  Automatically install system dependencies
-  uninstall     Uninstall packages
-  list          List the registered system
+  build          Build the executable
+  dists          List out all installed dists
+  info           Display information about the current system(s)
+  install        Install packages
+  install-deps   Automatically install system dependencies
+  install-dists  Install dists
+  list           List the registered system
+  status         Display the state of the workspac
+  uninstall      Uninstall packages
 
 AUTHORS:
   Jen-Chieh Shen <jcs090218@gmail.com>

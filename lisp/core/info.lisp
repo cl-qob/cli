@@ -13,6 +13,7 @@
 
 (defun qob-info--print-system (name system)
   "Print the SYSTEM info."
+  (qob-println "")
   (let ((author      (asdf:system-author system))
         (maintainer  (asdf:system-maintainer system))
         (version     (asdf:component-version system))
@@ -21,7 +22,7 @@
         (license     (asdf:system-license system))
         (depends-on  (asdf:system-depends-on system)))
     (qob-println "~A (~A) | deps: ~A"
-                 (qob-ansi-green name)
+                 (qob-ansi-green (string-downcase name))
                  (qob-ansi-yellow version)
                  (qob-ansi-cyan (length depends-on)))
     (when description
