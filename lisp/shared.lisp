@@ -40,7 +40,7 @@
          (installed 0)
          (skipped 0))
     (qob-msg "Uninstalling ~A system~A... " total (qob--sinr total "" "s"))
-    (qob-msg "✗💡✓")
+    (qob-msg "")
     (dolist (name names)
       (let* ((system (qob-ignore-errors (asdf:find-system name)))
              (version (if system (asdf:component-version system)
