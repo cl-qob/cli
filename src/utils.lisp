@@ -48,6 +48,15 @@
   "Return the lisp scripts' root directory."
   (el-lib:el-expand-file-name "lisp/" (exec-dir)))
 
+(defun extract-post-arguments (cmd)
+  "Extract arguments after two dashes `--' from CMD."
+  (let ((args (clingon:command-arguments cmd))
+        (pattern "--"))
+    (setq args (remove-if-not (lambda (arg)
+                                (string= pattern arg :end2 (length pattern)))
+                              args))
+    args))
+
 (defun prepare-options (cmd)
   "Prepare options string from CMD."
   (let ((opts (list -1)))  ; Assign -1 for `nconc' operation
@@ -133,15 +142,24 @@ Argument CMD is used to extract positional arguments and options."
     (let ((command (concatenate 'list
                                 (list lisp-impls)
                                 (list "--noinform")
+                                ;; NOTE: `extract-post-arguments' doesn't work
+                                ;; in function `run-program'; add it here?
+                                (extract-post-arguments cmd)
                                 (when (local-p cmd)
                                   (list "--userinit" (user-init)))
                                 args)))
       (when (<= 5 (verbose cmd))
         (format t "~A~%" command))
-      (uiop:run-program command
-                        :output :interactive
-                        :error-output :interactive
-                        :force-shell t))))
+      (run-program command cmd))))
+
+(defun run-program (command cmd)
+  "Return COMMAND program."
+  (uiop:run-program (concatenate 'list
+                                 command
+                                 (extract-post-arguments cmd))
+                    :output :interactive
+                    :error-output :interactive
+                    :force-shell t))
 
 ;;
 ;;; Package

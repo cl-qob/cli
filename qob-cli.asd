@@ -11,7 +11,9 @@
                (:file "src/packages")
                (:file "src/utils")
                ;; Commands
+               (:file "cmds/clean/workspace")
                (:file "cmds/core/build")
+               (:file "cmds/core/clean")
                (:file "cmds/core/dists")
                (:file "cmds/core/info")
                (:file "cmds/core/install")
