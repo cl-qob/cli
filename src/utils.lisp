@@ -153,7 +153,10 @@ Argument CMD is used to extract positional arguments and options."
       (run-program command cmd t))))
 
 (defun run-program (command cmd &optional no-post-args)
-  "Return COMMAND program."
+  "Return COMMAND program.
+
+If the optional argument NO-POST-ARGS is non nil, do not include post
+arguments in the command list."
   (uiop:run-program (concatenate 'list
                                  command
                                  (if no-post-args '()
