@@ -11,6 +11,7 @@
   (:use cl)
   (:export
    ;; src/utils.lsip
+   inhibit-ql-download
    call-script
    call-impls
    setup           ; TODO: move to prepare.lisp

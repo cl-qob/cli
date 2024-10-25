@@ -19,7 +19,8 @@
 
 (defun handler (cmd)
   "Handler for `clean workspace' command."
-  (qob-cli:call-script "clean/workspace" cmd))
+  (let ((qob-cli:inhibit-ql-download t))
+    (qob-cli:call-script "clean/workspace" cmd)))
 
 (defun command ()
   "The `clean workspace' command."

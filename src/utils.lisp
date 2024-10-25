@@ -9,6 +9,9 @@
 
 (in-package :qob-cli)
 
+(defvar inhibit-ql-download nil
+  "Set to t if you don't  want download `quicklisp.lisp' file on start.")
+
 ;;
 ;;; Flags
 
@@ -86,9 +89,10 @@ Argument CMD is used to extract positional arguments and options."
   (setf (uiop:getenv "QOB_TEMP_FILE") (el-lib:el-expand-file-name "tmp" (dot-global)))
   (setf (uiop:getenv "QOB_LISP_ROOT") (lisp-root))
   (setf (uiop:getenv "QOB_USER_INIT") (user-init))
-  (if (quicklisp-installed-p cmd)
-      (setf (uiop:getenv "QOB_QUICKLISP_INSTALLED") "t")
-      (quicklisp-download cmd)))
+  (unless inhibit-ql-download
+    (if (quicklisp-installed-p cmd)
+        (setf (uiop:getenv "QOB_QUICKLISP_INSTALLED") "t")
+        (quicklisp-download cmd))))
 
 (defun program-name ()
   "Lisp program we target to run."
@@ -123,7 +127,8 @@ Argument CMD is used to extract positional arguments and options."
         (ql      (lisp-script "_ql"))
         (script  (lisp-script script)))
     (call-impls (concatenate 'list
-                             (if (quicklisp-installed-p cmd)
+                             (if (or inhibit-ql-download
+                                     (quicklisp-installed-p cmd))
                                  (list "--load" no-ql)
                                  (list "--load" (quicklisp-lisp cmd)
                                        "--load" ql))
@@ -178,12 +183,10 @@ arguments in the command list."
 
 (defun quicklisp-download (cmd)
   "Download quicklisp."
-  (uiop:run-program `("curl"
-                      "https://beta.quicklisp.org/quicklisp.lisp"
-                      "--output"
-                      ,(quicklisp-lisp cmd))
-                    :output *standard-output*
-                    :error-output *error-output*
-                    :force-shell t))
+  (run-program `("curl"
+                 "https://beta.quicklisp.org/quicklisp.lisp"
+                 "--output"
+                 ,(quicklisp-lisp cmd))
+               cmd t))
 
 ;;; End of src/utils.lisp
