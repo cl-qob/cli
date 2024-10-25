@@ -51,7 +51,7 @@
 (defun extract-post-arguments (cmd)
   "Extract arguments after two dashes `--' from CMD."
   (let ((args (clingon:command-arguments cmd))
-        (pattern "--"))
+        (pattern "-"))
     (setq args (remove-if-not (lambda (arg)
                                 (string= pattern arg :end2 (length pattern)))
                               args))
@@ -150,13 +150,14 @@ Argument CMD is used to extract positional arguments and options."
                                 args)))
       (when (<= 5 (verbose cmd))
         (format t "~A~%" command))
-      (run-program command cmd))))
+      (run-program command cmd t))))
 
-(defun run-program (command cmd)
+(defun run-program (command cmd &optional no-post-args)
   "Return COMMAND program."
   (uiop:run-program (concatenate 'list
                                  command
-                                 (extract-post-arguments cmd))
+                                 (if no-post-args '()
+                                     (extract-post-arguments cmd)))
                     :output :interactive
                     :error-output :interactive
                     :force-shell t))
