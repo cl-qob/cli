@@ -46,12 +46,16 @@
 
 (let ((names qob-args)
       (default-name (qob-only-system)))
-  (cond (default-name
-         (qob-info--print-system default-name))
-        ((zerop (length names))
-         (qob-help "core/info"))
-        (t
-         (dolist (name names)
-           (qob-info--print-system name)))))
+  (cond
+    ;; If only specified one system.
+    (default-name
+     (qob-info--print-system default-name))
+    ;; If no system(s) specified.
+    ((zerop (length names))
+     (qob-help "core/info"))
+    ;; Print all systems information.
+    (t
+     (dolist (name names)
+       (qob-info--print-system name)))))
 
 ;;; End of lisp/core/info.lisp
