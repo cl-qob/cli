@@ -40,6 +40,7 @@ OPTIONS:
 
 COMMANDS:
   build          Build the executable
+  clean          Delete various files produced during building
   dists          List out all installed dists
   info           Display information about the current system(s)
   install        Install systems
