@@ -11,16 +11,17 @@
 
 (qob-init-asds)
 
-(defun qob-info--print-system (name system)
-  "Print the SYSTEM info."
+(defun qob-info--print-system (name)
+  "Print the system's info by their NAME."
   (qob-println "")
-  (let ((author      (asdf:system-author system))
-        (maintainer  (asdf:system-maintainer system))
-        (version     (asdf:component-version system))
-        (description (asdf:system-description system))
-        (homepage    (asdf:system-homepage system))
-        (license     (asdf:system-license system))
-        (depends-on  (asdf:system-depends-on system)))
+  (let* ((system      (asdf:find-system name))
+         (author      (asdf:system-author system))
+         (maintainer  (asdf:system-maintainer system))
+         (version     (asdf:component-version system))
+         (description (asdf:system-description system))
+         (homepage    (asdf:system-homepage system))
+         (license     (asdf:system-license system))
+         (depends-on  (asdf:system-depends-on system)))
     (qob-println "~A (~A) | deps: ~A"
                  (qob-ansi-green (string-downcase name))
                  (qob-ansi-yellow version)
@@ -43,12 +44,14 @@
         ;; TODO: Print system version?
         (qob-println "  ~A" dep)))))
 
-(let ((names qob-args))
-  (cond ((zerop (length names))
+(let ((names qob-args)
+      (default-name (qob-only-system)))
+  (cond (default-name
+         (qob-info--print-system default-name))
+        ((zerop (length names))
          (qob-help "core/info"))
         (t
          (dolist (name names)
-           (let ((system (asdf:find-system name)))
-             (qob-info--print-system name system))))))
+           (qob-info--print-system name)))))
 
 ;;; End of lisp/core/info.lisp

@@ -373,13 +373,24 @@ to actually set up the systems."
      (qob-ansi-green "Loading ASDF files... ")
      (qob-with-verbosity
       'debug
-      (let ((files (qob-asd-files t)))
+      (let ((files (qob-asd-files t))
+            (pre-systems (asdf:registered-systems)))
         (mapc (lambda (file)
-                (push (asdf:load-asd file) qob-loaded-asds)
+                (asdf:load-asd file)
                 (qob-println "Loaded ASD file ~A" file))
-              files)))
+              files)
+        (setq qob-loaded-asds
+              (remove-if (lambda (system)
+                           (qob-el-memq system pre-systems))
+                         (asdf:registered-systems)))))
      (qob-ansi-green "done ✓"))
-    (setq qob-loaded-asds t)))
+    (setq qob-asds-init-p t)))
+
+(defun qob-only-system ()
+  "Return the default system if only one system is loaded in the workspace."
+  (qob-init-asds)
+  (when (= (length qob-loaded-asds) 1)
+    (nth 0 qob-loaded-asds)))
 
 ;;
 ;;; ASDF system
