@@ -138,8 +138,10 @@ The arguments FMT and ARGS are used to form the output message."
   "Parse arguments.
 
 Argument ENV-NAME is used to get the argument string."
-  (let* ((args (uiop:getenv env-name))
+  (let* ((*readtable* (copy-readtable *readtable*))
+         (args (uiop:getenv env-name))
          (args (concatenate 'string "'" args)))
+    (setf (readtable-case *readtable*) :preserve)
     (eval (read-from-string args))))
 
 (defvar qob-args (qob-parse-args "QOB_ARGS")
