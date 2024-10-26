@@ -328,11 +328,11 @@ Execute forms BODY limit by the verbosity level (SYMBOL)."
     (qob-with-progress
      (qob-ansi-green "Setting up QuickLisp... ")
      (let* ((ql-dir (qob-ql-installed-dir))
-            (ql-init (uiop:merge-pathnames* "setup.lisp" ql-dir)))
+            (ql-setup (uiop:merge-pathnames* "setup.lisp" ql-dir)))
        (unless qob-quicklisp-installed-p
          (qob-quicklisp-install ql-dir))
-       (when (probe-file ql-init)
-         (load ql-init)))
+       (when (probe-file ql-setup)
+         (load ql-setup)))
      (qob-ansi-green "done ✓"))
     (setq qob-ql-init-p t)))
 
@@ -435,12 +435,19 @@ Set up the systems; on contrary, you should use the function
     (setq qob-systems-init-p t)))
 
 ;;
-;;; Externals
+;;; DSL
 
-;;(qob-load "extern/alexandria")
+(defvar qob-local-systems nil
+  "A list of local systems.")
+
+(defun qob-depends-on (&rest args)
+  "Define a local systems"
+  (push args qob-local-systems))
 
 ;;
 ;;; Initialization
+
+(ensure-directories-exist (qob-dot-impls))
 
 (setq qob-enable-color (not (qob-no-color-p)))
 
