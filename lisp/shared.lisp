@@ -31,7 +31,9 @@
          (if already-installed-p "skipped ✗" "done ✓")))
       (incf count))
     (qob-msg "")
-    (qob-info "(Total of ~A systems installed; ~A skipped)" installed skipped)))
+    (qob-info "(Total of ~A system~A installed; ~A skipped)" installed
+              (qob--sinr installed "" "s")
+              skipped)))
 
 (defun qob-uninstall-systems (names)
   "Uninstall systesm by NAMES."
@@ -55,6 +57,7 @@
          (if system "done ✓" "skipped ✗")))
       (incf count))
     (qob-msg "")
-    (qob-info "(Total of ~A systems uninstalled; ~A skipped)" installed skipped)))
+    (qob-info "(Total of ~A system~A uninstalled; ~A skipped)" installed
+              (qob--sinr installed "" "s") skipped)))
 
 ;;; End of lisp/shared.lisp

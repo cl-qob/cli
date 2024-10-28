@@ -314,7 +314,7 @@ Execute forms BODY limit by the verbosity level (SYMBOL)."
     (ultralisp . "http://dist.ultralisp.org/"))
   "Mapping of source name and url.")
 
-(defvar qob-ql-init-p nil
+(defvar qob--ql-init-p nil
   "Set to t when Quicklisp is initialized.")
 
 (defun qob-ql-installed-dir ()
@@ -329,7 +329,7 @@ Execute forms BODY limit by the verbosity level (SYMBOL)."
 
 (defun qob-init-ql (&optional force)
   "Initialize QuickLisp."
-  (when (or (not qob-ql-init-p)
+  (when (or (not qob--ql-init-p)
             force)
     (qob-with-progress
      (qob-ansi-green "Setting up QuickLisp... ")
@@ -340,7 +340,7 @@ Execute forms BODY limit by the verbosity level (SYMBOL)."
        (when (probe-file ql-setup)
          (load ql-setup)))
      (qob-ansi-green "done ✓"))
-    (setq qob-ql-init-p t)))
+    (setq qob--ql-init-p t)))
 
 ;;
 ;;; ASDF file
@@ -359,7 +359,7 @@ If optional argument WITH-TEST is non-nil; include test ASD files as well."
     (remove-if (lambda (filename) (qob-el-memq filename tests)) files)
     files))
 
-(defvar qob-asds-init-p nil
+(defvar qob--asds-init-p nil
   "Set to t when ASDF files are initialized.")
 
 (defvar qob-loaded-asds nil
@@ -372,7 +372,7 @@ This function only loads the ASD file but doesn't actually try to
 set up the system.  You should use the function `qob-init-systems'
 to actually set up the systems."
   (when (and (qob-local-p)
-             (or (not qob-asds-init-p)
+             (or (not qob--asds-init-p)
                  force))
     (setq qob-loaded-asds nil)  ; reset
     (qob-with-progress
@@ -390,7 +390,7 @@ to actually set up the systems."
                            (qob-el-memq system pre-systems))
                          (asdf:registered-systems)))))
      (qob-ansi-green "done ✓"))
-    (setq qob-asds-init-p t)))
+    (setq qob--asds-init-p t)))
 
 (defun qob-only-system ()
   "Return the default system if only one system is loaded in the workspace."
@@ -401,7 +401,7 @@ to actually set up the systems."
 ;;
 ;;; ASDF system
 
-(defvar qob-systems-init-p nil
+(defvar qob--systems-init-p nil
   "Set to t when system is initialized.")
 
 (defun qob-load-system (filename)
@@ -425,7 +425,7 @@ to actually set up the systems."
 Set up the systems; on contrary, you should use the function
 `qob-init-asds' if you only want the ASD files to be loaded."
   (when (and (qob-local-p)
-             (or (not qob-systems-init-p)
+             (or (not qob--systems-init-p)
                  force))
     (setq qob-loaded-systems nil)  ; reset
     (qob-with-progress
@@ -438,13 +438,16 @@ Set up the systems; on contrary, you should use the function
                 (qob-println "Loaded system file ~A" file))
               files)))
      (qob-ansi-green "done ✓"))
-    (setq qob-systems-init-p t)))
+    (setq qob--systems-init-p t)))
 
 ;;
 ;;; DSL
 
-(defvar qob-init-p nil
+(defvar qob--init-file-p nil
   "Set to t when Qob file is initialized.")
+
+(defvar qob-files nil
+  "Read Qob files.")
 
 (defvar qob-local-systems nil
   "A list of local systems.")
@@ -453,25 +456,32 @@ Set up the systems; on contrary, you should use the function
   "Define a local systems"
   (push args qob-local-systems))
 
+(defun qob-init-file-p ()
+  "Return non-nil if Qob file is read."
+  (and qob--init-file-p qob-files))
+
 (defun qob-files ()
   "Return a list of Qob files."
   (directory "**/Qob"))
 
-(defun qob-init (&optional force)
+(defun qob-init-file (&optional force)
   "Initialize the Qob file"
-  (when (or (not qob-init-p)
+  (when (or (not qob--init-file-p)
             force)
+    (setq qob-files nil)  ; reset
     (qob-with-progress
      (qob-ansi-green "Loading Qob file... ")
      (qob-with-verbosity
       'debug
       (let ((files (qob-files)))
         (mapc (lambda (file)
-                (load file)
-                (qob-println "Loaded Qob file ~A" file))
+                (when (uiop:file-exists-p file)
+                  (load file)
+                  (push file qob-files)
+                  (qob-println "Loaded Qob file ~A" file)))
               files)))
-     (qob-ansi-green "done ✓"))
-    (setq qob-init-p t)))
+     (qob-ansi-green (if (qob-init-file-p) "done ✓" "skipped ✗")))
+    (setq qob--init-file-p t)))
 
 ;;
 ;;; Initialization
