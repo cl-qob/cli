@@ -28,6 +28,3 @@
   :build-operation "program-op"
   :build-pathname "bin/qob"
   :entry-point "qob-cli:main")
-
-(when (fboundp 'qob-depends-on)
-  (qob-depends-on "fsdb" "https://github.com/billstclair/fsdb" :git))

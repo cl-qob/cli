@@ -1,10 +1,6 @@
 # qob
 /.qob
 
-# executables
-qob
-*.exe
-
 # lisp
 *.FASL
 *.fasl

@@ -15,11 +15,12 @@
 ;;; Code
 
 (qob-init-ql)
+(qob-init)
 
 (ql:quickload "cl-autorepo")
 
-(let ((*repo-dir* ))
+(let ((cl-autorepo::*repo-dir* (qob-ql-local-dir)))
   (dolist (args qob-local-systems)
-    (apply #' cl-autorepo:add-system args)))
+    (apply #'cl-autorepo:add-system args)))
 
 ;;; End of lisp/core/compile.lisp

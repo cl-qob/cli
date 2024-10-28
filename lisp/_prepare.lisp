@@ -315,13 +315,17 @@ Execute forms BODY limit by the verbosity level (SYMBOL)."
   "Mapping of source name and url.")
 
 (defvar qob-ql-init-p nil
-  "Set to t when QuickLisp is initialized.")
+  "Set to t when Quicklisp is initialized.")
 
 (defun qob-ql-installed-dir ()
-  "Return the QuickLisp installed directory base on scope."
+  "Return the Quicklisp installed directory base on scope."
   (uiop:merge-pathnames* "quicklisp/" (if (qob-global-p)
                                           (user-homedir-pathname)
                                           (qob-dot-impls))))
+
+(defun qob-ql-local-dir ()
+  "Return the Quicklisp local project directory."
+  (uiop:merge-pathnames* "local-projects/" (qob-ql-installed-dir)))
 
 (defun qob-init-ql (&optional force)
   "Initialize QuickLisp."
@@ -439,12 +443,35 @@ Set up the systems; on contrary, you should use the function
 ;;
 ;;; DSL
 
+(defvar qob-init-p nil
+  "Set to t when Qob file is initialized.")
+
 (defvar qob-local-systems nil
   "A list of local systems.")
 
 (defun qob-depends-on (&rest args)
   "Define a local systems"
   (push args qob-local-systems))
+
+(defun qob-files ()
+  "Return a list of Qob files."
+  (directory "**/Qob"))
+
+(defun qob-init (&optional force)
+  "Initialize the Qob file"
+  (when (or (not qob-init-p)
+            force)
+    (qob-with-progress
+     (qob-ansi-green "Loading Qob file... ")
+     (qob-with-verbosity
+      'debug
+      (let ((files (qob-files)))
+        (mapc (lambda (file)
+                (load file)
+                (qob-println "Loaded Qob file ~A" file))
+              files)))
+     (qob-ansi-green "done ✓"))
+    (setq qob-init-p t)))
 
 ;;
 ;;; Initialization

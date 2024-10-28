@@ -6,4 +6,4 @@ ci: build
 
 build:
 	@echo "Building..."
-	$(LISP)	--load './scripts/build.lisp'
+	$(LISP) --noinform --load './scripts/build.lisp'
