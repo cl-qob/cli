@@ -29,7 +29,7 @@
 (let ((exec (el-lib:el-expand-fn (if (uiop:os-windows-p)
                                      "bin/qob.exe"
                                      "bin/qob"))))
-  (when (uiop:file-exists-p exec)
+  (when (probe-file exec)
     (delete-file exec)))
 
 ;; Build executable
