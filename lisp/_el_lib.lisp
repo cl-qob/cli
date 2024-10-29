@@ -37,4 +37,18 @@
         (concatenate 'string (string dirve) ":" dir)
         dir)))
 
+(defun qob-el-expand-fn (path &optional (dir-name (uiop:getcwd)))
+  "Like `expand-file-name' function but return path object instead."
+  (uiop:ensure-absolute-pathname (uiop:merge-pathnames* path dir-name)))
+
+(defun qob-el-expand-file-name (path &optional (dir-name (uiop:getcwd)))
+  "Like `expand-file-name' function; returns a string."
+  (namestring (qob-el-expand-fn path dir-name)))
+
+(defun qob-el-file-name-nondirectory (path)
+  "Like `file-name-nondirectory' function."
+  (setq path (qob-el-2str path))
+  (let ((pathname (parse-namestring path)))
+    (car (last (pathname-directory pathname)))))
+
 ;;; End of lisp/_el_lib.lisp

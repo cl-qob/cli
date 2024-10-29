@@ -22,7 +22,7 @@
   (clingon:print-usage-and-exit cmd t))
 
 (defun command ()
-  "The `build' command."
+  "The `clean' command."
   (clingon:make-command
    :name "clean"
    :description "Delete various files produced during building"

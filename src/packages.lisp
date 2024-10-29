@@ -12,6 +12,7 @@
   (:export
    ;; src/utils.lsip
    inhibit-ql-download
+   force-global-p
    call-script
    call-impls
    ;; cmds/qob.lisp

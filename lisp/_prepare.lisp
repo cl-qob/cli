@@ -7,6 +7,9 @@
 
 (require "asdf")
 
+(defconstant qob-homepage "https://cl-qob.github.io/"
+  "Qob's home page.")
+
 ;;
 ;;; Utils
 
@@ -36,6 +39,11 @@
                      new
                      (subseq str (+ pos (length old))))
         str)))  ; Return original if substring not found
+
+(defun qob-s-slash (path)
+  "Ensure path is a directory."
+  (let ((path (qob-el-2str path)))
+    (concatenate 'string path "/")))
 
 (defun qob-file-get-lines (filename)
   "Get FILENAME's contents in list of lines."
@@ -258,6 +266,11 @@ the `qob-start' execution.")
 (defun qob-no-color-p ()
   "Non-nil when flag is on (`--no-color')."
   (qob--flag "--no-color"))
+
+;;; String (with arguments)
+(defun qob-output ()
+  "Non-nil when flag has value (`--o', `--output')."
+  (qob--flag-value "--output"))
 
 ;;; Number (with arguments)
 (defun qob-verbose ()

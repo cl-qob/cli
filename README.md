@@ -41,6 +41,7 @@ OPTIONS:
 COMMANDS:
   build          Build the executable
   clean          Delete various files produced during building
+  create         Create a new Common Lisp project
   dists          List out all installed dists
   info           Display information about the current system(s)
   install        Install systems

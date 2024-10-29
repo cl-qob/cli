@@ -11,9 +11,11 @@
                (:file "src/packages")
                (:file "src/utils")
                ;; Commands
+               (:file "cmds/create/cl-project")
                (:file "cmds/clean/workspace")
                (:file "cmds/core/build")
                (:file "cmds/core/clean")
+               (:file "cmds/core/create")
                (:file "cmds/core/dists")
                (:file "cmds/core/info")
                (:file "cmds/core/install")

@@ -12,12 +12,16 @@
 (defvar inhibit-ql-download nil
   "Set to t if you don't  want download `quicklisp.lisp' file on start.")
 
+(defvar force-global-p nil
+  "Set to t if force global.")
+
 ;;
 ;;; Flags
 
 (defun global-p (cmd)
   "Non-nil when in global space (`-g', `--global')."
-  (clingon:getopt cmd :global))
+  (or (clingon:getopt cmd :global)
+      force-global-p))
 
 (defun local-p (cmd)
   "Non-nil when in local space (default)."
@@ -70,6 +74,10 @@
       (nconc opts `("--all")))
     (when (clingon:getopt cmd :no-color)
       (nconc opts `("--no-color")))
+    ;; String (with value)
+    (let ((output (clingon:getopt cmd :output)))
+      (when output
+        (nconc opts `("--output" ,output))))
     ;; Number (with value)
     (let ((verbose (verbose cmd)))
       (when verbose
@@ -88,7 +96,7 @@ Argument CMD is used to extract positional arguments and options."
   (setf (uiop:getenv "QOB_DOT")       (dot cmd))
   (setf (uiop:getenv "QOB_TEMP_FILE") (el-lib:el-expand-file-name "tmp" (dot-global)))
   (setf (uiop:getenv "QOB_LISP_ROOT") (lisp-root))
-  (setf (uiop:getenv "QOB_USER_INIT") (user-init))
+  (setf (uiop:getenv "QOB_USER_INIT") (user-init cmd))
   (unless inhibit-ql-download
     (if (quicklisp-installed-p cmd)
         (setf (uiop:getenv "QOB_QUICKLISP_INSTALLED") "t")
@@ -99,9 +107,9 @@ Argument CMD is used to extract positional arguments and options."
   (or (uiop:getenv "QOB_LISP")
       "sbcl"))
 
-(defun user-init ()
+(defun user-init (cmd)
   "Return the user init file."
-  (let ((filename (concatenate 'string (dot-local) "init.lisp")))
+  (let ((filename (concatenate 'string (dot cmd) "init.lisp")))
     (unless (uiop:file-exists-p filename)
       ;; Ensure the file exists.
       (with-open-file (str filename
@@ -151,7 +159,7 @@ Argument CMD is used to extract positional arguments and options."
                                 ;; in function `run-program'; add it here?
                                 (extract-post-arguments cmd)
                                 (when (local-p cmd)
-                                  (list "--userinit" (user-init)))
+                                  (list "--userinit" (user-init cmd)))
                                 args)))
       (when (<= 5 (verbose cmd))
         (format t "~A~%" command))
@@ -166,6 +174,7 @@ arguments in the command list."
                                  command
                                  (if no-post-args '()
                                      (extract-post-arguments cmd)))
+                    :input :interactive
                     :output :interactive
                     :error-output :interactive
                     :force-shell t))
