@@ -9,18 +9,14 @@
 
 (require 'asdf)
 
-;;(push (concatenate 'string (uiop:getcwd) "extern"
-;;                   "clingon")
-;;      asdf:*central-registry*)
-
-(push '*default-pathname-defaults* asdf:*central-registry*)
-(asdf:load-system "qob-cli")
-(asdf:load-system "copy-directory")
-
 (when (uiop:getenv "GITHUB_WORKSPACE")
   ;;(ql:quickload "cl-autorepo")
   (ql:quickload "clingon")
   (ql:quickload "copy-directory"))
+
+(push '*default-pathname-defaults* asdf:*central-registry*)
+(asdf:load-system "qob-cli")
+(asdf:load-system "copy-directory")
 
 ;;; Copy lisp directory
 (progn
