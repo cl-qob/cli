@@ -1,3 +1,3 @@
-; -*- mode: emacs-lisp; lexical-binding: t -*-
+; -*- mode: lisp; lexical-binding: t -*-
 
 (qob-depends-on "fsdb" "https://github.com/billstclair/fsdb" :git)

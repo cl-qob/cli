@@ -49,7 +49,7 @@
     ;; If only specified one system.
     (default-name
      (qob-build--print-header 1)
-     (qob-build--system-by-name default-name))
+     (qob-build--system-by-name (car default-name)))
     ;; If no system(s) specified.
     ((zerop systems-len)
      (qob-help "core/build"))
