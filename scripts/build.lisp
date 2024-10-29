@@ -18,8 +18,8 @@
 (asdf:load-system "copy-directory")
 
 ;;(ql:quickload "cl-autorepo")
-;;(ql:quickload "clingon")
-;;(ql:quickload "copy-directory")
+(ql:quickload "clingon")
+(ql:quickload "copy-directory")
 
 ;;; Copy lisp directory
 (progn
