@@ -402,6 +402,14 @@ to actually set up the systems."
   (when (= (length qob-loaded-asds) 1)
     (nth 0 qob-loaded-asds)))
 
+(defun qob-find-asd-file (name)
+  "Return the ASD file by system's NAME."
+  (let ((result))
+    (dolist (system qob-loaded-asds)
+      (when (equal name (car system))
+        (setq result (nth 1 system))))
+    result))
+
 ;;
 ;;; ASDF system
 

@@ -13,8 +13,8 @@
 
 (defun qob-info--print-system (name)
   "Print the system's info by their NAME."
-  (qob-println "")
-  (let* ((system      (asdf:find-system name))
+  (let* ((file        (qob-find-asd-file name))
+         (system      (asdf:find-system name))
          (author      (asdf:system-author system))
          (maintainer  (asdf:system-maintainer system))
          (version     (asdf:component-version system))
@@ -22,6 +22,9 @@
          (homepage    (asdf:system-homepage system))
          (license     (asdf:system-license system))
          (depends-on  (asdf:system-depends-on system)))
+    (qob-msg "")
+    (qob-write "💡 ")
+    (qob-info "Defined in file ~A" file)
     (qob-println "~A (~A) | deps: ~A"
                  (qob-ansi-green (string-downcase name))
                  (qob-ansi-yellow version)
@@ -45,11 +48,11 @@
         (qob-println "  ~A" dep)))))
 
 (let ((names qob-args)
-      (default-name (qob-only-system)))
+      (default-system (qob-only-system)))
   (cond
     ;; If only specified one system.
-    (default-name
-     (qob-info--print-system default-name))
+    (default-system
+     (qob-info--print-system (car default-system)))
     ;; If no system(s) specified.
     ((zerop (length names))
      (qob-help "core/info"))
