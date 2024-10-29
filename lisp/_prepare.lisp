@@ -365,6 +365,12 @@ If optional argument WITH-TEST is non-nil; include test ASD files as well."
 (defvar qob-loaded-asds nil
   "Loaded ASD files.")
 
+(defun qob-newly-loaded-systems (pre-systems)
+  "Return the a newly loaded systems compare to PRE-SYSTESM."
+  (remove-if (lambda (system)
+               (qob-el-memq system pre-systems))
+             (asdf:registered-systems)))
+
 (defun qob-init-asds (&optional force)
   "Initialize the ASD files.
 
@@ -379,16 +385,14 @@ to actually set up the systems."
      (qob-ansi-green "Loading ASDF files... ")
      (qob-with-verbosity
       'debug
-      (let ((files (qob-asd-files t))
-            (pre-systems (asdf:registered-systems)))
+      (let ((files (qob-asd-files t)))
         (mapc (lambda (file)
-                (asdf:load-asd file)
-                (qob-println "Loaded ASD file ~A" file))
-              files)
-        (setq qob-loaded-asds
-              (remove-if (lambda (system)
-                           (qob-el-memq system pre-systems))
-                         (asdf:registered-systems)))))
+                (let ((pre-systems (asdf:registered-systems)))
+                  (asdf:load-asd file)
+                  (qob-println "Loaded ASD file ~A" file)
+                  (dolist (new-system (qob-newly-loaded-systems pre-systems))
+                    (push (list new-system file) qob-loaded-asds))))
+              files)))
      (qob-ansi-green "done ✓"))
     (setq qob--asds-init-p t)))
 

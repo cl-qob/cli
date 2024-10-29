@@ -30,11 +30,42 @@
   (let ((title   (qob-2str (nth 0 pair)))
         (content (qob-2str (nth 1 pair)))
         (note    (qob-2str (or (nth 2 pair) ""))))
-    (qob-println (concatenate 'string "   " fmt)
+    (qob-println fmt
                  title
                  (qob-ansi-dark content)
                  note))
   (incf qob-status--listed))
+
+(defun qob-status--list-max-length (lst index)
+  "Return the LST max length by its INDEX."
+  (let ((max-len 0)
+        (max-current))
+    (dolist (data lst)
+      (setq max-current (qob-2str (nth index data))
+            max-current (case index
+                          (1 (qob-ansi-dark max-current))
+                          (_ max-current))
+            max-len (max (length max-current) max-len)))
+    max-len))
+
+(defun qob-status--print-infos (lst)
+  "Print environment info LST."
+  (let* ((len-0 (qob-2str (qob-status--list-max-length lst 0)))
+         (len-1 (qob-2str (+ (qob-status--list-max-length lst 1) 2)))
+         (fmt (concatenate 'string "   ~21A   ~" len-1 "A   ~A")))
+    (dolist (pair lst)
+      (when pair
+        (qob-status--print-info fmt pair)))))
+
+(defun qob-status--var-nil (var)
+  "Return missing string when VAR is nil."
+  (unless var
+    (qob-ansi-red "(missing)")))
+
+(defun qob-status--file-dir (path)
+  "Return file directory status from PATH."
+  (unless (uiop:probe-file* path)
+    (qob-ansi-red "(missing)")))
 
 ;;
 ;;; Core
@@ -42,23 +73,33 @@
 (qob-println "In the ~A enviornment" (qob-status--environment-name))
 
 (qob-status--print-title "System:")
-(qob-status--print-info
- "~A version   ~A" `(,(lisp-implementation-type) ,(lisp-implementation-version)))
-(qob-status--print-info "~A   ~A" `("Machine instance" ,(machine-instance)))
-(qob-status--print-info "~A   ~A" `("Machine type" ,(machine-type)))
-(qob-status--print-info "~A   ~A" `("Machine version" ,(machine-version)))
-(qob-status--print-info "~A   ~A" `("Software type" ,(software-type)))
-(qob-status--print-info "~A   ~A" `("Software version" ,(software-version)))
+(qob-status--print-infos
+ `((,(lisp-implementation-type) ,(lisp-implementation-version))
+   ("Machine instance" ,(machine-instance) ,(qob-status--var-nil (machine-instance)))
+   ("Machine type" ,(machine-type) ,(qob-status--var-nil (machine-type)))
+   ("Machine version" ,(machine-version) ,(qob-status--var-nil (machine-version)))
+   ("Software type" ,(software-type) ,(qob-status--var-nil (software-type)))
+   ("Software version" ,(software-version) ,(qob-status--var-nil (software-version)))))
 
 (qob-status--print-title "Environment:")
-(qob-status--print-info "~A   ~A" `("Qob directory" ,qob-dot))
-(qob-status--print-info "~A   ~A" `("Qob implementation directory" ,(qob-dot-impls)))
-(qob-status--print-info "~A   ~A" `("Quicklisp directory" ,(qob-ql-installed-dir)))
+(qob-status--print-infos
+ `(("Qob directory" ,qob-dot ,(qob-status--file-dir qob-dot))
+   ("Qob impls directory" ,(qob-dot-impls) ,(qob-status--file-dir (qob-dot-impls)))
+   ("Quicklisp directory" ,(qob-ql-installed-dir) ,(qob-status--file-dir (qob-ql-installed-dir)))))
+
+(qob-status--print-title "Qob-file:")
+(qob-status--print-infos
+ `(("Qob file" nil ,(qob-status--file-dir nil))))
 
 (when (qob-local-p)
   (qob-status--print-title "Workspace:")
-  (dolist (name qob-loaded-asds)
-    (qob-status--print-info "~A ~A" `(,name "(system)"))))
+  (qob-status--print-infos
+   (mapcar (lambda (info)
+             (setq info (append info
+                                ;; This can never happens since reading ASDF files
+                                ;; is the requirements of this command!
+                                (list (qob-status--file-dir (nth 1 info))))))
+           qob-loaded-asds)))
 
 (qob-println "")
 (qob-info "(Total of ~A state~A listed)" qob-status--listed
