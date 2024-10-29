@@ -56,7 +56,8 @@ jobs:
 
     - name: Prepare content...
       run: |
-        mv bin/qob dist
+        mkdir dist
+        mv bin/qob dist/qob
         mv lisp dist
         mv LICENSE dist
         mv README.md dist
