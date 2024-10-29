@@ -76,7 +76,7 @@
 (defun el-directory-files (dir)
   "Return a list of names of files in DIR."
   (append (uiop:subdirectories dir)
-          (directory-files dir)))
+          (uiop:directory-files dir)))
 
 (defun el-file-name-directory (filename)
   "Return the directory component in file name FILENAME."
