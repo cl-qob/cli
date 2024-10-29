@@ -1,0 +1,145 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'qob'
+      - '**.yml'
+      - lisp/**
+      - cmds/**
+      - src/**
+      - test/**
+      - '**.json'
+  pull_request:
+    branches:
+      - master
+    paths-ignore:
+      - '**.md'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  VERSION: 0.1.0
+  LISP_VER: 2.4.2
+  REPO_BIN: 'cl-qob/binaries'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+        - linux-arm64
+        - linux-x64
+        - macos-arm64
+        - macos-x64
+        - win-arm64
+        - win-x64
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup SBCL
+      uses: cheeze2000/setup-sbcl@main
+      with:
+        version: ${{ env.LISP_VER }}
+
+    - name: Building...
+      run: make build
+
+    - name: Prepare content...
+      run: |
+        mv bin/qob dist
+        mv lisp dist
+        mv LICENSE dist
+        mv README.md dist
+
+    - name: Setup environment (Unix)
+      if: contains(fromJSON('["linux-arm64", "linux-x64", "macos-arm64", "macos-x64"]'), matrix.target)
+      run: |
+        echo "_EXT=tar.gz" >> $GITHUB_ENV
+
+    - name: Setup environment (Windows)
+      if: contains(fromJSON('["win-arm64", "win-x64"]'), matrix.target)
+      run: |
+        echo "_EXT=zip" >> $GITHUB_ENV
+
+    - name: Change permissions (Unix)
+      if: contains(fromJSON('["linux-arm64", "linux-x64", "macos-arm64", "macos-x64"]'), matrix.target)
+      run: |
+        chmod -R 777 ./dist
+
+    - name: Tar dist (Unix)
+      if: contains(fromJSON('["linux-arm64", "linux-x64", "macos-arm64", "macos-x64"]'), matrix.target)
+      run: |
+        tar czf ${{ matrix.target }}.${{ env._EXT }} -C ./dist/ .
+        cp ${{ matrix.target }}.${{ env._EXT }} qob_${{ env.VERSION }}_${{ matrix.target }}.${{ env._EXT }}
+
+    - name: Zipping dist (Windows)
+      if: contains(fromJSON('["win-arm64", "win-x64"]'), matrix.target)
+      working-directory: dist
+      run: |
+        zip -r ${{ matrix.target }}.${{ env._EXT }} .
+        mv ${{ matrix.target }}.${{ env._EXT }} ../
+        cd ..
+        cp ${{ matrix.target }}.${{ env._EXT }} qob_${{ env.VERSION }}_${{ matrix.target }}.${{ env._EXT }}
+
+    - name: Uploading...
+      if: github.ref == 'refs/heads/master'
+      uses: softprops/action-gh-release@v2.0.8
+      with:
+        tag_name: ${{ env.VERSION }}
+        token: ${{ secrets.PAT }}
+        prerelease: true
+        files: qob_${{ env.VERSION }}_${{ matrix.target }}.${{ env._EXT }}
+
+    #### Prepare to push to `binaries` repository!
+
+    - name: Move tar to HOME
+      run: mv ${{ matrix.target }}.${{ env._EXT }} ~/
+
+    - name: Checkout binaries repository
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ env.REPO_BIN }}
+        persist-credentials: false
+        fetch-depth: 0
+
+    - name: Clean up previous binaires
+      continue-on-error: true
+      run: rm -rf qob/${{ matrix.target }}.${{ env._EXT }}
+
+    - name: Move binaires to repository
+      run: mv ~/${{ matrix.target }}.${{ env._EXT }} ./
+
+    - name: Set git config
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+
+    - name: Commit
+      continue-on-error: true
+      run: |
+        git pull
+        git add .
+        git commit -m "Update binairs ${{ matrix.target }}.${{ env._EXT }}"
+
+    - name: Push
+      if: github.ref == 'refs/heads/master'
+      uses: jcs090218/github-push-action@master
+      with:
+        repository: ${{ env.REPO_BIN }}
+        github_token: ${{ secrets.PAT }}
+        branch: master
+        rebase: true
+        retry: 7
