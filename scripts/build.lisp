@@ -17,9 +17,10 @@
 (asdf:load-system "qob-cli")
 (asdf:load-system "copy-directory")
 
-;;(ql:quickload "cl-autorepo")
-(ql:quickload "clingon")
-(ql:quickload "copy-directory")
+(when (uiop:getenv "GITHUB_WORKSPACE")
+  ;;(ql:quickload "cl-autorepo")
+  (ql:quickload "clingon")
+  (ql:quickload "copy-directory"))
 
 ;;; Copy lisp directory
 (progn
