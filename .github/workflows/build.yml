@@ -28,10 +28,6 @@ env:
   LISP_VER: 2.4.2
   REPO_BIN: 'cl-qob/binaries'
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   build:
     runs-on: ubuntu-latest
