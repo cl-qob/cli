@@ -10,6 +10,7 @@ on:
       - lisp/**
       - cmds/**
       - src/**
+      - scripts/**
       - test/**
       - '**.json'
   pull_request:
