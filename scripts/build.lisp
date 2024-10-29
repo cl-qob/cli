@@ -20,7 +20,8 @@
 
 ;;; Copy lisp directory
 (progn
-  (el-lib:el-delete-directory "bin/lisp/")
+  (when (uiop:probe-file exec)
+    (el-lib:el-delete-directory "bin/lisp/"))
   (copy-directory:copy (el-lib:el-expand-fn "lisp/")
                        (el-lib:el-expand-fn "bin/lisp/")))
 
