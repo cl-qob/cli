@@ -20,7 +20,7 @@
 
 ;;; Copy lisp directory
 (progn
-  (when (probe-file exec)
+  (when (probe-file "bin/lisp/")
     (el-lib:el-delete-directory "bin/lisp/"))
   (copy-directory:copy (el-lib:el-expand-fn "lisp/")
                        (el-lib:el-expand-fn "bin/lisp/")))
@@ -29,7 +29,7 @@
 (let ((exec (el-lib:el-expand-fn (if (uiop:os-windows-p)
                                      "bin/qob.exe"
                                      "bin/qob"))))
-  (when (probe-file exec)
+  (when (uiop:file-exists-p exec)
     (delete-file exec)))
 
 ;; Build executable
