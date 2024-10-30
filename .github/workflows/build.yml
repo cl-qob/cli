@@ -49,9 +49,12 @@ jobs:
       with:
         version: ${{ env.LISP_VER }}
 
-    - name: Building...
+    - name: Install Quicklisp
       run: |
         make install-ql
+
+    - name: Building...
+      run: |
         make build
 
     - name: Prepare content...
@@ -145,9 +148,12 @@ jobs:
       with:
         args: install sbcl --version=${{ env.LISP_VER }}
 
-    - name: Building...
+    - name: Install Quicklisp
       run: |
         make install-ql
+
+    - name: Building...
+      run: |
         make build
 
     - name: Prepare content...
