@@ -10,6 +10,10 @@ build:
 	@echo "Building..."
 	$(LISP) $(LISP_ARGS) --load './scripts/build.lisp'
 
-install-ql:
+download-ql:
+	@echo "Downloading Quicklisp..."
+	curl -O https://beta.quicklisp.org/quicklisp.lisp
+
+install-ql: download-ql
 	@echo "Installing Quicklisp..."
-	$(LISP) $(LISP_ARGS) --load './scripts/quicklisp.lisp' --script './scripts/install-ql.lisp'
+	$(LISP) $(LISP_ARGS) --load './quicklisp.lisp' --script './scripts/install-ql.lisp'
