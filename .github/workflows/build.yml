@@ -146,7 +146,9 @@ jobs:
         args: install sbcl --version=${{ env.LISP_VER }}
 
     - name: Building...
-      run: make build
+      run: |
+        make install-ql
+        make build
 
     - name: Prepare content...
       run: |

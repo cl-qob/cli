@@ -1,6 +1,6 @@
 LISP ?= sbcl
 
-.PHONY: build
+.PHONY: build install-ql
 
 ci: build
 
