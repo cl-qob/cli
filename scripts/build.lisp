@@ -34,3 +34,5 @@
 
 ;; Build executable
 (asdf:operate :build-op "qob-cli")
+
+;;; End of scripts/build.lisp

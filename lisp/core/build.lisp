@@ -37,10 +37,14 @@
                qob-build--count qob-build--total
                (qob-ansi-green name)
                (qob-ansi-yellow (qob-system-version name)))
-   (qob-with-verbosity
-    'debug
-    (asdf:operate :build-op name))
+   (asdf:operate :build-op name)
    "done ✓"))
+
+(defun qob-build--print-footer ()
+  "Print the build footer."
+  (qob-println "")
+  (qob-info "(Total of ~A system~A built)" qob-build--count
+            (qob--sinr qob-build--count "" "s")))
 
 (let* ((systems qob-args)
        (systems-len (length systems))
@@ -49,7 +53,8 @@
     ;; If only specified one system.
     (default-name
      (qob-build--print-header 1)
-     (qob-build--system-by-name (car default-name)))
+     (qob-build--system-by-name (car default-name))
+     (qob-build--print-footer))
     ;; If no system(s) specified.
     ((zerop systems-len)
      (qob-help "core/build"))
@@ -57,9 +62,7 @@
     (t
      (qob-build--print-header systems-len)
      (dolist (name systems)
-       (qob-build--system-by-name name))))
-  (when (<= 1 qob-build--total)
-    (qob-msg "")
-    (qob-info "(Total of ~A systems built)" qob-build--count)))
+       (qob-build--system-by-name name))
+     (qob-build--print-footer))))
 
 ;;; End of lisp/core/build.lisp
