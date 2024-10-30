@@ -45,10 +45,13 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Setup SBCL
-      uses: cheeze2000/setup-sbcl@main
+    - uses: cachix/install-nix-action@v27
       with:
-        version: ${{ env.LISP_VER }}
+        nix_path: nixpkgs=channel:nixos-unstable
+
+    - name: Setup SBCL
+      run: |
+        nix env install sbcl
 
     - name: Install Quicklisp
       run: |
