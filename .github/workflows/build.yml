@@ -236,6 +236,8 @@ jobs:
 
   build-windows:
     runs-on: windows-latest
+    env:
+      _EXT: zip
     strategy:
       fail-fast: false
       matrix:
