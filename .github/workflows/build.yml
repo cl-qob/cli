@@ -252,9 +252,7 @@ jobs:
         args: install sbcl --version=${{ env.LISP_VER }}
 
     - name: Install Zip
-      uses: crazy-max/ghaction-chocolatey@v3
-      with:
-        args: install 7zip
+      uses: montudor/action-zip@master
 
     - name: Install Quicklisp
       run: |
