@@ -143,6 +143,9 @@ jobs:
       with:
         version: ${{ env.LISP_VER }}
 
+    - name: Print SBCL version
+      run: sbcl --version
+
     - name: Building...
       run: make build
 
