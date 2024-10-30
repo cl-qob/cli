@@ -30,7 +30,7 @@ env:
   REPO_BIN: 'cl-qob/binaries'
 
 jobs:
-  build-linux:
+  build-unix:
     runs-on: [ubuntu-latest, macos-latest]
     strategy:
       fail-fast: false
