@@ -9,11 +9,9 @@
 
 (require 'asdf)
 
-(when (uiop:getenv "GITHUB_WORKSPACE")
-  (format t "?????????????")
-  (load "~/quicklisp/setup.lisp")
-  (ql:quickload "clingon")
-  (ql:quickload "copy-directory"))
+(load "~/quicklisp/setup.lisp")
+(ql:quickload "clingon")
+(ql:quickload "copy-directory")
 
 (push '*default-pathname-defaults* asdf:*central-registry*)
 (asdf:load-system "qob-cli")
