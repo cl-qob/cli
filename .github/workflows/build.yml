@@ -54,10 +54,20 @@ jobs:
     - name: Building...
       run: make build
 
-    - name: Prepare content...
+    - name: Prepare content... (Unix)
+      if: contains(fromJSON('["linux-arm64", "linux-x64", "macos-arm64", "macos-x64"]'), matrix.target)
       run: |
         mkdir dist
-        mv bin/qob dist/qob
+        mv bin/qob dist
+        mv lisp dist
+        mv LICENSE dist
+        mv README.md dist
+
+    - name: Prepare content... (Windows)
+      if: contains(fromJSON('["win-arm64", "win-x64"]'), matrix.target)
+      run: |
+        mkdir dist
+        mv bin/qob.exe dist
         mv lisp dist
         mv LICENSE dist
         mv README.md dist
