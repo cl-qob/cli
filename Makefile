@@ -10,4 +10,4 @@ build:
 
 install-ql:
 	@echo "Installing Quicklisp..."
-	$(LISP) --load './scripts/quicklisp.lisp' --load './scripts/install-ql.lisp'
+	$(LISP) --load './scripts/quicklisp.lisp' --script './scripts/install-ql.lisp'
