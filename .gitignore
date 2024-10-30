@@ -1,5 +1,6 @@
 # qob
 /.qob
+/dist
 
 # lisp
 *.FASL
