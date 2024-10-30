@@ -10,7 +10,7 @@
 (require 'asdf)
 
 (when (uiop:getenv "GITHUB_WORKSPACE")
-  ;;(ql:quickload "cl-autorepo")
+  (load "~/quicklisp/setup.lisp")
   (ql:quickload "clingon")
   (ql:quickload "copy-directory"))
 

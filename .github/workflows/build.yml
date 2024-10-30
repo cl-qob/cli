@@ -54,7 +54,6 @@ jobs:
         nix profile install nixpkgs#sbcl
 
     - name: Install Quicklisp
-      continue-on-error: true
       run: |
         make install-ql
 

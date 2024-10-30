@@ -9,6 +9,6 @@
 
 (quicklisp-quickstart:install)
 
-(ql:add-to-init-file)
+;;(ql:add-to-init-file)
 
 ;;; End of scripts/install-ql.lisp
