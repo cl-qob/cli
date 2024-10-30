@@ -268,10 +268,6 @@ jobs:
         mv LICENSE dist
         mv README.md dist
 
-    - name: Setup environment (Windows)
-      run: |
-        echo "_EXT=zip" >> $GITHUB_ENV
-
     - name: Zipping dist (Windows)
       working-directory: dist
       run: |
@@ -303,7 +299,7 @@ jobs:
 
     - name: Clean up previous binaires
       continue-on-error: true
-      run: rm -rf qob/${{ matrix.target }}.${{ env._EXT }}
+      run: rm -r -force qob/${{ matrix.target }}.${{ env._EXT }}
 
     - name: Move binaires to repository
       run: mv ~/${{ matrix.target }}.${{ env._EXT }} ./
