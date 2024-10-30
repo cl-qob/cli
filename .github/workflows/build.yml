@@ -31,10 +31,11 @@ env:
 
 jobs:
   build-unix:
-    runs-on: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
+        os: [ubuntu-latest, macos-latest]
         target:
         - linux-arm64
         - linux-x64
