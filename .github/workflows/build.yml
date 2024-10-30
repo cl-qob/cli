@@ -249,7 +249,12 @@ jobs:
     - name: Setup SBCL
       uses: crazy-max/ghaction-chocolatey@v3
       with:
-        args: install sbcl --version=${{ env.LISP_VER }} zip
+        args: install sbcl --version=${{ env.LISP_VER }}
+
+    - name: Install Zip
+      uses: crazy-max/ghaction-chocolatey@v3
+      with:
+        args: install 7zip
 
     - name: Install Quicklisp
       run: |
