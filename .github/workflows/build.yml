@@ -28,7 +28,6 @@ env:
   VERSION: 0.1.0
   LISP_VER: 2.4.2
   REPO_BIN: 'cl-qob/binaries'
-  LISP: sbcl-bin
 
 jobs:
   build-unix:
@@ -45,7 +44,10 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - uses: 40ants/setup-lisp@v4
+    - name: Setup SBCL
+      uses: cheeze2000/setup-sbcl@main
+      with:
+        version: ${{ env.LISP_VER }}
 
     - name: Building...
       run: make build
@@ -136,7 +138,10 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - uses: 40ants/setup-lisp@v4
+    - name: Setup SBCL
+      uses: crazy-max/ghaction-chocolatey@v3
+      with:
+        args: install sbcl --version=${{ env.LISP_VER }}
 
     - name: Print SBCL version
       run: sbcl --version
