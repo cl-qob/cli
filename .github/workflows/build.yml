@@ -51,7 +51,7 @@ jobs:
 
     - name: Setup SBCL
       run: |
-        nix-env install sbcl
+        nix-env --install sbcl
 
     - name: Install Quicklisp
       run: |
