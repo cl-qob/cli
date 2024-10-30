@@ -65,7 +65,7 @@ jobs:
     - name: Rename to exe (Windows)
       if: contains(fromJSON('["win-arm64", "win-x64"]'), matrix.target)
       run: |
-        rn dist/qob dist/qob.exe
+        mv dist/qob dist/qob.exe
 
     - name: Setup environment (Unix)
       if: contains(fromJSON('["linux-arm64", "linux-x64", "macos-arm64", "macos-x64"]'), matrix.target)
