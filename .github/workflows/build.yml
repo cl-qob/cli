@@ -298,7 +298,6 @@ jobs:
         fetch-depth: 0
 
     - run: |
-        cd ..
         ls
 
     - run: echo $pwd
