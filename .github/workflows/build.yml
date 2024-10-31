@@ -81,7 +81,7 @@ jobs:
 
     - name: Uploading...
       if: github.ref == 'refs/heads/master'
-      uses: softprops/action-gh-release@v2.0.8
+      uses: softprops/action-gh-release@v2.0.9
       with:
         tag_name: ${{ env.VERSION }}
         token: ${{ secrets.PAT }}
@@ -180,7 +180,7 @@ jobs:
 
     - name: Uploading...
       if: github.ref == 'refs/heads/master'
-      uses: softprops/action-gh-release@v2.0.8
+      uses: softprops/action-gh-release@v2.0.9
       with:
         tag_name: ${{ env.VERSION }}
         token: ${{ secrets.PAT }}
@@ -278,7 +278,7 @@ jobs:
 
     - name: Uploading...
       if: github.ref == 'refs/heads/master'
-      uses: softprops/action-gh-release@v2.0.8
+      uses: softprops/action-gh-release@v2.0.9
       with:
         tag_name: ${{ env.VERSION }}
         token: ${{ secrets.PAT }}
