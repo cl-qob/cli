@@ -100,11 +100,11 @@ jobs:
         persist-credentials: false
         fetch-depth: 0
 
-    - name: Clean up previous binaires
+    - name: Clean up previous binaries
       continue-on-error: true
       run: rm -rf qob/${{ matrix.target }}.${{ env._EXT }}
 
-    - name: Move binaires to repository
+    - name: Move binaries to repository
       run: mv ~/${{ matrix.target }}.${{ env._EXT }} ./
 
     - name: Set git config
@@ -199,11 +199,11 @@ jobs:
         persist-credentials: false
         fetch-depth: 0
 
-    - name: Clean up previous binaires
+    - name: Clean up previous binaries
       continue-on-error: true
       run: rm -rf qob/${{ matrix.target }}.${{ env._EXT }}
 
-    - name: Move binaires to repository
+    - name: Move binaries to repository
       run: mv ~/${{ matrix.target }}.${{ env._EXT }} ./
 
     - name: Set git config
@@ -297,15 +297,17 @@ jobs:
         persist-credentials: false
         fetch-depth: 0
 
-    - run: ls
+    - run: |
+        cd ..
+        ls
 
     - run: echo $pwd
 
-    - name: Clean up previous binaires
+    - name: Clean up previous binaries
       continue-on-error: true
       run: rm -r -force qob/${{ matrix.target }}.${{ env._EXT }}
 
-    - name: Move binaires to repository
+    - name: Move binaries to repository
       run: mv ~/${{ matrix.target }}.${{ env._EXT }} ./
 
     - name: Set git config
@@ -318,7 +320,7 @@ jobs:
       run: |
         git pull
         git add .
-        git commit -m "Update binairs ${{ matrix.target }}.${{ env._EXT }}"
+        git commit -m "Update binaries ${{ matrix.target }}.${{ env._EXT }}"
 
     - name: Push
       if: github.ref == 'refs/heads/master'
