@@ -297,6 +297,10 @@ jobs:
         persist-credentials: false
         fetch-depth: 0
 
+    - run: ls
+
+    - run: echo $pwd
+
     - name: Clean up previous binaires
       continue-on-error: true
       run: rm -r -force qob/${{ matrix.target }}.${{ env._EXT }}
