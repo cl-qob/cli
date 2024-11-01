@@ -70,7 +70,11 @@ WIP
 
 We have incorporated a range of tests to ensure Eask remains stable throughout its release cycle.
 
-[![Build](https://github.com/cl-qob/cli/actions/workflows/build.yml/badge.svg)](https://github.com/cl-qob/cli/actions/workflows/build.yml)
+###### Development
+
+| Description       | Done | Status                                                                                                                                      |
+|-------------------|------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| Build executables | ✔    | [![Build](https://github.com/cl-qob/cli/actions/workflows/build.yml/badge.svg)](https://github.com/cl-qob/cli/actions/workflows/build.yml) |
 
 ## ⚜️ License
 
