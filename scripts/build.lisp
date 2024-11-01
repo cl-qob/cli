@@ -32,6 +32,6 @@
     (delete-file exec)))
 
 ;; Build executable
-(asdf:operate :build-op "qob-cli")
+(asdf:make "qob-cli" :compression nil)
 
 ;;; End of scripts/build.lisp
