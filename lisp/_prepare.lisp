@@ -267,6 +267,10 @@ the `qob-start' execution.")
   "Non-nil when flag is on (`--no-color')."
   (qob--flag "--no-color"))
 
+(defun qob-compression-p ()
+  "Non-nil when flag is on (`--compression')."
+  (if (qob--flag "--compression") t nil))
+
 ;;; String (with arguments)
 (defun qob-output ()
   "Non-nil when flag has value (`--o', `--output')."

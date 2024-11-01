@@ -74,6 +74,8 @@
       (nconc opts `("--all")))
     (when (clingon:getopt cmd :no-color)
       (nconc opts `("--no-color")))
+    (when (clingon:getopt cmd :compression)
+      (nconc opts `("--compression")))
     ;; String (with value)
     (let ((output (clingon:getopt cmd :output)))
       (when output

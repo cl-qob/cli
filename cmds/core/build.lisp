@@ -27,7 +27,13 @@
     :description "output directory"
     :short-name #\o
     :long-name "output"
-    :key :output)))
+    :key :output)
+   (clingon:make-option
+    :flag
+    :description "compress output for smaller file size"
+    :long-name "compression"
+    :initial-value nil
+    :key :compression)))
 
 (defun handler (cmd)
   "Handler for `build' command."

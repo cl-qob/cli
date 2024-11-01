@@ -37,7 +37,8 @@
                qob-build--count qob-build--total
                (qob-ansi-green name)
                (qob-ansi-yellow (qob-system-version name)))
-   (asdf:operate :build-op name)
+   (asdf:make name
+              :compression (qob-compression-p))
    "done ✓"))
 
 (defun qob-build--print-footer ()

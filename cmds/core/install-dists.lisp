@@ -15,8 +15,7 @@
 
 (defun options ()
   "Options for `install-dists' command."
-  (list
-   ))
+  (list ))
 
 (defun handler (cmd)
   "Handler for `install-dists' command."
