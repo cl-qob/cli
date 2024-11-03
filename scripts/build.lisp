@@ -32,6 +32,15 @@
     (delete-file exec)))
 
 ;; Build executable
-(asdf:make "qob-cli" :compression nil)
+;;(asdf:make "qob-cli" :compression nil)
+
+(sb-ext:save-lisp-and-die (if (uiop:os-windows-p)
+                              "bin/qob.exe"
+                              "bin/qob")
+                          :purify t
+                          :compression nil
+                          :toplevel #'qob-cli:main
+                          :save-runtime-options t
+                          :executable t)
 
 ;;; End of scripts/build.lisp
