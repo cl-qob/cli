@@ -60,7 +60,16 @@ LICENSE:
 
 ## 🔨 Development
 
-WIP
+You need the following softwares:
+
+- [SBCL][]
+- [Make][]
+
+then,
+
+```sh
+$ make build
+```
 
 ## 🔗 Links
 
@@ -105,8 +114,12 @@ See [`LICENSE`](./LICENSE) for details.
 [macOS]: https://en.wikipedia.org/wiki/MacOS
 [Windows]: https://en.wikipedia.org/wiki/Microsoft_Windows
 
+[SBCL]: https://www.sbcl.org/
+
 [ASDF]: https://asdf.common-lisp.dev/
 [Quicklisp]: https://www.quicklisp.org/beta/
 
 [Roswell]: https://roswell.github.io/
 [Qlot]: https://github.com/fukamachi/qlot
+
+[Make]: https://www.gnu.org/software/make/
