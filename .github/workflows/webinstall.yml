@@ -1,0 +1,50 @@
+name: Webinstall
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - webinstall/**
+  pull_request:
+    branches:
+      - master
+    paths:
+      - webinstall/**
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Qob (Unix)
+      if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
+      run: |
+        chmod -R 777 ./
+        ./webinstall/install.sh
+
+    - name: Install Qob (Windows)
+      if: matrix.os == 'windows-latest'
+      run: ./webinstall/install.bat
+
+    - name: Testing... (Unix)
+      if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
+      run: |
+         ~/.local/bin/qob --version
+
+    - name: Testing... (Windows)
+      if: matrix.os == 'windows-latest'
+      shell: cmd
+      run: |
+         %USERPROFILE%/.local/bin/qob.exe --version
