@@ -1,0 +1,70 @@
+name: Docs
+
+on:
+  push:
+    branches:
+      - master
+      - docs
+    paths:
+      - '**.yml'
+      - docs/**
+  pull_request:
+    branches:
+      - master
+    paths:
+      - '**.yml'
+      - docs/**
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  publish-doc:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    - name: Setup Hugo
+      uses: peaceiris/actions-hugo@v3
+      with:
+        hugo-version: '0.134.2'
+
+    - name: Build theme
+      working-directory: ./docs/themes/geekdoc
+      run: |
+        npm install
+        npm run build
+
+    - name: Check out GitHub page repo
+      uses: actions/checkout@v4
+      with:
+        repository: cl-qob/cl-qob.github.io
+        path: cl-qob.github.io
+        token: ${{ secrets.PAT }}
+
+    - name: Build doc artifacts with Hugo
+      run: hugo --destination ../cl-qob.github.io --minify
+      working-directory: docs
+
+    # TODO: Generate better commit message
+    - name: Publish doc artifacts
+      if: github.ref == 'refs/heads/master'
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git add .
+        git commit -F- <<-_UBLT_COMMIT_MSG_
+        auto: ${{ github.event.head_commit.message }}
+
+        SourceCommit: https://github.com/cl-qob/cli/commit/${{ github.sha }}
+        _UBLT_COMMIT_MSG_
+        git push
+      working-directory: cl-qob.github.io
