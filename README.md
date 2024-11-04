@@ -77,7 +77,7 @@ $ make build
 
 ## 🧪 Testing
 
-We have incorporated a range of tests to ensure Eask remains stable throughout its release cycle.
+We have incorporated a range of tests to ensure Qob remains stable throughout its release cycle.
 
 ###### Development
 
