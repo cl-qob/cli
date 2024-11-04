@@ -81,8 +81,8 @@ We have incorporated a range of tests to ensure Qob remains stable throughout it
 
 ###### Documentation
 
-| Description                            | Done | Status                                                                                                                                          |
-|----------------------------------------|------|-------------------------------------------------------------------------------------------------------------------------------------------------|
+| Description                            | Done | Status                                                                                                                                   |
+|----------------------------------------|------|------------------------------------------------------------------------------------------------------------------------------------------|
 | Keep the documentation page up to date | ✔    | [![Docs](https://github.com/cl-qob/cli/actions/workflows/docs.yml/badge.svg)](https://github.com/cl-qob/cli/actions/workflows/docs.yml) |
 
 ###### Development
@@ -93,8 +93,8 @@ We have incorporated a range of tests to ensure Qob remains stable throughout it
 
 ###### Others
 
-| Description | Done | Status                                                                                                                                                            |
-|-------------|------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Description | Done | Status                                                                                                                                                     |
+|-------------|------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Webinstall  | ✔    | [![Webinstall](https://github.com/cl-qob/cli/actions/workflows/webinstall.yml/badge.svg)](https://github.com/cl-qob/cli/actions/workflows/webinstall.yml) |
 
 ## ⚜️ License
