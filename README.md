@@ -79,6 +79,12 @@ $ make build
 
 We have incorporated a range of tests to ensure Qob remains stable throughout its release cycle.
 
+###### Documentation
+
+| Description                            | Done | Status                                                                                                                                          |
+|----------------------------------------|------|-------------------------------------------------------------------------------------------------------------------------------------------------|
+| Keep the documentation page up to date | ✔    | [![Docs](https://github.com/cl-qob/cli/actions/workflows/docs.yml/badge.svg)](https://github.com/cl-qob/cli/actions/workflows/docs.yml) |
+
 ###### Development
 
 | Description       | Done | Status                                                                                                                                      |
