@@ -91,6 +91,12 @@ We have incorporated a range of tests to ensure Qob remains stable throughout it
 |-------------------|------|---------------------------------------------------------------------------------------------------------------------------------------------|
 | Build executables | ✔    | [![Build](https://github.com/cl-qob/cli/actions/workflows/build.yml/badge.svg)](https://github.com/cl-qob/cli/actions/workflows/build.yml) |
 
+###### Others
+
+| Description | Done | Status                                                                                                                                                            |
+|-------------|------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Webinstall  | ✔    | [![Webinstall](https://github.com/cl-qob/cli/actions/workflows/webinstall.yml/badge.svg)](https://github.com/cl-qob/cli/actions/workflows/webinstall.yml) |
+
 ## ⚜️ License
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
