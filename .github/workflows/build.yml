@@ -44,10 +44,12 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Prepare APT
+      run: |
+        apt-get update
+
     - name: Setup SBCL
-      uses: cheeze2000/setup-sbcl@main
-      with:
-        version: ${{ env.LISP_VER }}
+      run: apt-get install sbcl=${{ env.LISP_VER }}
 
     - name: Install Quicklisp
       run: |
