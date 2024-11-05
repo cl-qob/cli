@@ -1,6 +1,1 @@
-/lisp
-
-# executables
-qob
-qob.*
-*.exe
+**/**
