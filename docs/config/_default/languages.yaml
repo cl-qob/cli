@@ -1,0 +1,8 @@
+---
+en:
+  languageName: "English"
+  weight: 100
+
+zh-TW:
+  languageName: "繁體中文"
+  weight: 90

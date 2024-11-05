@@ -1,0 +1,60 @@
+---
+baseURL: https://cl-qob.github.io/
+title: Qob
+theme: geekdoc
+
+pygmentsUseClasses: true
+pygmentsCodeFences: true
+timeout: 180000
+pluralizeListTitles: false
+
+defaultContentLanguage: en
+
+disablePathToLower: true
+enableGitInfo: false
+
+enableRobotsTXT: true
+
+params:
+  geekdocToC: 3
+  geekdocLogo: './logo.png'
+  geekdocRepo: 'https://github.com/cl-qob/cli/'
+  geekdocEditPath: 'edit/master/docs/'
+
+  geekdocSearch: true
+  geekdocSearchShowParent: true
+
+  geekdocLegalNotice: "/tos"
+  geekdocPrivacyPolicy: "/tos"
+
+  geekdocContentLicense:
+    name: CC BY-SA 4.0
+    link: https://creativecommons.org/licenses/by-sa/4.0/
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  tableOfContents:
+    startLevel: 1
+    endLevel: 9
+
+taxonomies:
+  tag: tags
+
+outputs:
+  home:
+    - HTML
+  page:
+    - HTML
+  section:
+    - HTML
+  taxonomy:
+    - HTML
+  term:
+    - HTML
+
+security:
+  exec:
+    allow:
+      - "^asciidoctor$"

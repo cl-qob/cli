@@ -1,0 +1,14 @@
+---
+more:
+  - name: News
+    external: true
+    ref: "https://cl-qob.github.io/Getting-Started/Introduction/#-news"
+    icon: gdoc_notification
+  - name: Releases
+    ref: "https://github.com/cl-qob/cli/releases"
+    external: true
+    icon: gdoc_download
+  - name: "View Source"
+    ref: "https://github.com/cl-qob/cli"
+    external: true
+    icon: gdoc_github

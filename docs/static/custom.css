@@ -1,0 +1,48 @@
+.container {
+  padding: 0.6rem;
+}
+
+.gdoc-header {
+  background: #202020;
+  border-bottom: 0rem solid #8B8B8B;
+  box-shadow: 0 0 1rem #202020;
+}
+
+.gdoc-brand__title {
+  display: none;
+}
+
+.gdoc-brand {
+  font-size: 2rem;
+  font-family: serif;
+}
+
+.gdoc-brand__img {
+  margin-right: 0.8rem;
+  margin-top: 0.8rem;
+  margin-bottom: 0.8rem;
+  width: 7.5rem;
+  height: 4.0rem;
+}
+
+.gdoc-footer {
+  background: #202020;
+}
+
+/* Icons */
+
+.gdoc_dicord {
+  background: url('./icons/discord-mark-white.svg');
+  background-repeat: no-repeat;
+  margin-top: 5px;
+  background-size: 90%;
+}
+
+/* Themes */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --body-background: #3F3F3F;
+	--accent-color-lite: #2E2E2E;
+  }
+}

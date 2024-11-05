@@ -1,0 +1,11 @@
+vendor
+_site
+.bundle
+
+/archetypes
+.hugo_build.lock
+
+/public
+
+# macOS
+.DS_Store
