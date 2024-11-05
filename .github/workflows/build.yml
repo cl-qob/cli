@@ -46,10 +46,11 @@ jobs:
 
     - name: Prepare APT
       run: |
-        apt-get update
+        sudo apt-get update
 
     - name: Setup SBCL
-      run: apt-get install sbcl=${{ env.LISP_VER }}
+      run: |
+        sudo apt-get install sbcl=${{ env.LISP_VER }}
 
     - name: Install Quicklisp
       run: |
