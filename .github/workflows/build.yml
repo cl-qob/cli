@@ -62,7 +62,7 @@ jobs:
     - name: Prepare content...
       run: |
         mkdir dist
-        mv bin/* dist
+        mv bin/qob dist
         mv LICENSE dist
         mv README.md dist
 
