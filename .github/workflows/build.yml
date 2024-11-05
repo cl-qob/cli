@@ -147,7 +147,7 @@ jobs:
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
     - name: Setup SBCL
-      run: brew install sbcl
+      run: brew install sbcl@${{ env.LISP_VER }}
 
     - name: Install Quicklisp
       run: |
