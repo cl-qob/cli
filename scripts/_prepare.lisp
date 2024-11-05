@@ -5,6 +5,7 @@
 (require 'asdf)
 
 (load "~/quicklisp/setup.lisp")
+(ql:quickload "deploy")
 (ql:quickload "clingon")
 (ql:quickload "copy-directory")
 
