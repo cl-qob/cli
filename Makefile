@@ -8,7 +8,8 @@ ci: build
 
 build:
 	@echo "Building..."
-	$(LISP) $(LISP_ARGS) --load './scripts/build.lisp'
+	$(LISP) $(LISP_ARGS) --script './scripts/deploy.lisp'
+	$(LISP) $(LISP_ARGS) --script './scripts/build.lisp'
 
 download-ql:
 	@echo "Downloading Quicklisp..."
