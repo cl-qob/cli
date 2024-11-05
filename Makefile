@@ -2,14 +2,17 @@ LISP ?= sbcl
 
 LISP_ARGS =	--noinform
 
-.PHONY: build install-ql
+.PHONY: build build-deploy download-ql install-ql
 
 ci: build
 
 build:
 	@echo "Building..."
+	$(LISP) $(LISP_ARGS) --script './scripts/build.lisp'
+
+build-deploy:
+	@echo "Building... (with Deploy)"
 	$(LISP) $(LISP_ARGS) --script './scripts/deploy.lisp'
-#	$(LISP) $(LISP_ARGS) --script './scripts/build.lisp'
 
 download-ql:
 	@echo "Downloading Quicklisp..."
