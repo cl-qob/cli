@@ -1,5 +1,4 @@
-<a href="#"><img align="right" src="./docs/static/logo.png" width="20%"></a>
-# Qob
+<a href="#"><img src="./docs/static/logo.png" width="20%"></a>
 > CLI for building, running, testing, and managing your Common Lisp dependencies
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
