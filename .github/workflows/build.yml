@@ -139,10 +139,12 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Install Homebrew
+      run: |
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
     - name: Setup SBCL
-      uses: cheeze2000/setup-sbcl@main
-      with:
-        version: ${{ env.LISP_VER }}
+      run: brew install sbcl
 
     - name: Install Quicklisp
       run: |
