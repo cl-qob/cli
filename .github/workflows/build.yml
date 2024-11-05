@@ -26,7 +26,6 @@ concurrency:
 
 env:
   VERSION: 0.1.0
-  LISP_VER: 2.4.9
   REPO_BIN: 'cl-qob/binaries'
 
 jobs:
@@ -147,7 +146,7 @@ jobs:
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
     - name: Setup SBCL
-      run: brew install sbcl@${{ env.LISP_VER }}
+      run: brew install sbcl
 
     - name: Install Quicklisp
       run: |
@@ -243,7 +242,7 @@ jobs:
     - name: Setup SBCL
       uses: crazy-max/ghaction-chocolatey@v3
       with:
-        args: install sbcl --version=${{ env.LISP_VER }}
+        args: install sbcl
 
     - name: Install Zip
       uses: crazy-max/ghaction-chocolatey@v3
