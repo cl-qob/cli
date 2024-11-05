@@ -64,7 +64,6 @@ jobs:
       run: |
         mkdir dist
         mv bin/* dist
-        mv lisp dist
         mv LICENSE dist
         mv README.md dist
 
