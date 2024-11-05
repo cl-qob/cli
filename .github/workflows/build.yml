@@ -50,7 +50,7 @@ jobs:
 
     - name: Setup SBCL
       run: |
-        sudo apt-get install sbcl=${{ env.LISP_VER }}
+        sudo apt-get install sbcl
 
     - name: Install Quicklisp
       run: |
