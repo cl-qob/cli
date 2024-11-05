@@ -17,6 +17,8 @@
 (asdf:load-system "qob-cli")
 (asdf:load-system "copy-directory")
 
+(load "scripts/_prepare.lisp")
+
 ;;; Copy lisp directory
 (progn
   (when (probe-file "bin/lisp/")
@@ -24,16 +26,9 @@
   (copy-directory:copy (el-lib:el-expand-fn "lisp/")
                        (el-lib:el-expand-fn "bin/lisp/")))
 
-;; Delete executable
-(let ((exec (el-lib:el-expand-fn (if (uiop:os-windows-p)
-                                     "bin/qob.exe"
-                                     "bin/qob"))))
-  (when (uiop:file-exists-p exec)
-    (delete-file exec)))
+(qob-delete-exec)
 
 ;; Build executable
-;;(asdf:make "qob-cli" :compression nil)
-
 (sb-ext:save-lisp-and-die (if (uiop:os-windows-p)
                               "bin/qob.exe"
                               "bin/qob")
