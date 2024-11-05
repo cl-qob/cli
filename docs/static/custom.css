@@ -40,6 +40,10 @@
 
 /* Themes */
 
+:root[color-theme="dark"] {
+  --body-background: #3F3F3F;
+  --accent-color-lite: #2E2E2E;
+}
 @media (prefers-color-scheme: dark) {
   :root {
     --body-background: #3F3F3F;
