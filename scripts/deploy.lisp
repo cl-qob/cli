@@ -10,9 +10,11 @@
 (require 'asdf)
 
 (load "~/quicklisp/setup.lisp")
+(ql:quickload "clingon")
 (ql:quickload "deploy")
 
 (push '*default-pathname-defaults* asdf:*central-registry*)
+(asdf:load-system "qob-cli")
 (asdf:load-system "qob-cli/deploy")
 
 (load "scripts/_prepare.lisp")
