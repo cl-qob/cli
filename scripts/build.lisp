@@ -13,6 +13,8 @@
 (qob-delete-exec)
 
 ;; Build executable
+;;(asdf:make "qob-cli" :compression nil)
+
 (sb-ext:save-lisp-and-die (if (uiop:os-windows-p)
                               "bin/qob.exe"
                               "bin/qob")
