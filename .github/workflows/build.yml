@@ -5,14 +5,13 @@ on:
     branches:
       - master
     paths:
-      - 'qob'
       - '**.yml'
       - lisp/**
       - cmds/**
       - src/**
       - scripts/**
       - test/**
-      - '**.json'
+      - '**.asd'
   pull_request:
     branches:
       - master
