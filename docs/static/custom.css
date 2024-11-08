@@ -36,27 +36,27 @@
 /* Themes */
 
 :root[color-theme="light"] {
-  --header-background: #205375;
-  --footer-background: #112B3C;
+  --header-background: #222C37;
+  --footer-background: #222C37;
 }
 @media (prefers-color-scheme: light) {
   :root {
-    --header-background: #205375;
-    --footer-background: #112B3C;
+    --header-background: #222C37;
+    --footer-background: #222C37;
   }
 }
 
 :root[color-theme="dark"] {
-  --header-background: #202020;
+  --header-background: #222C37;
   --body-background: #3F3F3F;
   --accent-color-lite: #2E2E2E;
-  --footer-background: #202020;
+  --footer-background: #222C37;
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --header-background: #202020;
+    --header-background: #222C37;
     --body-background: #3F3F3F;
 	--accent-color-lite: #2E2E2E;
-    --footer-background: #202020;
+    --footer-background: #222C37;
   }
 }
