@@ -22,79 +22,41 @@ $ eask --help
 您在控制台中看到的輸出應類似於以下內容：
 
 ```
-eask is the main command, used to manage your Emacs dependencies
+NAME:
+  qob - CLI for building, running, testing, and managing your Common Lisp dependencies
 
-Eask is a command-line tool that helps you build, lint, and test Emacs Lisp packages.
+USAGE:
+  qob [global-options] [<command>] [command-options] [arguments ...]
 
-Usage: eask <command> [options..]
+OPTIONS:
+      --help           display usage information and exit
+      --no-color       enable/disable color output
+      --version        display version and exit
+  -a, --all            enable all flag
+  -g, --global         change default workspace to ~/.qob/
+  -v, --verbose <INT>  set verbosity from 0 to 5 [default: 3]
 
-Commands:
-  analyze [files..]          Run Eask checker
-  archives                   List out all package archives                                                                                                                                     [aliases: sources]
-  clean <type>               Delete various files produced during building
-  compile [names..]          Byte-compile `.el' files
-  create <type>              Create a new elisp project
-  docker <version> [args..]  Launch specified Emacs version in a Docker container
-  docs [names..]             Build documentation                                                                                                                                                   [aliases: doc]
-  emacs [args..]             Execute emacs with the appropriate environment
-  eval [form]                Evaluate lisp form with a proper PATH
-  path [patterns..]          Print the PATH (exec-path) from workspace                                                                                                                       [aliases: exec-path]
-  exec [args..]              Execute command with correct environment PATH set up
-  files [patterns..]         Print all package files
-  format <type>              Run formatters                                                                                                                                                        [aliases: fmt]
-  generate <type>            Generate files that are used for the development
-  info                       Display information about the current package
-  init [files..]             Initialize project to use Eask
-  install-deps               Automatically install package dependencies                                                                                                  [aliases: install-dependencies, prepare]
-  install [names..]          Install packages
-  keywords                   List available keywords that can be used in the header section
-  link <action>              Manage links
-  lint <type>                Run linters
-  list                       List packages
-  load-path [patterns..]     Print the load-path from workspace
-  load [files..]             Load elisp files
-  outdated                   Show all outdated dependencies
-  package-directory          Print path to package directory
-  package [destination]      Build a package artifact, and put it into the given destination                                                                                                      [aliases: pack]
-  recipe                     Suggest a recipe format
-  recompile [names..]        Byte-recompile `.el' files
-  refresh                    Download package archives
-  reinstall [names..]        Reinstall packages
-  run <type>                 Run custom tasks
-  search [queries..]         Search packages
-  status                     Display the state of the workspace
-  test <type>                Run regression/unit tests
-  uninstall [names..]        Uninstall packages                                                                                                                                                 [aliases: delete]
-  upgrade [names..]          Upgrade packages
-  locate                     Print out Eask installed location
-  upgrade-eask               Upgrade Eask itself                                                                                                                                          [aliases: upgrade-self]
+COMMANDS:
+  build          Build the executable
+  clean          Delete various files produced during building
+  create         Create a new Common Lisp project
+  dists          List out all installed dists
+  info           Display information about the current system(s)
+  install        Install systems
+  install-deps   Automatically install system dependencies
+  install-dists  Install dists
+  list           List the registered system
+  status         Display the state of the workspace
+  uninstall      Uninstall systems
 
-Proxy Options:
-      --proxy        update proxy for HTTP and HTTPS to host                                                                                                                                             [string]
-      --http-proxy   update proxy for HTTP to host                                                                                                                                                       [string]
-      --https-proxy  update proxy for HTTPS to host                                                                                                                                                      [string]
-      --no-proxy     set no-proxy to host                                                                                                                                                                [string]
+AUTHORS:
+  Jen-Chieh Shen <jcs090218@gmail.com>
 
-Options:
-      --version      output version information and exit                                                                                                                                                [boolean]
-      --help         show usage instructions                                                                                                                                                            [boolean]
-      --show-hidden  Show hidden commands and options                                                                                                                                                   [boolean]
-  -g, --global       change default workspace to ~/.eask/                                                                                                                                               [boolean]
-  -c, --config       change default workspace to ~/.emacs.d/                                                                                                                                            [boolean]
-  -a, --all          enable all flag                                                                                                                                                                    [boolean]
-  -q, --quick        start cleanly without loading the configuration files                                                                                                                              [boolean]
-  -f, --force        enable force flag                                                                                                                                                                  [boolean]
-      --debug        turn on debug mode                                                                                                                                                                 [boolean]
-      --strict       report error instead of warnings                                                                                                                                                   [boolean]
-      --allow-error  continue the executioon even there is error reported                                                                                                                               [boolean]
-      --insecure     allow insecure connection                                                                                                                                                          [boolean]
-      --no-color     enable/disable color output                                                                                                                                                        [boolean]
-  -v, --verbose      set verbosity from 0 to 5                                                                                                                                                           [number]
-
-For more information, find the manual at https://emacs-eask.github.io/
+LICENSE:
+  MIT
 ```
 
-## 🗃️ `eask` 命令
+## 🗃️ `qob` 命令
 
 最常見的用法可能是在當前目錄作為輸入目錄的情況下運行 eask。 然後你運行 eask 後跟一個子命令：
 

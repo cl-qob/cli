@@ -3,18 +3,18 @@ title: 🔨 Basic Usage
 weight: 250
 ---
 
-Eask’s CLI is fully featured but simple to use, even for those who have very
+Qob’s CLI is fully featured but simple to use, even for those who have very
 limited experience working from the command line.
 
 The following is a description of the most common commands you will use while
-developing your Eask project. See the [Commands and options](https://emacs-eask.github.io/Getting-Started/Commands-and-options/)
-for a comprehensive view of Eask’s CLI.
+developing your Common Lisp project. See the [Commands and options](https://cl-qob.github.io/Getting-Started/Commands-and-options/)
+for a comprehensive view of Qob’s CLI.
 
-Once you have installed [Eask](), make sure it is in your `PATH`. You can test
-that Eask has been installed correctly via the help command:
+Once you have installed [Qob](), make sure it is in your `PATH`. You can test
+that Qob has been installed correctly via the help command:
 
 ```
-$ eask --help
+$ qob --help
 ```
 
 {{< hint ok >}}
@@ -25,98 +25,60 @@ options!
 The output you see in your console should be similar to the following:
 
 ```
-eask is the main command, used to manage your Emacs dependencies
+NAME:
+  qob - CLI for building, running, testing, and managing your Common Lisp dependencies
 
-Eask is a command-line tool that helps you build, lint, and test Emacs Lisp packages.
+USAGE:
+  qob [global-options] [<command>] [command-options] [arguments ...]
 
-Usage: eask <command> [options..]
+OPTIONS:
+      --help           display usage information and exit
+      --no-color       enable/disable color output
+      --version        display version and exit
+  -a, --all            enable all flag
+  -g, --global         change default workspace to ~/.qob/
+  -v, --verbose <INT>  set verbosity from 0 to 5 [default: 3]
 
-Commands:
-  analyze [files..]          Run Eask checker
-  archives                   List out all package archives                                                                                                                                     [aliases: sources]
-  clean <type>               Delete various files produced during building
-  compile [names..]          Byte-compile `.el' files
-  create <type>              Create a new elisp project
-  docker <version> [args..]  Launch specified Emacs version in a Docker container
-  docs [names..]             Build documentation                                                                                                                                                   [aliases: doc]
-  emacs [args..]             Execute emacs with the appropriate environment
-  eval [form]                Evaluate lisp form with a proper PATH
-  path [patterns..]          Print the PATH (exec-path) from workspace                                                                                                                       [aliases: exec-path]
-  exec [args..]              Execute command with correct environment PATH set up
-  files [patterns..]         Print all package files
-  format <type>              Run formatters                                                                                                                                                        [aliases: fmt]
-  generate <type>            Generate files that are used for the development
-  info                       Display information about the current package
-  init [files..]             Initialize project to use Eask
-  install-deps               Automatically install package dependencies                                                                                                  [aliases: install-dependencies, prepare]
-  install [names..]          Install packages
-  keywords                   List available keywords that can be used in the header section
-  link <action>              Manage links
-  lint <type>                Run linters
-  list                       List packages
-  load-path [patterns..]     Print the load-path from workspace
-  load [files..]             Load elisp files
-  outdated                   Show all outdated dependencies
-  package-directory          Print path to package directory
-  package [destination]      Build a package artifact, and put it into the given destination                                                                                                      [aliases: pack]
-  recipe                     Suggest a recipe format
-  recompile [names..]        Byte-recompile `.el' files
-  refresh                    Download package archives
-  reinstall [names..]        Reinstall packages
-  run <type>                 Run custom tasks
-  search [queries..]         Search packages
-  status                     Display the state of the workspace
-  test <type>                Run regression/unit tests
-  uninstall [names..]        Uninstall packages                                                                                                                                                 [aliases: delete]
-  upgrade [names..]          Upgrade packages
-  locate                     Print out Eask installed location
-  upgrade-eask               Upgrade Eask itself                                                                                                                                          [aliases: upgrade-self]
+COMMANDS:
+  build          Build the executable
+  clean          Delete various files produced during building
+  create         Create a new Common Lisp project
+  dists          List out all installed dists
+  info           Display information about the current system(s)
+  install        Install systems
+  install-deps   Automatically install system dependencies
+  install-dists  Install dists
+  list           List the registered system
+  status         Display the state of the workspace
+  uninstall      Uninstall systems
 
-Proxy Options:
-      --proxy        update proxy for HTTP and HTTPS to host                                                                                                                                             [string]
-      --http-proxy   update proxy for HTTP to host                                                                                                                                                       [string]
-      --https-proxy  update proxy for HTTPS to host                                                                                                                                                      [string]
-      --no-proxy     set no-proxy to host                                                                                                                                                                [string]
+AUTHORS:
+  Jen-Chieh Shen <jcs090218@gmail.com>
 
-Options:
-      --version      output version information and exit                                                                                                                                                [boolean]
-      --help         show usage instructions                                                                                                                                                            [boolean]
-      --show-hidden  Show hidden commands and options                                                                                                                                                   [boolean]
-  -g, --global       change default workspace to ~/.eask/                                                                                                                                               [boolean]
-  -c, --config       change default workspace to ~/.emacs.d/                                                                                                                                            [boolean]
-  -a, --all          enable all flag                                                                                                                                                                    [boolean]
-  -q, --quick        start cleanly without loading the configuration files                                                                                                                              [boolean]
-  -f, --force        enable force flag                                                                                                                                                                  [boolean]
-      --debug        turn on debug mode                                                                                                                                                                 [boolean]
-      --strict       report error instead of warnings                                                                                                                                                   [boolean]
-      --allow-error  continue the executioon even there is error reported                                                                                                                               [boolean]
-      --insecure     allow insecure connection                                                                                                                                                          [boolean]
-      --no-color     enable/disable color output                                                                                                                                                        [boolean]
-  -v, --verbose      set verbosity from 0 to 5                                                                                                                                                           [number]
-
-For more information, find the manual at https://emacs-eask.github.io/
+LICENSE:
+  MIT
 ```
 
-## 🗃️ The `eask` Command
+## 🗃️ The `qob` Command
 
 The most common usage is probably to run eask with your current directory being
 the input directory. Then you run eask followed by a subcommand:
 
 ```sh
-$ eask info             # Print out Eask-file information
+$ Qob info             # Print out Eask-file information
 ```
 
 Notice the subcommand can be nested:
 
 ```sh
-$ eask clean workspace  # Deletes your `.eask` folder
+$ Qob clean workspace  # Deletes your `.Qob` folder
 ```
 
 Pass in option `--help` to look up more information regarding the command you
 are using:
 
 ```sh
-$ eask clean --help
+$ Qob clean --help
 ```
 
 The output, and it shows there are 7 subcommands supported:
@@ -153,9 +115,9 @@ Here is a list of known nested subcommands:
 - eask source
 - eask test
 
-## 📌 Knowing your `elpa` directory
+## 📌 Knowing your `quicklisp` directory
 
-Eask creates an isolated environment, so it won't create any side effects after
+Qob creates an isolated environment, so it won't create any side effects after
 playing, testing, and running your elisp packages. But it's important to know
 what elpa directory (you can think of this as your `.emacs.d`) the current Eask
 session is pointing to, so you can release the full potential of this tool!

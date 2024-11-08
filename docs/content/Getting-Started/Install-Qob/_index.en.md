@@ -1,11 +1,11 @@
 ---
-title: 💾 Install Eask
+title: 💾 Install Qob
 weight: 200
 ---
 
 This document guides you through the installation of Eask.
 
-Install Eask on macOS, Linux, Windows, BSD, and on any machine that can run the [Node.js][].
+Install Qob on macOS, Linux, Windows, BSD, and on any machine that can run the [Node.js][].
 
 {{< toc >}}
 

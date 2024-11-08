@@ -1,5 +1,5 @@
 ---
-title: 🔭 尋找 Emacs
+title: 🔭 尋找 Lisp
 weight: 150
 ---
 
