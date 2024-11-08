@@ -73,6 +73,7 @@ $ make build
 ## 🔗 Links
 
 - [Documentation](https://cl-qob.github.io/)
+- [FAQ](https://cl-qob.github.io/FAQ/)
 
 ## 🧪 Testing
 
