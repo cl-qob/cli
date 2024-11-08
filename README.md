@@ -73,6 +73,9 @@ $ make build
 ## 🔗 Links
 
 - [Documentation](https://cl-qob.github.io/)
+- [Installation](https://cl-qob.github.io/Getting-Started/Install-Eask/)
+- [Command-line interface](https://cl-qob.github.io/Getting-Started/Commands-and-options/)
+- [Examples](https://cl-qob.github.io/Examples/Real-project-examples/)
 - [FAQ](https://cl-qob.github.io/FAQ/)
 
 ## 🧪 Testing
