@@ -13,6 +13,7 @@
    ;; src/utils.lsip
    inhibit-ql-download
    force-global-p
+   exec-dir
    call-script
    call-impls
    ;; cmds/qob.lisp

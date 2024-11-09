@@ -1,4 +1,4 @@
-;;;; cmds/core/list.lisp --- Build executable
+;;;; cmds/core/list.lisp --- List the registered systems
 
 ;;; Commentary
 ;;
@@ -25,7 +25,7 @@
   "The `list' command."
   (clingon:make-command
    :name "list"
-   :description "List the registered system"
+   :description "List the registered systems"
    :options (options)
    :handler #'handler))
 

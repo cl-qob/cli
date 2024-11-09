@@ -48,7 +48,8 @@ COMMANDS:
   install        Install systems
   install-deps   Automatically install system dependencies
   install-dists  Install dists
-  list           List the registered system
+  list           List the registered systems
+  locate         Print out Qob installed location
   status         Display the state of the workspace
   uninstall      Uninstall systems
 
