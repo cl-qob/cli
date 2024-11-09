@@ -26,7 +26,8 @@ repository!
 
 ## ❓ Why clingon?
 
-WIP
+There are limited options for command line parsers in Common Lisp,
+so I opted for the most mature one, which is also recommended by the community.
 
 
 <!-- Links -->

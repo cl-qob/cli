@@ -78,7 +78,7 @@ Pass in option `--help` to look up more information regarding the command you
 are using:
 
 ```sh
-$ Qob clean --help
+$ qob clean --help
 ```
 
 The output, and it shows there are 7 subcommands supported:

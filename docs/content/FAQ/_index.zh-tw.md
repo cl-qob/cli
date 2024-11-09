@@ -7,7 +7,7 @@ weight: 900
 
 {{< toc >}}
 
-# 🔍 About Qob
+# 🔍 關於 Qob
 
 ## ❓ 誰應該使用這個工具？
 
@@ -22,9 +22,9 @@ weight: 900
 
 # 🔍 技術選擇
 
-## ❓ 為什麼是 clingon?
+## ❓ 為什麼選擇 clingon?
 
-WIP
+Common Lisp 的命令列解析器選項有限、所以我選擇了最成熟的，也是社群推薦的。
 
 
 <!-- Links -->
