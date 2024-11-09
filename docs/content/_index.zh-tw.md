@@ -5,19 +5,19 @@ geekdocAlign: center
 geekdocAnchor: false
 ---
 
-### CLI 建立, 執行, 測試, 和管理你的 Emacs Lisp 依賴
+### CLI 建立, 執行, 測試, 和管理你的 Common Lisp 依賴
 
 <p>
 <img src="/logo.png" width="15%" />
 </p>
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-green.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![Emacs Version](https://img.shields.io/badge/Emacs-26.1+-7F5AB6.svg?logo=gnu%20emacs&logoColor=white)](https://www.gnu.org/software/emacs/download.html)
-[![Release](https://img.shields.io/github/release/emacs-eask/cli.svg?logo=github)](https://github.com/emacs-eask/cli/releases/latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![SBCL Version](https://img.shields.io/badge/SBCL-2.2.9+-white.svg?logo=awslambda&logoColor=white)](https://www.sbcl.org/)
+[![Release](https://img.shields.io/github/tag/cl-qob/cli.svg?label=release&logo=github)](https://github.com/cl-qob/cli/releases/latest)
 
-安裝 Eask 之後, 你就可以很輕鬆的開發任何 Elisp 包.
+安裝 Qob 之後, 你就可以很輕鬆的開發任何 Common Lisp 包.
 
-開箱及用, Eask 支援 **50+ 指令** 來幫助整個你開發. 🔥
+開箱及用, Qob 支援 **10+ 指令** 來幫助整個你開發. 🔥
 
 {{< button size="large" relref="Getting-Started/Introduction/" >}}開始使用{{< /button >}}
 

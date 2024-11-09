@@ -20,43 +20,6 @@ We are currently in a *early-development* phase.  API, and commands are not stab
 
 Things might still break at any point.
 
-## 🔧 Usage
-
-```
-NAME:
-  qob - CLI for building, running, testing, and managing your Common Lisp dependencies
-
-USAGE:
-  qob [global-options] [<command>] [command-options] [arguments ...]
-
-OPTIONS:
-      --help           display usage information and exit
-      --no-color       enable/disable color output
-      --version        display version and exit
-  -a, --all            enable all flag
-  -g, --global         change default workspace to ~/.qob/
-  -v, --verbose <INT>  set verbosity from 0 to 5 [default: 3]
-
-COMMANDS:
-  build          Build the executable
-  clean          Delete various files produced during building
-  create         Create a new Common Lisp project
-  dists          List out all installed dists
-  info           Display information about the current system(s)
-  install        Install systems
-  install-deps   Automatically install system dependencies
-  install-dists  Install dists
-  list           List the registered system
-  status         Display the state of the workspace
-  uninstall      Uninstall systems
-
-AUTHORS:
-  Jen-Chieh Shen <jcs090218@gmail.com>
-
-LICENSE:
-  MIT
-```
-
 ## 🔨 Development
 
 You need the following softwares:

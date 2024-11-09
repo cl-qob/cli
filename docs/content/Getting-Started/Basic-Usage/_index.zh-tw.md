@@ -12,7 +12,7 @@ Eask 的 CLI 功能齊全但易於使用，即使對於那些使用命令行的�
 一旦你安裝了 [Eask]()，確保它在你的 `PATH` 中。 您可以通過 help 命令測試 Eask 是否已正確安裝：
 
 ```
-$ eask --help
+$ qob --help
 ```
 
 {{< hint ok >}}
