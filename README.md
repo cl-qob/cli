@@ -12,26 +12,13 @@ Qob attempts to be good at these things:
 - Works on all modern operating systems: [Linux][], [macOS][], and [Windows][].
 - No extra file required, qlfile, `.ros` files, etc.
 
-We aim to make Qob an all-in-one tool so users no longer need to install tools like [Roswell] and [Qlot][], which only serve specific goals.
+We aim to make Qob an all-in-one tool so users no longer need to install tools like [Roswell] and [Qlot][], which only serve specific goals.
 
 ## 🚧 State of the project
 
 We are currently in a *early-development* phase.  API, and commands are not stable.
 
 Things might still break at any point.
-
-## 🔨 Development
-
-You need the following softwares:
-
-- [SBCL][]
-- [Make][]
-
-then,
-
-```sh
-$ make build
-```
 
 ## 🔗 Links
 
