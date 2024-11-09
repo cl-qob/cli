@@ -32,6 +32,15 @@ $ curl.exe -fsSL https://raw.githubusercontent.com/cl-qob/cli/master/webinstall/
 
 ## 💾 包管理器
 
+### 📦 Nix (macOS 或 Linux)
+
+[Nix][] 是一個適用於 macOS 和 Linux 的免費開源套件管理器。
+若要安裝 Qob CLI，請執行下列操作：
+
+```sh
+$ nix profile install nixpkgs#qob-cli
+```
+
 ### 📦 Homebrew (macOS 或 Linux)
 
 [Homebrew][] 是一個適用於 macOS 和 Linux 的免費開源套件管理器。
@@ -154,6 +163,7 @@ set PATH=%PATH%;c:/path/to/qob-cli/bin
 
 [packaging/debian]: https://github.com/cl-qob/packaging/tree/master/debian
 
+[Nix]: https://nixos.org/
 [Homebrew]: https://brew.sh/
 [MacPorts]: https://www.macports.org/
 [Snap]: https://snapcraft.io/

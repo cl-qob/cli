@@ -35,6 +35,15 @@ $ curl.exe -fsSL https://raw.githubusercontent.com/cl-qob/cli/master/webinstall/
 
 ## 💾 Package managers
 
+### 📦 Nix (macOS or Linux)
+
+[Nix][] is a free and open-source package manager for macOS and Linux.
+To install the Qob CLI:
+
+```sh
+$ nix profile install nixpkgs#qob-cli
+```
+
 ### 📦 Homebrew (macOS or Linux)
 
 [Homebrew][] is a free and open-source package manager for macOS and Linux.
@@ -162,6 +171,7 @@ the current `qob`'s version number! 🎉 🎊
 
 [packaging/debian]: https://github.com/cl-qob/packaging/tree/master/debian
 
+[Nix]: https://nixos.org/
 [Homebrew]: https://brew.sh/
 [MacPorts]: https://www.macports.org/
 [Snap]: https://snapcraft.io/
