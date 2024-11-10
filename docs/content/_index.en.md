@@ -1,5 +1,5 @@
 ---
-title: 
+title:
 geekdocNav: false
 geekdocAlign: center
 geekdocAnchor: false
@@ -25,30 +25,34 @@ Out of the box, Qob supports **10+ commands** to help you throughout development
 
 {{< columns >}}
 
-### Successor to Cask
+### ASDF and Quicklisp Integration
 
-<img src="/images/cask-large.png" width="60%" />
+<img src="/images/quicklisp.png" width="60%" />
 
-Eask is very similar to Cask!
+Beginners often need clarification about package management in Common Lisp.
+Having [ASDF][] and [Quicklisp][] built-in can help get things up and running.
 
-Eask has **all the commands** from Cask, plus even more!
-
-<--->
-
-### Out-of-the-box[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-
-<img src="/images/lint.png" width="85%" />
-
-Eask comes with 10+ built-in linters and test runners, so you don't have to worry about how to use it!
+[ASDF]: https://asdf.common-lisp.dev/
+[Quicklisp]: https://www.quicklisp.org/
 
 <--->
 
-### Eask-file is an Elisp file
+### Out-of-the-box
 
-<img src="/images/eask-elisp.png" width="90%" />
+<img src="/images/status.png" width="110%" />
 
-Eask is treated as an Elisp file.
+Has the most commonly used facilities and aims for the best user experience.
 
-You can do anything just like you do in Emacs!
+<--->
+
+### Alternatives to Roswell and Qlot
+
+<img src="/images/roswell.png" width="60%" />
+
+All-in-one tool so users no longer need to install tools like
+[Roswell][] and [Qlot][], which only serve specific goals.
+
+[Roswell]: https://roswell.github.io/
+[Qlot]: https://github.com/fukamachi/qlot
 
 {{< /columns >}}

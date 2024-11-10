@@ -1,5 +1,5 @@
 ---
-title: 
+title:
 geekdocNav: false
 geekdocAlign: center
 geekdocAnchor: false
@@ -25,30 +25,36 @@ geekdocAnchor: false
 
 {{< columns >}}
 
-### Cask 的繼任者
+### ASDF 與 Quicklisp 整合
 
-<img src="/images/cask-large.png" width="60%" />
+<img src="/images/quicklisp.png" width="60%" />
 
-Eask 與 Cask 非常相似！
+Qob 已整合 [ASDF][] 和 [Quicklisp][]
 
-Eask 擁有 Cask 的**所有命令**甚至更多！
+初學者通常需要澄清 Common Lisp 中的套件管理。
+內建的 [ASDF][] 和 [Quicklisp][] 可以幫助您開始運作。
+
+[ASDF]: https://asdf.common-lisp.dev/
+[Quicklisp]: https://www.quicklisp.org/
 
 <--->
 
 ### 開箱及用
 
-<img src="/images/lint.png" width="85%" />
+<img src="/images/status.png" width="110%" />
 
-自帶 10+ 內置 linters 和 test runners，所以你不用擔心如何使用它!
+擁有最常用的設施，並追求最佳的使用者體驗。
 
 <--->
 
-### Eask-file 是一個 elisp 文件
+### Roswell 和 Qlot 的替代方案
 
-<img src="/images/eask-elisp.png" width="90%" />
+<img src="/images/roswell.png" width="60%" />
 
-Eask 被視為 elisp 文件。
+多合一工具讓使用者不再需要安裝 [Roswell][] 和 [Qlot][] 等工具，
+這些工具只能達到特定目標。
 
-您可以像在 Emacs 中那樣做任何事情！
+[Roswell]: https://roswell.github.io/
+[Qlot]: https://github.com/fukamachi/qlot
 
 {{< /columns >}}
