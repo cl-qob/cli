@@ -29,10 +29,10 @@
   (qob-println "Initialize the .asd file for your project...")
   (qob-println "")
   (let* ((name-or-path (qob-2str name-or-path))
-         (output (qob-el-expand-file-name (qob-s-slash name-or-path)))
-         (dirname (qob-el-file-name-nondirectory output))
+         (output (qob-expand-file-name (qob-s-slash name-or-path)))
+         (dirname (qob-file-name-nondirectory output))
          (home (qob-s-slash (user-homedir-pathname)))
-         (username (qob-el-file-name-nondirectory home)))
+         (username (qob-file-name-nondirectory home)))
     (cl-project:make-project
      (pathname output)
      :name        (qob-create-cl-project--rl "Name: "        dirname)

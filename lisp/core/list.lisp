@@ -41,7 +41,7 @@
     (qob-init-systems))
 
   (setq post-systems (remove-if (lambda (system)
-                                  (qob-el-memq system pre-systems))
+                                  (qob-memq system pre-systems))
                                 (asdf:registered-systems))
         post-systems (reverse post-systems))
 

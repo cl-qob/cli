@@ -10,6 +10,7 @@
 ;;; Code
 
 (qob-init-asds)
+(qob-init-file)
 
 (defvar qob-status--listed 0
   "Count information listed.")
@@ -89,7 +90,7 @@
 
 (qob-status--print-title "Qob-file:")
 (qob-status--print-infos
- `(("Qob file" nil ,(qob-status--file-dir nil))))
+ `(("Qob file" ,qob-file ,(qob-status--file-dir qob-file))))
 
 (when (qob-local-p)
   (qob-status--print-title "Workspace:")

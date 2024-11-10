@@ -22,29 +22,6 @@
   "Execute BODY without output."
   `(with-open-stream (*standard-output* (make-broadcast-stream)) ,@body))
 
-(defun qob-format (string &rest objects)
-  "Format string."
-  (apply #'qob-el-format string objects))
-
-(defun qob-2str (object)
-  "Convert to string."
-  (funcall #'qob-el-2str object))
-
-(defun qob-s-replace (old new str)
-  "Replaces OLD with NEW in S."
-  (let ((pos (search old str)))
-    (if pos
-        (concatenate 'string
-                     (subseq str 0 pos)
-                     new
-                     (subseq str (+ pos (length old))))
-        str)))  ; Return original if substring not found
-
-(defun qob-s-slash (path)
-  "Ensure path is a directory."
-  (let ((path (qob-el-2str path)))
-    (concatenate 'string path "/")))
-
 (defun qob-file-get-lines (filename)
   "Get FILENAME's contents in list of lines."
   (with-open-file (stream filename)
@@ -64,6 +41,12 @@
   (let ((len (if (numberp len-or-list) len-or-list (length len-or-list))))
     (if (<= len 1) form-1 form-2)))
 
+(defun qob-eval (str)
+  "Evaluate a STR."
+  (let ((*readtable* (copy-readtable *readtable*)))
+    (setf (readtable-case *readtable*) :preserve)
+    (eval (read-from-string str))))
+
 ;;
 ;;; Color
 
@@ -76,7 +59,7 @@
 
 (defun qob--format-paint-kwds (msg &rest args)
   "Paint keywords after format MSG and ARGS."
-  (let* ((string (apply #'qob-el-format msg args))
+  (let* ((string (apply #'qob-format msg args))
          (string (qob--msg-paint-kwds string)))
     string))
 
@@ -146,11 +129,9 @@ The arguments FMT and ARGS are used to form the output message."
   "Parse arguments.
 
 Argument ENV-NAME is used to get the argument string."
-  (let* ((*readtable* (copy-readtable *readtable*))
-         (args (uiop:getenv env-name))
+  (let* ((args (uiop:getenv env-name))
          (args (concatenate 'string "'" args)))
-    (setf (readtable-case *readtable*) :preserve)
-    (eval (read-from-string args))))
+    (qob-eval args)))
 
 (defvar qob-args (qob-parse-args "QOB_ARGS")
   "Positionl arguments (no options).")
@@ -373,7 +354,7 @@ If optional argument WITH-TEST is non-nil; include test ASD files as well."
   (uiop:if-let ((files (directory "*.asd"))
                 (_ (not with-test))
                 (tests (qob-asd-test-files)))
-    (remove-if (lambda (filename) (qob-el-memq filename tests)) files)
+    (remove-if (lambda (filename) (qob-memq filename tests)) files)
     files))
 
 (defvar qob--asds-init-p nil
@@ -385,7 +366,7 @@ If optional argument WITH-TEST is non-nil; include test ASD files as well."
 (defun qob-newly-loaded-systems (pre-systems)
   "Return the a newly loaded systems compare to PRE-SYSTESM."
   (remove-if (lambda (system)
-               (qob-el-memq system pre-systems))
+               (qob-memq system pre-systems))
              (asdf:registered-systems)))
 
 (defun qob-init-asds (&optional force)
@@ -435,7 +416,7 @@ to actually set up the systems."
 
 (defun qob-load-system (filename)
   "Load the system from ASD's FILENAME; and return the registered name."
-  (let ((dir (qob-el-file-name-directory filename))
+  (let ((dir (qob-file-name-directory filename))
         (file (pathname-name filename)))
     (push dir asdf:*central-registry*)
     (asdf:load-system file)
@@ -475,41 +456,35 @@ Set up the systems; on contrary, you should use the function
 (defvar qob--init-file-p nil
   "Set to t when Qob file is initialized.")
 
-(defvar qob-files nil
-  "Read Qob files.")
+(defvar qob-file nil
+  "Read the Qob file.")
 
 (defvar qob-local-systems nil
   "A list of local systems.")
 
-(defun qob-depends-on (&rest args)
+(defun depends-on (&rest args)
   "Define a local systems"
   (push args qob-local-systems))
 
 (defun qob-init-file-p ()
   "Return non-nil if Qob file is read."
-  (and qob--init-file-p qob-files))
-
-(defun qob-files ()
-  "Return a list of Qob files."
-  (directory "**/Qob"))
+  (and qob--init-file-p qob-file))
 
 (defun qob-init-file (&optional force)
   "Initialize the Qob file"
   (when (or (not qob--init-file-p)
             force)
-    (setq qob-files nil)  ; reset
+    (setq qob-file nil)  ; reset
     (qob-with-progress
      (qob-ansi-green "Loading Qob file... ")
      (qob-with-verbosity
       'debug
-      (let ((files (qob-files)))
-        (mapc (lambda (file)
-                (when (uiop:file-exists-p file)
-                  (load file)
-                  (push file qob-files)
-                  (qob-println "Loaded Qob file ~A" file)))
-              files)))
-     (qob-ansi-green (if (qob-init-file-p) "done ✓" "skipped ✗")))
+      (let ((file (qob-locate-dominating-file "Qob")))
+        (when file
+          (load file)
+          (setq qob-file file)
+          (qob-println "Loaded Qob file ~A" file))))
+     (qob-ansi-green (if qob-file "done ✓" "skipped ✗")))
     (setq qob--init-file-p t)))
 
 ;;
