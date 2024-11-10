@@ -17,7 +17,7 @@
                      "0"))
         (desc (or (asdf:system-description system)
                   "")))
-    (qob-println "   [+] ~A  ~A  ~A"
+    (qob-println "   [+] ~20A  ~8A  ~A"
                  name version desc)))
 
 (defun qob-list--print-system-by-name (name)
@@ -26,16 +26,12 @@
     (qob-list--print-system name system)))
 
 (defun qob-list--print-dist (dist)
-  ""
+  "Print DIST's systems."
   (let ((systems (ql-dist:provided-systems dist)))
     (dolist (system systems)
-      (let ((name    (ql-dist:name system))
-            (version (or (ql-dist:version system)
-                         "0"))
-            )
-        (qob-println "   [+] ~A (~A)"
-                     name version)
-        ))))
+      ;; TODO: Print version?
+      (let ((name    (ql-dist:name system)))
+        (qob-println "   [+] ~A" name)))))
 
 (let* ((pre-systems (asdf:registered-systems))
        (pre-systems (reverse pre-systems))

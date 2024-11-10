@@ -31,10 +31,3 @@
   :build-operation "program-op"
   :build-pathname "bin/qob"
   :entry-point "qob-cli:main")
-
-(defsystem "qob-cli/deploy"
-  :depends-on ("qob-cli")
-  :defsystem-depends-on (:deploy)
-  :build-operation "deploy-op"
-  :build-pathname "qob"
-  :entry-point "qob-cli:main")
