@@ -14,8 +14,6 @@
 
 ;;; Code
 
-(qob-init-ql)
-
 (qob-load "shared")
 
 (let ((names qob-args))

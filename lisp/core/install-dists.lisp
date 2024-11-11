@@ -9,8 +9,6 @@
 
 ;;; Code
 
-(qob-init-ql)
-
 (let ((names qob-args))
   (cond ((zerop (length names))
          (qob-help "core/install-dists"))

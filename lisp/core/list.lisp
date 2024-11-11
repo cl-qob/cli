@@ -9,8 +9,6 @@
 
 ;;; Code
 
-(qob-init-ql)
-
 (defun qob-list--print-system (name system)
   "Print the SYSTEM."
   (let ((version (or (asdf:component-version system)

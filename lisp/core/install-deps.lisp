@@ -9,9 +9,7 @@
 
 ;;; Code
 
-(qob-init-ql)
 (qob-init-asds)
-(qob-init-file)
 
 (qob-load "shared")
 
@@ -22,13 +20,13 @@
 
 (when (qob-init-file-p)
   (let ((cl-autorepo::*repo-dir* (qob-ql-local-dir))
-        (total (length qob-local-systems))
+        (total (length qob-depends-on))
         (count 1)
         (installed 0)
         (skipped 0))
     (qob-msg "Installing ~A system~A... " total (qob--sinr total "" "s"))
     (qob-msg "")
-    (dolist (args qob-local-systems)
+    (dolist (args qob-depends-on)
       (let* ((name (nth 0 args))
              (url (nth 1 args))
              (installed-p (qob-ignore-errors (asdf:find-system name))))

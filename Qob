@@ -1,3 +1,6 @@
-; -*- mode: lisp; lexical-binding: t -*-
+;; -*- mode: lisp; lexical-binding: t -*-
+
+(source "quicklisp")
+(source "ultralisp")
 
 (depends-on "fsdb" "https://github.com/billstclair/fsdb" :git)

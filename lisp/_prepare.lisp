@@ -326,11 +326,11 @@ Execute forms BODY limit by the verbosity level (SYMBOL)."
   (uiop:merge-pathnames* "local-projects/" (qob-ql-installed-dir)))
 
 (defun qob-init-ql (&optional force)
-  "Initialize QuickLisp."
+  "Initialize Quicklisp."
   (when (or (not qob--ql-init-p)
             force)
     (qob-with-progress
-     (qob-ansi-green "Setting up QuickLisp... ")
+     (qob-ansi-green "Setting up Quicklisp... ")
      (let* ((ql-dir (qob-ql-installed-dir))
             (ql-setup (uiop:merge-pathnames* "setup.lisp" ql-dir)))
        (unless qob-quicklisp-installed-p
@@ -339,6 +339,9 @@ Execute forms BODY limit by the verbosity level (SYMBOL)."
          (load ql-setup)))
      (qob-ansi-green "done ✓"))
     (setq qob--ql-init-p t)))
+
+;; Must include!
+(qob-init-ql)
 
 ;;
 ;;; ASDF file
@@ -451,20 +454,13 @@ Set up the systems; on contrary, you should use the function
     (setq qob--systems-init-p t)))
 
 ;;
-;;; DSL
+;;; Qob file
 
 (defvar qob--init-file-p nil
   "Set to t when Qob file is initialized.")
 
 (defvar qob-file nil
   "Read the Qob file.")
-
-(defvar qob-local-systems nil
-  "A list of local systems.")
-
-(defun depends-on (&rest args)
-  "Define a local systems"
-  (push args qob-local-systems))
 
 (defun qob-init-file-p ()
   "Return non-nil if Qob file is read."
@@ -488,10 +484,36 @@ Set up the systems; on contrary, you should use the function
     (setq qob--init-file-p t)))
 
 ;;
+;;; DSL
+
+(defvar qob-depends-on nil)
+
+(defun source (name &optional location)
+  "Add dist NAME with LOCATION."
+  (let ((dist (ql-dist:find-dist name))
+        (url (or location
+                 (cdr (assoc (read-from-string name) qob-source-mapping)))))
+    (if dist
+        (ql-dist:enable dist)
+        (if url (ql-dist:install-dist url :prompt nil)
+            (qob-error "Can't find dist with name: ~A" name)))))
+
+(defun depends-on (&rest args)
+  "Define a local systems"
+  (push args qob-depends-on))
+
+;;
 ;;; Initialization
 
 (ensure-directories-exist (qob-dot-impls))
 
 (setq qob-enable-color (not (qob-no-color-p)))
+
+;; All dists are disabled be default.
+(dolist (dist (ql-dist:all-dists))
+  (ql-dist:disable dist))
+
+;; Load configuration.
+(qob-init-file)
 
 ;;; End of lisp/_prepare.lisp

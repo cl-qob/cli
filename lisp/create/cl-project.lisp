@@ -9,8 +9,6 @@
 
 ;;; Code
 
-(qob-init-ql)
-
 (ql:quickload "cl-project")
 
 (defun qob-create-cl-project--rl (prompt &optional default-value)

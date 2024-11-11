@@ -9,8 +9,6 @@
 
 ;;; Code
 
-(qob-init-ql)
-
 (defun qob-dists--print (dists)
   "Print list of dists."
   (dolist (dist dists)
@@ -18,8 +16,12 @@
           (version (slot-value dist 'ql-dist:version))
           (url     (or (qob-ignore-errors
                         (slot-value dist 'ql-dist::archive-base-url))
-                       "n/a")))
-      (qob-println "   ~A  ~A  ~A" name version url))))
+                       "n/a"))
+          (enabled-p (ql-dist:enabledp dist)))
+      (qob-println "   ~10A  ~15A  ~30A  ~A" name version url
+                   (if enabled-p
+                       (qob-ansi-green "(enabled)")
+                       (qob-ansi-red "(disabled)"))))))
 
 (let ((dists (ql-dist:all-dists)))
   (qob-info "Available dists:")

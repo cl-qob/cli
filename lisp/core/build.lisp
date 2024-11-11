@@ -14,7 +14,6 @@
 
 ;;; Code
 
-(qob-init-ql)
 (qob-init-systems)
 
 (defvar qob-build--count 0

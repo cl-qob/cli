@@ -10,7 +10,6 @@
 ;;; Code
 
 (qob-init-asds)
-(qob-init-file)
 
 (defvar qob-status--listed 0
   "Count information listed.")

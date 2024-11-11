@@ -1,0 +1,8 @@
+
+💡 You need to specify a Qob-file in your workspace; to create one use
+
+    $ qob init
+
+💡 Or you can execute the command with the -g (--global) option
+
+    $ qob [COMMAND] -g
