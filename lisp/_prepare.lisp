@@ -20,7 +20,8 @@
 
 (defmacro qob-silent (&rest body)
   "Execute BODY without output."
-  `(with-open-stream (*standard-output* (make-broadcast-stream)) ,@body))
+  `(with-open-stream (*standard-output* (make-broadcast-stream))
+     (with-open-stream (*error-output* (make-broadcast-stream)) ,@body)))
 
 (defun qob-file-get-lines (filename)
   "Get FILENAME's contents in list of lines."
@@ -537,27 +538,27 @@ Set up the systems; on contrary, you should use the function
 (cond ((qob-global-p)
        ;; Load configuration.
        (qob-with-verbosity
-        'debug (progn
-                 (qob-file-load (user-homedir-pathname))
-                 (qob-msg "✓ Loading global Qob file in ~A... done!" qob-file))))
+        'debug (if (qob-file-load (user-homedir-pathname))
+                   (qob-msg "✓ Loading global Qob file in ~A... done!" qob-file)
+                   (qob-msg "✗  Loading global Qob file... missing!"))))
       ((qob-special-p)
        ;; Load configuration.
        (qob-with-verbosity
-        'debug (let ((is-local-p))
-                 (qob-file-load (uiop:getcwd))
-                 (if qob-file (setq is-local-p t)
+        'debug (let ((scope ""))
+                 (if (qob-file-load (uiop:getcwd))
+                     (setq scope "global ")
                      (qob-file-load (user-homedir-pathname)))
-                 (qob-msg "✓ Loading ~AQob file in ~A... done!"
-                          (if is-local-p "" "global ")
-                          qob-file))))
+                 (if qob-file
+                     (qob-msg "✓ Loading ~AQob file in ~A... done!" scope qob-file)
+                     (qob-msg "✗ Loading Qob file... missing!")))))
       (t
        ;; All dists are disabled be default.
        (qob-ql-no-dists)
 
        ;; Load configuration.
        (qob-with-verbosity
-        'debug (progn
-                 (qob-file-load (uiop:getcwd))
-                 (qob-msg "✓ Loading Qob file in ~A... done!" qob-file)))))
+        'debug (if (qob-file-load (uiop:getcwd))
+                   (qob-msg "✓ Loading Qob file in ~A... done!" qob-file)
+                   (qob-msg "✗ Loading Qob file... missing!")))))
 
 ;;; End of lisp/_prepare.lisp
