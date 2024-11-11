@@ -534,7 +534,13 @@ Set up the systems; on contrary, you should use the function
 
 (setq qob-enable-color (not (qob-no-color-p)))
 
-(cond ((qob-special-p)
+(cond ((qob-global-p)
+       ;; Load configuration.
+       (qob-with-verbosity
+        'debug (progn
+                 (qob-file-load (user-homedir-pathname))
+                 (qob-msg "✓ Loading global Qob file in ~A... done!" qob-file))))
+      ((qob-special-p)
        ;; Load configuration.
        (qob-with-verbosity
         'debug (let ((is-local-p))
@@ -544,12 +550,6 @@ Set up the systems; on contrary, you should use the function
                  (qob-msg "✓ Loading ~AQob file in ~A... done!"
                           (if is-local-p "" "global ")
                           qob-file))))
-      ((qob-global-p)
-       ;; Load configuration.
-       (qob-with-verbosity
-        'debug (progn
-                 (qob-file-load (user-homedir-pathname))
-                 (qob-msg "✓ Loading global Qob file in ~A... done!" qob-file))))
       (t
        ;; All dists are disabled be default.
        (qob-ql-no-dists)
