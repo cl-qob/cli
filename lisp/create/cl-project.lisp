@@ -11,7 +11,7 @@
 
 (ql:quickload "cl-project")
 
-(defun qob-create-cl-project--rl (prompt &optional default-value)
+(defun qob-read-line (prompt &optional default-value)
   "Like `read-line'."
   (let* ((prompt (if default-value (qob-format "~A(~A) " prompt default-value)
                      prompt))
@@ -33,13 +33,13 @@
          (username (qob-file-name-nondirectory home)))
     (cl-project:make-project
      (pathname output)
-     :name        (qob-create-cl-project--rl "Name: "        dirname)
-     :version     (qob-create-cl-project--rl "Version: "     "1.0.0")
-     :description (qob-create-cl-project--rl "Description: " nil)
-     :author      (qob-create-cl-project--rl "Author: "      username)
-     :email       (qob-create-cl-project--rl "Email: "       nil)
-     :homepage    (qob-create-cl-project--rl "Homepage: "    nil)
-     :license     (qob-create-cl-project--rl "License: "     "MIT"))
+     :name        (qob-read-line "Name: "        dirname)
+     :version     (qob-read-line "Version: "     "1.0.0")
+     :description (qob-read-line "Description: " nil)
+     :author      (qob-read-line "Author: "      username)
+     :email       (qob-read-line "Email: "       nil)
+     :homepage    (qob-read-line "Homepage: "    nil)
+     :license     (qob-read-line "License: "     "MIT"))
     (qob-println "")
     (qob-println "")
     (qob-println "Preparing your new Common Lisp proejct... done ✓")

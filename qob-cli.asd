@@ -18,6 +18,7 @@
                (:file "cmds/core/create")
                (:file "cmds/core/dists")
                (:file "cmds/core/info")
+               (:file "cmds/core/init")
                (:file "cmds/core/install")
                (:file "cmds/core/install-deps")
                (:file "cmds/core/install-dists")

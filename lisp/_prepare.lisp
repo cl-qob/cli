@@ -123,6 +123,20 @@ The arguments FMT and ARGS are used to form the output message."
   (uiop:quit 1))
 
 ;;
+;;; Input
+
+(defun qob-read-line (prompt &optional default-value)
+  "Like `read-line'."
+  (let* ((prompt (if default-value (qob-format "~A(~A) " prompt default-value)
+                     prompt))
+         (answer))
+    (qob-print prompt)
+    (setq answer (read-line))
+    (if (and default-value (string= "" answer))
+        default-value
+        answer)))
+
+;;
 ;;; Environment
 
 (defun qob-parse-args (env-name)
@@ -153,6 +167,9 @@ Argument ENV-NAME is used to get the argument string."
 
 (defvar qob-user-init (uiop:getenv "QOB_USER_INIT")
   "Return the user init file.")
+
+(defvar qob-command (uiop:getenv "QOB_COMMAND")
+  "Hold the current command.")
 
 (defvar qob-quicklisp-installed-p (uiop:getenv "QOB_QUICKLISP_INSTALLED")
   "Return non-nil if Quicklisp is already installed.")
@@ -263,6 +280,25 @@ the `qob-start' execution.")
   (qob--flag-value "--verbose"))
 
 ;;
+;;; Execution
+
+(defun qob-command ()
+  "Return the current command."
+  (qob-s-replace "core/" "" qob-command))
+
+(defun qob-command-p (commands)
+  "Return t if COMMANDS is the current command."
+  (qob-member (qob-command) (qob-listify commands)))
+
+(defun qob-special-p ()
+  "Return t if the command that can be run without Qob-file existence.
+
+These commands will first respect the current workspace.  If the current
+workspace has no valid Qob-file; it will load global workspace instead."
+  (qob-command-p '("init"
+                   "create/cl-project")))
+
+;;
 ;;; Verbose
 
 (defun qob--verb2lvl (symbol)
@@ -342,6 +378,10 @@ Execute forms BODY limit by the verbosity level (SYMBOL)."
 
 ;; Must include!
 (qob-init-ql)
+
+(defun qob-ql-no-dists ()
+  "Disable all dists."
+  (mapc (lambda (dist) (ql-dist:disable dist)) (ql-dist:all-dists)))
 
 ;;
 ;;; ASDF file
@@ -456,32 +496,17 @@ Set up the systems; on contrary, you should use the function
 ;;
 ;;; Qob file
 
-(defvar qob--init-file-p nil
-  "Set to t when Qob file is initialized.")
-
 (defvar qob-file nil
   "Read the Qob file.")
 
-(defun qob-init-file-p ()
-  "Return non-nil if Qob file is read."
-  (and qob--init-file-p qob-file))
-
-(defun qob-init-file (&optional force)
-  "Initialize the Qob file"
-  (when (or (not qob--init-file-p)
-            force)
-    (setq qob-file nil)  ; reset
-    (qob-with-progress
-     (qob-ansi-green "Loading Qob file... ")
-     (qob-with-verbosity
-      'debug
-      (let ((file (qob-locate-dominating-file "Qob")))
-        (when file
-          (load file)
-          (setq qob-file file)
-          (qob-println "Loaded Qob file ~A" file))))
-     (qob-ansi-green (if qob-file "done ✓" "skipped ✗")))
-    (setq qob--init-file-p t)))
+(defun qob-file-load (dir)
+  "Load the Qob file in DIR."
+  (setq qob-file nil)  ; reset
+  (let ((file (qob-locate-dominating-file "Qob" dir)))
+    (when file
+      (load file)
+      (setq qob-file file)))
+  qob-file)
 
 ;;
 ;;; DSL
@@ -509,11 +534,30 @@ Set up the systems; on contrary, you should use the function
 
 (setq qob-enable-color (not (qob-no-color-p)))
 
-;; All dists are disabled be default.
-(dolist (dist (ql-dist:all-dists))
-  (ql-dist:disable dist))
+(cond ((qob-special-p)
+       ;; Load configuration.
+       (qob-with-verbosity
+        'debug (let ((is-local-p))
+                 (qob-file-load (uiop:getcwd))
+                 (if qob-file (setq is-local-p t)
+                     (qob-file-load (user-homedir-pathname)))
+                 (qob-msg "✓ Loading ~AQob file in ~A... done!"
+                          (if is-local-p "" "global ")
+                          qob-file))))
+      ((qob-global-p)
+       ;; Load configuration.
+       (qob-with-verbosity
+        'debug (progn
+                 (qob-file-load (user-homedir-pathname))
+                 (qob-msg "✓ Loading global Qob file in ~A... done!" qob-file))))
+      (t
+       ;; All dists are disabled be default.
+       (qob-ql-no-dists)
 
-;; Load configuration.
-(qob-init-file)
+       ;; Load configuration.
+       (qob-with-verbosity
+        'debug (progn
+                 (qob-file-load (uiop:getcwd))
+                 (qob-msg "✓ Loading Qob file in ~A... done!" qob-file)))))
 
 ;;; End of lisp/_prepare.lisp

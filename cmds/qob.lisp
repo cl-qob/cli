@@ -60,6 +60,7 @@
                    ,(qob-cli/create:command)
                    ,(qob-cli/dists:command)
                    ,(qob-cli/info:command)
+                   ,(qob-cli/init:command)
                    ,(qob-cli/install:command)
                    ,(qob-cli/install-deps:command)
                    ,(qob-cli/install-dists:command)

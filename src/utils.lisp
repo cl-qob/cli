@@ -87,7 +87,11 @@
     (pop opts)  ; pop -1
     opts))
 
-(defun setup-environment (cmd)
+(defun setup-script-env (script)
+  "Setup the SCRIPT environment."
+  (setf (uiop:getenv "QOB_COMMAND") script))
+
+(defun setup-env (cmd)
   "Setup the enviornment variables.
 
 Argument CMD is used to extract positional arguments and options."
@@ -130,6 +134,7 @@ Argument CMD is used to extract positional arguments and options."
 
 (defun call-script (script cmd)
   "Run the lisp implementation with the SCRIPT and CMD."
+  (setup-script-env script)
   (let ((el      (lisp-script "_el_lib"))
         (color   (lisp-script "_color"))
         (prepare (lisp-script "_prepare"))
@@ -153,7 +158,7 @@ Argument CMD is used to extract positional arguments and options."
   (let ((lisp-impls (program-name)))
     (unless (el-lib:el-executable-find lisp-impls)
       (error "Defined Lisp implementation is not installed: ~A" lisp-impls))
-    (setup-environment cmd)
+    (setup-env cmd)
     (let ((command (concatenate 'list
                                 (list lisp-impls)
                                 (list "--noinform")

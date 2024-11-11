@@ -18,7 +18,8 @@
 
 (ql:quickload "cl-autorepo")
 
-(when (qob-init-file-p)
+;; Load only when Qob file exists.
+(when qob-file
   (let ((cl-autorepo::*repo-dir* (qob-ql-local-dir))
         (total (length qob-depends-on))
         (count 1)

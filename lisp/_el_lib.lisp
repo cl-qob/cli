@@ -10,11 +10,51 @@
 ;;
 ;;; Interals
 
+(defun qob-2str (object)
+  "Convert to string."
+  (cond ((stringp   object) object)
+        ((pathnamep object) (namestring object))
+        (t                  (format nil "~A" object))))
+
 (defun qob--remove-last-char (str)
   "Removes the last character from STRING if it's not empty."
   (if (> (length str) 0)
       (subseq str 0 (1- (length str)))
       str))
+
+(defun qob-listify (obj)
+  "Turn OBJ to list."
+  (if (listp obj) obj (list obj)))
+
+(defun qob-s-replace (old new str)
+  "Replaces OLD with NEW in S."
+  (let ((pos (search old str)))
+    (if pos
+        (concatenate 'string
+                     (subseq str 0 pos)
+                     new
+                     (subseq str (+ pos (length old))))
+        str)))  ; Return original if substring not found
+
+(defun qob-s-slash-p (path)
+  "Return t if end with slash."
+  (let ((last-char (char path (1- (length path)))))
+    (string= last-char "/")))
+
+(defun qob-s-slash (path)
+  "Ensure path is a directory."
+  (let ((path (qob-2str path)))
+    (if (qob-s-slash-p path) path
+        (concatenate 'string path "/"))))
+
+(defun qob-f-root ()
+  "Return root directory."
+  (let* ((filename (uiop:getcwd))
+         (filename (qob-2str filename))
+         (drive (char filename 0)))
+    (if (uiop:os-windows-p)
+        (concatenate 'string (string drive) ":/")
+        (string drive))))
 
 ;;
 ;;; Core
@@ -22,12 +62,6 @@
 (defun qob-format (str &rest objects)
   "Mimic `format' function."
   (apply #'format nil str objects))
-
-(defun qob-2str (object)
-  "Convert to string."
-  (cond ((stringp   object) object)
-        ((pathnamep object) (namestring object))
-        (t                  (format nil "~A" object))))
 
 (defun qob-memq (elt list)
   "Mimic `memq' function."
@@ -39,8 +73,9 @@
 
 (defun qob-file-name-directory (filename)
   "Return the directory component in file name FILENAME."
-  (setq filename (qob-2str filename)
-        filename (qob--remove-last-char filename))
+  (setq filename (qob-2str filename))
+  (when (qob-s-slash-p filename)
+    (setq filename (qob--remove-last-char filename)))
   (let* ((dir (directory-namestring filename))
          (drive (char filename 0))
          (drive (string drive)))
@@ -62,35 +97,11 @@
   (let ((pathname (parse-namestring path)))
     (car (last (pathname-directory pathname)))))
 
-(defun qob-s-replace (old new str)
-  "Replaces OLD with NEW in S."
-  (let ((pos (search old str)))
-    (if pos
-        (concatenate 'string
-                     (subseq str 0 pos)
-                     new
-                     (subseq str (+ pos (length old))))
-        str)))  ; Return original if substring not found
-
-(defun qob-s-slash (path)
-  "Ensure path is a directory."
-  (let ((path (qob-2str path)))
-    (concatenate 'string path "/")))
-
-(defun qob-f-root ()
-  "Return root directory."
-  (let* ((filename (uiop:getcwd))
-         (filename (qob-2str filename))
-         (drive (char filename 0)))
-    (if (uiop:os-windows-p)
-        (concatenate 'string (string drive) ":/")
-        (string drive))))
-
 (defun qob-locate-dominating-file (pattern &optional dir)
   "Find the file from DIR by PATTERN."
-  (let ((dir (or dir
-                 (qob-2str (uiop:getcwd))))
-        (result))
+  (let* ((dir (or dir (uiop:getcwd)))
+         (dir (qob-2str dir))
+         (result))
     (uiop:with-current-directory (dir)
       (setq result (nth 0 (directory pattern)))
       (when (and (not result)
