@@ -43,7 +43,7 @@
     (qob-println "")
     (qob-println "")
     (qob-println "Preparing your new Common Lisp proejct... done ✓")
-    (qob-println "Congratulations! Your new Elisp project is created in ~A" output)
+    (qob-println "Congratulations! Your new Common Lisp project is created in ~A" output)
     (qob-println "")
     (qob-println "  [1] Navigate to ~A" output)
     (qob-println "  [2] Try out the command `qob info`")

@@ -19,7 +19,8 @@
 
 (defun handler (cmd)
   "Handler for `init' command."
-  (qob-cli:call-script "core/init" cmd))
+  (let ((qob-cli:force-global-p t))
+    (qob-cli:call-script "core/init" cmd)))
 
 (defun command ()
   "The `init' command."
