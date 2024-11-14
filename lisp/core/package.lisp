@@ -1,8 +1,8 @@
-;;;; lisp/core/package.lisp --- Build a package artifact
+;;;; lisp/core/package.lisp --- Build a system artifact
 
 ;;; Commentary
 ;;
-;; Command use to build a package artifact,
+;; Command use to build a system artifact,
 ;;
 ;;   $ qob package
 ;;

@@ -41,7 +41,9 @@ COMMANDS:
   clean          Delete various files produced during building
   create         Create a new Common Lisp project
   dists          List out all installed dists
+  package        Build a system artifact
   info           Display information about the current system(s)
+  init           Initialize project to use Qob
   install        Install systems
   install-deps   Automatically install system dependencies
   install-dists  Install dists
