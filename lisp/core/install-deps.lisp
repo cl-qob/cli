@@ -16,7 +16,7 @@
 ;;
 ;;; Local Projects
 
-(ql:quickload "cl-autorepo")
+(ql:quickload "cl-autorepo" :silent t)
 
 ;; Load only when Qob file exists.
 (when qob-file

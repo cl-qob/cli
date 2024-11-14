@@ -9,7 +9,7 @@
 
 ;;; Code
 
-(ql:quickload "cl-project")
+(ql:quickload "cl-project" :silent t)
 
 (defun qob-read-line (prompt &optional default-value)
   "Like `read-line'."

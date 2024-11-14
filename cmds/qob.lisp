@@ -59,6 +59,7 @@
                    ,(qob-cli/clean:command)
                    ,(qob-cli/create:command)
                    ,(qob-cli/dists:command)
+                   ,(qob-cli/package:command)
                    ,(qob-cli/info:command)
                    ,(qob-cli/init:command)
                    ,(qob-cli/install:command)
