@@ -11,6 +11,12 @@
 
 (qob-init-asds)
 
+(defun qob-info--print-dep (deps)
+  ""
+  (dolist (dep deps)
+    ;; TODO: Print system version?
+    (qob-println "  ~A" dep)))
+
 (defun qob-info--print-system (name)
   "Print the system's info by their NAME."
   (let* ((file        (qob-find-asd-file name))
@@ -43,9 +49,8 @@
     (when depends-on
       (qob-println "")
       (qob-println "dependencies:")
-      (dolist (dep depends-on)
-        ;; TODO: Print system version?
-        (qob-println "  ~A" dep)))))
+      (qob-info--print-dep depends-on)
+      (qob-info--print-dep (mapcar #'car qob-depends-on)))))
 
 (let ((names qob-args)
       (default-system (qob-only-system)))
