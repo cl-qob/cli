@@ -12,7 +12,7 @@
 (qob-init-asds)
 
 (defun qob-info--print-dep (deps)
-  ""
+  "Print DEPS."
   (dolist (dep deps)
     ;; TODO: Print system version?
     (qob-println "  ~A" dep)))
