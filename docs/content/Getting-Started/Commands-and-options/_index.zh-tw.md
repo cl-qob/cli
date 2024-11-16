@@ -65,8 +65,6 @@ $ qob [GLOBAL-OPTIONS] status
 
 安裝所有的依賴項目。
 
-別名: `install-dependencies`, `prepare`
-
 ```sh
 $ qob [GLOBAL-OPTIONS] install-deps
 ```
@@ -115,13 +113,19 @@ $ qob uninstall
 
 建立系統工件。
 
-別名: `pack`
-
 ```sh
 $ qob package [DESTINATION] (目的地)
 ```
 
 如果沒有指定 [DESTINATION]，預設會產生到 `/dist` 資料夾。
+
+## 🔍 qob files
+
+列印所有系統檔案。
+
+```sh
+$ qob files [DESTINATION]
+```
 
 # 🚩 執行
 
@@ -199,8 +203,6 @@ $ qob [GLOBAL-OPTIONS] link add <NAME> <PATH
 ## 🔍 qob link delete
 
 刪除指定系統的連結。
-
-別名: `remove`
 
 ```sh
 $ qob [GLOBAL-OPTIONS] link delete [NAMES.］

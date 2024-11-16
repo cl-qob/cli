@@ -65,8 +65,6 @@ $ qob [GLOBAL-OPTIONS] status
 
 To install all dependencies.
 
-Alias: `install-dependencies`, `prepare`
-
 ```sh
 $ qob [GLOBAL-OPTIONS] install-deps
 ```
@@ -115,14 +113,20 @@ $ qob uninstall
 
 Build the system artifact.
 
-Alias: `pack`
-
 ```sh
 $ qob package [DESTINATION]
 ```
 
 If [DESTINATION] is not specified, it will generate to the `/dist` folder
 by default.
+
+## 🔍 qob files
+
+Print all system files.
+
+```sh
+$ qob files [DESTINATION]
+```
 
 # 🚩 Execution
 
@@ -200,8 +204,6 @@ $ qob [GLOBAL-OPTIONS] link add <NAME> <PATH>
 ## 🔍 qob link delete
 
 Deletes the link for the given systems.
-
-Alias: `remove`
 
 ```sh
 $ qob [GLOBAL-OPTIONS] link delete [NAMES..]
