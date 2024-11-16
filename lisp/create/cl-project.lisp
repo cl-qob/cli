@@ -51,8 +51,8 @@
     (qob-print "Visit ~A for quickstart guide and full documentation."
                qob-homepage)))
 
-(let ((name-or-path (car qob-args))
-      (len (length qob-args)))
+(let ((name-or-path (qob-args 0))
+      (len (length (qob-args))))
   (cond ((zerop len)
          (qob-error "Required exactly 1 positional argument"))
         ((= 1 len)

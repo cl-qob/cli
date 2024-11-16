@@ -48,6 +48,14 @@
     (setf (readtable-case *readtable*) :preserve)
     (eval (read-from-string str))))
 
+(defun qob-run-program (command)
+  "Return COMMAND program."
+  (uiop:run-program command
+                    :input :interactive
+                    :output :interactive
+                    :error-output :interactive
+                    :force-shell t))
+
 ;;
 ;;; Color
 
@@ -183,6 +191,12 @@ For example, `.qob/sbcl/2.4.9/'."
                                       (lisp-implementation-type) "/"
                                       (lisp-implementation-version) "/")
                          qob-dot))
+
+(defun qob-args (&optional n)
+  "Return the program arguments.
+
+If optional argument is non-nil, return the N th argument instead."
+  (if n (nth n qob-args) qob-args))
 
 ;;
 ;;; Help
@@ -527,6 +541,12 @@ Set up the systems; on contrary, you should use the function
 (defun depends-on (&rest args)
   "Define a local systems"
   (push args qob-depends-on))
+
+;;
+;;; User customization
+
+(defvar qob-dist-path "dist"
+  "Default path where to place the package artifact.")
 
 ;;
 ;;; Initialization

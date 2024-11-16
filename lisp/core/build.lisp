@@ -46,7 +46,7 @@
   (qob-info "(Total of ~A system~A built)" qob-build--count
             (qob--sinr qob-build--count "" "s")))
 
-(let* ((systems qob-args)
+(let* ((systems (qob-args))
        (systems-len (length systems))
        (default-name (qob-only-system)))
   (cond

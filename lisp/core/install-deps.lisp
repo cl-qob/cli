@@ -55,7 +55,7 @@
          (deps   (asdf:system-depends-on system)))
     (qob-install-systems deps)))
 
-(let ((systems qob-args)
+(let ((systems (qob-args))
       (default-name (qob-only-system)))
   (cond
     ;; If only specified one system.

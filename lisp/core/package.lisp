@@ -9,17 +9,13 @@
 
 ;;; Code
 
-(qob-init-asds)
+;; Must be able to build.
+(qob-init-systems)
 
-(ql:quickload "cl-autorepo" :silent t)
+(defun qob-package--tar (output)
+  "Build system to artifact."
 
-;; Install QL controller
-(let ((cl-autorepo::*repo-dir* (qob-ql-local-dir)))
-  (cl-autorepo:add-system "githappy" "https://github.com/xach/githappy" :git)
-  (cl-autorepo:add-system "project-info" "https://github.com/quicklisp/project-info" :git)
-  (cl-autorepo:add-system "quicklisp-controller" "https://github.com/quicklisp/quicklisp-controller" :git))
-
-(ql:quickload "quicklisp-controller" :silent t)
+  )
 
 ;; Build the artifact.
 (let ((fs (make-instance 'quicklisp-controller:single-file-source)))
@@ -28,5 +24,8 @@
    (make-pathname :name (project-name source)
                   :type "tgz"
                   :defaults "./")))
+
+(let ((qob-dist-path (or (qob-args 0) qob-dist-path)))
+  )
 
 ;;; End of lisp/core/package.lisp

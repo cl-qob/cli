@@ -52,7 +52,7 @@
       (qob-info--print-dep depends-on)
       (qob-info--print-dep (mapcar #'car qob-depends-on)))))
 
-(let ((names qob-args)
+(let ((names (qob-args))
       (default-system (qob-only-system)))
   (cond
     ;; If only specified one system.

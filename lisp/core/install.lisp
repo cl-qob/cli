@@ -16,7 +16,7 @@
 
 (qob-load "shared")
 
-(let ((names qob-args))
+(let ((names (qob-args)))
   (cond ((zerop (length names))
          (qob-help "core/install"))
         (t
