@@ -36,10 +36,31 @@
                      (subseq str (+ pos (length old))))
         str)))  ; Return original if substring not found
 
+(defun qob-s-prefix-p (prefix string)
+  "Checks if STRING starts with PREFIX."
+  (and (<= (length prefix) (length string))
+       (string= prefix (subseq string 0 (length prefix)))))
+
+(defun qob-s-suffix-p (suffix string)
+  "Checks if STRING ends with SUFFIX."
+  (and (<= (length suffix) (length string))
+       (string= suffix (subseq string (- (length string) (length suffix))))))
+
+(defun qob-s-remove-prefix (prefix string)
+  "Removes PREFIX from STRING if STRING starts with PREFIX."
+  (if (qob-s-prefix-p prefix string)
+      (subseq string (length prefix))
+      string))
+
+(defun qob-s-remove-suffix (suffix string)
+  "Removes SUFFIX from STRING if STRING ends with SUFFIX."
+  (if (qob-s-suffix-p suffix string)
+      (subseq string 0 (- (length string) (length suffix)))
+      string))
+
 (defun qob-s-slash-p (path)
   "Return t if end with slash."
-  (let ((last-char (char path (1- (length path)))))
-    (string= last-char "/")))
+  (qob-s-suffix-p "/" path))
 
 (defun qob-s-slash (path)
   "Ensure path is a directory."

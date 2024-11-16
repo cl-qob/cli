@@ -11,6 +11,12 @@
   "Qob's home page.")
 
 ;;
+;;; Variables
+
+(defvar qob-files nil)
+(defvar qob-depends-on nil)
+
+;;
 ;;; Utils
 
 (defmacro qob-silent (&rest body)
@@ -456,16 +462,27 @@ to actually set up the systems."
     (qob-error "There is no specified ASDF system"))
   (asdf:primary-system-name (car (nth 0 qob-loaded-asds))))
 
-(defun qob-primary-system ()
+(defun qob-primary-system-entry ()
   "Return the primary system."
   (let ((name (qob-primary-system-name)))
     (assoc name qob-loaded-asds)))
+
+(defun qob-primary-system ()
+  "Return the primary system."
+  (let ((name (qob-primary-system-name)))
+    (asdf:find-system name)))
+
+;; NOTE: Use this as project root?
+(defun qob-primary-root ()
+  "Return the primary system path."
+  (let ((path (car (cdr (qob-primary-system-entry)))))
+    (qob-file-name-directory path)))
 
 (defun qob-only-system ()
   "Return the default system if only one system is loaded in the workspace."
   (qob-init-asds)
   (when (= (length qob-loaded-asds) 1)
-    (qob-primary-system)))
+    (qob-primary-system-entry)))
 
 (defun qob-find-asd-file (name)
   "Return the ASD file by system's NAME."
@@ -474,6 +491,29 @@ to actually set up the systems."
       (when (equal name (car system))
         (setq result (nth 1 system))))
     result))
+
+(defun qob-system-files ()
+  "Return a list of system files."
+  (let* ((system (qob-primary-system))
+         (components (asdf:component-children system))
+         (files))
+    (setq files
+          (concatenate
+           'list
+           (mapcar (lambda (component)
+                     (let ((file (ignore-errors (asdf:component-pathname component))))
+                       (when file
+                         (qob-2str file))))
+                   components)
+           (directory "*.asd")
+           (directory "*.lisp")
+           (let ((temp-files))
+             (mapcar (lambda (spec)
+                       (setq temp-files (append temp-files
+                                                (directory spec))))
+                     qob-files)
+             temp-files)))
+    files))
 
 ;;
 ;;; ASDF system
@@ -535,7 +575,9 @@ Set up the systems; on contrary, you should use the function
 ;;
 ;;; DSL
 
-(defvar qob-depends-on nil)
+(defun files (&rest spec)
+  "Inclue file spec."
+  (setq qob-files spec))
 
 (defun source (name &optional location)
   "Add dist NAME with LOCATION."

@@ -15,6 +15,9 @@
 ;; Build executable
 ;;(asdf:make "qob-cli" :compression nil)
 
+;; (copy-directory:copy (el-lib:el-expand-fn "lisp/")
+;;                      (el-lib:el-expand-fn "dist/qob-cli-0.1.0/lisp/"))
+
 (sb-ext:save-lisp-and-die (if (uiop:os-windows-p)
                               "bin/qob.exe"
                               "bin/qob")

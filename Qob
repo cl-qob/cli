@@ -1,5 +1,7 @@
 ;; -*- mode: lisp; lexical-binding: t -*-
 
+(files "lisp")
+
 (source "quicklisp")
 (source "ultralisp")
 
