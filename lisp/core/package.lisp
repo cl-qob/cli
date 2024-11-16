@@ -18,7 +18,8 @@
   (let* ((version (asdf:component-version system))
          (f-name (qob-format "~A-~A" name version))
          (f-dir (qob-expand-fn (qob-format "~A/" f-name) qob-dist-path))
-         (root (qob-primary-root)))
+         (root (qob-primary-root))
+         (tar (qob-s-remove-suffix "/" (qob-2str f-dir))))
     (ignore-errors (delete-directory f-dir :recursive t))
     (ensure-directories-exist f-dir)
 
@@ -38,7 +39,10 @@
                              (qob-format "~A.tar" f-name)
                              (qob-s-remove-prefix
                               (qob-2str qob-dist-path)
-                              (qob-s-remove-suffix "/" (qob-2str f-dir))))))))
+                              tar))))
+
+    (qob-msg "")
+    (qob-info "(Built in ~A.tar)" tar)))
 
 (let* ((qob-dist-path (or (qob-args 0) qob-dist-path))
        (qob-dist-path (qob-expand-fn qob-dist-path)))
