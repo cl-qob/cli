@@ -34,13 +34,13 @@
                (uiop:copy-file path target)))))
 
     ;; Tar it.
+    (qob-msg "")
     (uiop:with-current-directory (qob-dist-path)
       (qob-run-program (list "tar" "-cvf"
                              (qob-format "~A.tar" f-name)
                              (qob-s-remove-prefix
                               (qob-2str qob-dist-path)
                               tar))))
-
     (qob-msg "")
     (qob-info "(Built in ~A.tar)" tar)))
 
