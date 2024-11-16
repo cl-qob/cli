@@ -419,7 +419,9 @@ If optional argument WITH-TEST is non-nil; include test ASD files as well."
   "Set to t when ASDF files are initialized.")
 
 (defvar qob-loaded-asds nil
-  "Loaded ASD files.")
+  "Loaded ASD files.
+
+The cons looks like `((name . path) (name . path)).")
 
 (defun qob-newly-loaded-systems (pre-systems)
   "Return the a newly loaded systems compare to PRE-SYSTESM."
@@ -452,11 +454,22 @@ to actually set up the systems."
      (qob-ansi-green "done ✓"))
     (setq qob--asds-init-p t)))
 
+(defun qob-primary-system-name ()
+  "Return the primary system name."
+  (qob-init-asds)
+  (unless qob-loaded-asds (qob-error "No system is specified"))
+  (asdf:primary-system-name (car (nth 0 qob-loaded-asds))))
+
+(defun qob-primary-system ()
+  "Return the primary system."
+  (let ((name (qob-primary-system-name)))
+    (assoc name qob-loaded-asds)))
+
 (defun qob-only-system ()
   "Return the default system if only one system is loaded in the workspace."
   (qob-init-asds)
   (when (= (length qob-loaded-asds) 1)
-    (nth 0 qob-loaded-asds)))
+    (qob-primary-system)))
 
 (defun qob-find-asd-file (name)
   "Return the ASD file by system's NAME."
