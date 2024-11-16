@@ -14,7 +14,7 @@
   (dolist (dist dists)
     (let ((name    (slot-value dist 'ql-dist:name))
           (version (slot-value dist 'ql-dist:version))
-          (url     (or (qob-ignore-errors
+          (url     (or (ignore-errors
                         (slot-value dist 'ql-dist::archive-base-url))
                        "n/a"))
           (enabled-p (ql-dist:enabledp dist)))

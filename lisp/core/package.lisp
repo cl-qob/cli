@@ -13,24 +13,32 @@
 
 (ql:quickload "copy-directory" :silent t)
 
-(defun qob-package--tar (output)
-  "Build system to artifact."
-  )
+(defun qob-package--build (name system)
+  "Build the system artifact."
+  (let* ((version (asdf:component-version system))
+         (components (asdf:component-children system))
+         (f-name (qob-format "~A-~A" name version))
+         (f-dir (qob-expand-fn (qob-format "~A/" f-name) qob-dist-path)))
+    (ensure-directories-exist f-dir)
 
-(let ((qob-dist-path (or (qob-args 0) qob-dist-path)))
+    (dolist (comp components)
+      (let ((file (ignore-errors (asdf:component-pathname comp))))
+        (when file
+          (qob-info "? ~A" file)
+          (uiop:copy-file file f-dir)
+          )
+        ))
+
+
+    ;;(qob-run-program '("tar" ))
+    ))
+
+(let* ((qob-dist-path (or (qob-args 0) qob-dist-path))
+       (qob-dist-path (qob-expand-fn qob-dist-path)))
   (ensure-directories-exist qob-dist-path)
 
-  (unless qob-loaded-asds
-    (qob-error "There is no specified ASD system"))
-
-  (qob-info "? ~A" (qob-primary-system))
-
-  (let* ((name    (car (nth 0 qob-loaded-asds)))
-         (system  (asdf:find-system name))
-         (version (asdf:component-version system))
-         (files   (asdf:component-file)))
-    ;;(qob-run-program '("tar" ))
-    )
-  )
+  (let* ((name   (qob-primary-system-name))
+         (system (asdf:find-system name)))
+    (qob-package--build name system)))
 
 ;;; End of lisp/core/package.lisp

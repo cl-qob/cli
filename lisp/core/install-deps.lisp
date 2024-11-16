@@ -30,7 +30,7 @@
     (dolist (args qob-depends-on)
       (let* ((name (nth 0 args))
              (url (nth 1 args))
-             (installed-p (qob-ignore-errors (asdf:find-system name))))
+             (installed-p (ignore-errors (asdf:find-system name))))
         (if installed-p (incf skipped) (incf installed))
         (qob-with-progress
          (qob-format "  - [~A/~A] Installing ~A from ~A... "

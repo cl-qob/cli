@@ -13,11 +13,6 @@
 ;;
 ;;; Utils
 
-(defmacro qob-ignore-errors (&rest forms)
-  "Ignore errors."
-  `(handler-case (progn ,@forms)
-     (error (condition) (values nil condition))))
-
 (defmacro qob-silent (&rest body)
   "Execute BODY without output."
   `(with-open-stream (*standard-output* (make-broadcast-stream))
@@ -457,7 +452,8 @@ to actually set up the systems."
 (defun qob-primary-system-name ()
   "Return the primary system name."
   (qob-init-asds)
-  (unless qob-loaded-asds (qob-error "No system is specified"))
+  (unless qob-loaded-asds
+    (qob-error "There is no specified ASDF system"))
   (asdf:primary-system-name (car (nth 0 qob-loaded-asds))))
 
 (defun qob-primary-system ()
@@ -558,7 +554,7 @@ Set up the systems; on contrary, you should use the function
 ;;
 ;;; User customization
 
-(defvar qob-dist-path "dist"
+(defvar qob-dist-path "dist/"
   "Default path where to place the package artifact.")
 
 ;;
