@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-npm install
+make build
 echo "$GITHUB_WORKSPACE/bin" >> "$GITHUB_PATH"
