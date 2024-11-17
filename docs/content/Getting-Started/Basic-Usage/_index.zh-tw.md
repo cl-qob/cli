@@ -37,21 +37,22 @@ OPTIONS:
   -v, --verbose <INT>  set verbosity from 0 to 5 [default: 3]
 
 COMMANDS:
-  build                               Build the executable
-  clean                               Delete various files produced during building
-  create                              Create a new Common Lisp project
-  dists                               List out all installed dists
-  files                               Print all system files
-  package                             Build a system artifact
-  info                                Display information about the current system(s)
-  init                                Initialize project to use Qob
-  install                             Install systems
-  install-deps, install-dependencies  Automatically install system dependencies
-  install-dists                       Install dists
-  list                                List the registered systems
-  locate                              Print out Qob installed location
-  status                              Display the state of the workspace
-  uninstall                           Uninstall systems
+  build          Build the executable
+  clean          Delete various files produced during building
+  create         Create a new Common Lisp project
+  dists          List out all installed dists
+  files          Print all system files
+  package        Build a system artifact
+  info           Display information about the current system(s)
+  init           Initialize project to use Qob
+  install        Install systems
+  install-deps   Automatically install system dependencies
+  install-dists  Install dists
+  list           List the registered systems
+  load           Load lisp files
+  locate         Print out Qob installed location
+  status         Display the state of the workspace
+  uninstall      Uninstall systems
 
 AUTHORS:
   Jen-Chieh Shen <jcs090218@gmail.com>
