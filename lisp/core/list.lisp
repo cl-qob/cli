@@ -1,8 +1,8 @@
-;;;; lisp/core/list.lisp --- Build executable
+;;;; lisp/core/list.lisp --- List the registered systems
 
 ;;; Commentary
 ;;
-;; Command use to list the registered system
+;; Command use to list the registered systems
 ;;
 ;;   $ qob list
 ;;

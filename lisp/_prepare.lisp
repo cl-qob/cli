@@ -60,6 +60,15 @@
                     :error-output :interactive
                     :force-shell t))
 
+(defun qob-expand-file-specs (specs)
+  "Expand file SPECS."
+  (let ((temp-files))
+    (mapcar (lambda (spec)
+              (setq temp-files (append temp-files
+                                       (directory spec))))
+            specs)
+    temp-files))
+
 ;;
 ;;; Color
 
@@ -158,7 +167,7 @@ The arguments FMT and ARGS are used to form the output message."
 Argument ENV-NAME is used to get the argument string."
   (let* ((args (uiop:getenv env-name))
          (args (concatenate 'string "'" args)))
-    (qob-eval args)))
+    (mapcar #'qob-2str (qob-eval args))))
 
 (defvar qob-args (qob-parse-args "QOB_ARGS")
   "Positionl arguments (no options).")
@@ -296,7 +305,7 @@ the `qob-start' execution.")
 ;;; Number (with arguments)
 (defun qob-verbose ()
   "Non-nil when flag has value (`-v', `--verbose')."
-  (qob--flag-value "--verbose"))
+  (parse-integer (qob--flag-value "--verbose")))
 
 ;;
 ;;; Execution
@@ -510,12 +519,7 @@ to actually set up the systems."
                    components)
            (directory "*.asd")
            (directory "*.lisp")
-           (let ((temp-files))
-             (mapcar (lambda (spec)
-                       (setq temp-files (append temp-files
-                                                (directory spec))))
-                     qob-files)
-             temp-files)))
+           (qob-expand-file-specs qob-files)))
     files))
 
 ;;

@@ -25,6 +25,7 @@
                (:file "cmds/core/install-deps")
                (:file "cmds/core/install-dists")
                (:file "cmds/core/list")
+               (:file "cmds/core/load")
                (:file "cmds/core/locate")
                (:file "cmds/core/status")
                (:file "cmds/core/uninstall")

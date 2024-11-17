@@ -67,6 +67,7 @@
                    ,(qob-cli/install-deps:command)
                    ,(qob-cli/install-dists:command)
                    ,(qob-cli/list:command)
+                   ,(qob-cli/load:command)
                    ,(qob-cli/locate:command)
                    ,(qob-cli/status:command)
                    ,(qob-cli/uninstall:command))))

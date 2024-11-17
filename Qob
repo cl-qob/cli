@@ -13,14 +13,6 @@
 (depends-on "fsdb" "https://github.com/billstclair/fsdb" :git)
 
 ;; Test hooks
-(qob-add-hook 'qob-before-command-hook
-              (lambda ()
-                (qob-info "? before command")))
-
-(qob-add-hook 'qob-after-command-hook
-              (lambda ()
-                (qob-info "? after command")))
-
 (qob-add-hook 'qob-before-info-hook
               (lambda ()
                 (qob-info "? before info")))

@@ -1,4 +1,4 @@
-;;;; cmds/core/locate.lisp --- Build executable
+;;;; cmds/core/locate.lisp --- Print the Qob installed location
 
 ;;; Commentary
 ;;
