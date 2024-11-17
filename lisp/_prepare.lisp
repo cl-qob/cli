@@ -579,8 +579,9 @@ Set up the systems; on contrary, you should use the function
 ;;; DSL
 
 (defun files (&rest spec)
-  "Inclue file spec."
-  (setq qob-files spec))
+  "Include file spec."
+  (setq qob-files (append qob-files
+                          spec)))
 
 (defun source (name &optional location)
   "Add dist NAME with LOCATION."
