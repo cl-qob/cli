@@ -8,15 +8,3 @@
 
 (source "quicklisp")
 (source "ultralisp")
-
-;; Test local systems
-(depends-on "fsdb" "https://github.com/billstclair/fsdb" :git)
-
-;; Test hooks
-(qob-add-hook 'qob-before-info-hook
-              (lambda ()
-                (qob-info "? before info")))
-
-(qob-add-hook 'qob-after-info-hook
-              (lambda ()
-                (qob-info "? after info")))
