@@ -22,9 +22,9 @@ Things might still break at any point.
 ## 🔗 Links
 
 - [Documentation](https://cl-qob.github.io/)
-- [Installation](https://cl-qob.github.io/Getting-Started/Install-Eask/)
+- [Installation](https://cl-qob.github.io/Getting-Started/Install-Qob/)
 - [Command-line interface](https://cl-qob.github.io/Getting-Started/Commands-and-options/)
-- [Examples](https://cl-qob.github.io/Examples/Real-project-examples/)
+- [Examples](https://cl-qob.github.io/Examples/System-Development/)
 - [FAQ](https://cl-qob.github.io/FAQ/)
 
 ## 🧪 Testing
