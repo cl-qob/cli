@@ -1,0 +1,67 @@
+name: Global
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - '**.yml'
+      - lisp/**
+      - cmds/**
+      - src/**
+      - scripts/**
+      - test/**
+      - '**.asd'
+  pull_request:
+    branches:
+      - master
+    paths-ignore:
+    - '**.md'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+    - name: Setup SBCL (Ubuntu)
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get update
+        sudo apt-get install sbcl
+
+    - name: Setup SBCL (macOS)
+      if: runner.os == 'macOS'
+      run: |
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        brew install sbcl
+
+    - name: Setup SBCL (Windows)
+      if: runner.os == 'Windows'
+      uses: crazy-max/ghaction-chocolatey@v3
+      with:
+        args: install sbcl
+
+    - uses: actions/checkout@v4
+
+    - name: Prepare Qob (Unix)
+      if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
+      run: |
+        chmod -R 777 ./
+        .github/scripts/setup-qob
+
+    - name: Prepare Qob (Windows)
+      if: matrix.os == 'windows-latest'
+      run: .github/scripts/setup-qob.ps1
+
+    - name: Testing...
+      run: |
+        make command-global

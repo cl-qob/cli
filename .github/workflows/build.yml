@@ -42,12 +42,10 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Prepare APT
+    - name: Setup SBCL (Ubuntu)
+      if: runner.os == 'Linux'
       run: |
         sudo apt-get update
-
-    - name: Setup SBCL
-      run: |
         sudo apt-get install sbcl
 
     - name: Install Quicklisp
@@ -140,12 +138,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Install Homebrew
+    - name: Setup SBCL (macOS)
+      if: runner.os == 'macOS'
       run: |
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-    - name: Setup SBCL
-      run: brew install sbcl
+        brew install sbcl
 
     - name: Install Quicklisp
       run: |
@@ -238,7 +235,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Setup SBCL
+    - name: Setup SBCL (Windows)
+      if: runner.os == 'Windows'
       uses: crazy-max/ghaction-chocolatey@v3
       with:
         args: install sbcl

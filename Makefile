@@ -21,3 +21,6 @@ download-ql:
 install-ql: download-ql
 	@echo "Installing Quicklisp..."
 	$(LISP) $(LISP_ARGS) --load './quicklisp.lisp' --script './scripts/install-ql.lisp'
+
+command-global:
+	./test/commands/global/run.sh
