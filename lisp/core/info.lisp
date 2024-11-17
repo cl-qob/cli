@@ -52,18 +52,19 @@
       (qob-info--print-dep depends-on)
       (qob-info--print-dep (mapcar #'car qob-depends-on)))))
 
-(let ((names (qob-args))
-      (default-system (qob-only-system)))
-  (cond
-    ;; If only specified one system.
-    (default-system
-     (qob-info--print-system (car default-system)))
-    ;; If no system(s) specified.
-    ((zerop (length names))
-     (qob-help "core/info"))
-    ;; Print all systems information.
-    (t
-     (dolist (name names)
-       (qob-info--print-system name)))))
+(qob-start
+ (let ((names (qob-args))
+       (default-system (qob-only-system)))
+   (cond
+     ;; If only specified one system.
+     (default-system
+      (qob-info--print-system (car default-system)))
+     ;; If no system(s) specified.
+     ((zerop (length names))
+      (qob-help "core/info"))
+     ;; Print all systems information.
+     (t
+      (dolist (name names)
+        (qob-info--print-system name))))))
 
 ;;; End of lisp/core/info.lisp

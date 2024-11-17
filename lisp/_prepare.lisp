@@ -16,6 +16,9 @@
 (defvar qob-files nil)
 (defvar qob-depends-on nil)
 
+(defvar qob-before-command-hook nil)
+(defvar qob-after-command-hook nil)
+
 ;;
 ;;; Utils
 
@@ -598,6 +601,58 @@ Set up the systems; on contrary, you should use the function
 
 (defvar qob-dist-path "dist/"
   "Default path where to place the package artifact.")
+
+;;
+;;; Entry
+
+(defun qob-add-hook (hook function)
+  "Add FUNCTION to the HOOK list if not already present."
+  (set hook nil)  ; Declare it.
+  (unless (member function (symbol-value hook))
+    (push function (symbol-value hook))))
+
+(defun qob-run-hooks (hooks)
+  "Run all functions in the HOOKS list."
+  (dolist (fn (ignore-errors (symbol-value hooks)))
+    (funcall fn)))
+
+(defun qob--form-command-var (name)
+  "From the command variable by NAME."
+  (let* ((name (string-upcase name))
+         (name (intern name)))
+    name))
+
+(defun qob--before-command-var ()
+  "Return the before command name."
+  (let* ((command (qob-command))
+         (before  (concatenate 'string "qob-before-" command "-hook")))
+    (qob--form-command-var before)))
+
+(defun qob--after-command-var ()
+  "Return the after command name."
+  (let* ((command (qob-command))
+         (after   (concatenate 'string "qob-after-" command "-hook")))
+    (qob--form-command-var after)))
+
+;; Define variable
+(let ((before  (qob--before-command-var))
+      (after   (qob--after-command-var)))
+  (set before nil)
+  (set after nil))
+
+(defun qob--with-hooks (body)
+  "Execute BODY with before/after hooks."
+  (let ((before  (qob--before-command-var))
+        (after   (qob--after-command-var)))
+    (qob-run-hooks 'qob-before-command-hook)
+    (qob-run-hooks before)
+    (funcall body)
+    (qob-run-hooks after)
+    (qob-run-hooks 'qob-after-command-hook)))
+
+(defmacro qob-start (&rest body)
+  "Execute BODY with workspace setup."
+  `(qob--with-hooks (lambda () ,@body)))
 
 ;;
 ;;; Initialization
