@@ -70,39 +70,40 @@
 ;;
 ;;; Core
 
-(qob-println "In the ~A enviornment" (qob-status--environment-name))
+(qob-start
+ (qob-println "In the ~A enviornment" (qob-status--environment-name))
 
-(qob-status--print-title "System:")
-(qob-status--print-infos
- `((,(lisp-implementation-type) ,(lisp-implementation-version))
-   ("Machine instance" ,(machine-instance) ,(qob-status--var-nil (machine-instance)))
-   ("Machine type" ,(machine-type) ,(qob-status--var-nil (machine-type)))
-   ("Machine version" ,(machine-version) ,(qob-status--var-nil (machine-version)))
-   ("Software type" ,(software-type) ,(qob-status--var-nil (software-type)))
-   ("Software version" ,(software-version) ,(qob-status--var-nil (software-version)))))
+ (qob-status--print-title "System:")
+ (qob-status--print-infos
+  `((,(lisp-implementation-type) ,(lisp-implementation-version))
+    ("Machine instance" ,(machine-instance) ,(qob-status--var-nil (machine-instance)))
+    ("Machine type" ,(machine-type) ,(qob-status--var-nil (machine-type)))
+    ("Machine version" ,(machine-version) ,(qob-status--var-nil (machine-version)))
+    ("Software type" ,(software-type) ,(qob-status--var-nil (software-type)))
+    ("Software version" ,(software-version) ,(qob-status--var-nil (software-version)))))
 
-(qob-status--print-title "Environment:")
-(qob-status--print-infos
- `(("Qob directory" ,qob-dot ,(qob-status--file-dir qob-dot))
-   ("Qob impls directory" ,(qob-dot-impls) ,(qob-status--file-dir (qob-dot-impls)))
-   ("Quicklisp directory" ,(qob-ql-installed-dir) ,(qob-status--file-dir (qob-ql-installed-dir)))))
+ (qob-status--print-title "Environment:")
+ (qob-status--print-infos
+  `(("Qob directory" ,qob-dot ,(qob-status--file-dir qob-dot))
+    ("Qob impls directory" ,(qob-dot-impls) ,(qob-status--file-dir (qob-dot-impls)))
+    ("Quicklisp directory" ,(qob-ql-installed-dir) ,(qob-status--file-dir (qob-ql-installed-dir)))))
 
-(qob-status--print-title "Qob-file:")
-(qob-status--print-infos
- `(("Qob file" ,qob-file ,(qob-status--file-dir qob-file))))
+ (qob-status--print-title "Qob-file:")
+ (qob-status--print-infos
+  `(("Qob file" ,qob-file ,(qob-status--file-dir qob-file))))
 
-(when (qob-local-p)
-  (qob-status--print-title "Workspace:")
-  (qob-status--print-infos
-   (mapcar (lambda (info)
-             (setq info (append info
-                                ;; This can never happens since reading ASDF files
-                                ;; is the requirements of this command!
-                                (list (qob-status--file-dir (nth 1 info))))))
-           qob-loaded-asds)))
+ (when (qob-local-p)
+   (qob-status--print-title "Workspace:")
+   (qob-status--print-infos
+    (mapcar (lambda (info)
+              (setq info (append info
+                                 ;; This can never happens since reading ASDF files
+                                 ;; is the requirements of this command!
+                                 (list (qob-status--file-dir (nth 1 info))))))
+            qob-loaded-asds)))
 
-(qob-println "")
-(qob-info "(Total of ~A state~A listed)" qob-status--listed
-          (qob--sinr qob-status--listed "" "s"))
+ (qob-println "")
+ (qob-info "(Total of ~A state~A listed)" qob-status--listed
+           (qob--sinr qob-status--listed "" "s")))
 
 ;;; End of lisp/core/status.lisp

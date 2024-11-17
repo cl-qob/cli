@@ -44,12 +44,13 @@
     (qob-msg "")
     (qob-info "(Built in ~A.tar)" tar)))
 
-(let* ((qob-dist-path (or (qob-args 0) qob-dist-path))
-       (qob-dist-path (qob-expand-fn qob-dist-path)))
-  (ensure-directories-exist qob-dist-path)
+(qob-start
+ (let* ((qob-dist-path (or (qob-args 0) qob-dist-path))
+        (qob-dist-path (qob-expand-fn qob-dist-path)))
+   (ensure-directories-exist qob-dist-path)
 
-  (let ((name   (qob-primary-system-name))
-        (system (qob-primary-system)))
-    (qob-package--build name system)))
+   (let ((name   (qob-primary-system-name))
+         (system (qob-primary-system)))
+     (qob-package--build name system))))
 
 ;;; End of lisp/core/package.lisp

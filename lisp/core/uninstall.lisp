@@ -16,10 +16,11 @@
 
 (qob-load "shared")
 
-(let ((names (qob-args)))
-  (cond ((zerop (length names))
-         (qob-help "core/uninstall"))
-        (t
-         (qob-uninstall-systems names))))
+(qob-start
+ (let ((names (qob-args)))
+   (cond ((zerop (length names))
+          (qob-help "core/uninstall"))
+         (t
+          (qob-uninstall-systems names)))))
 
 ;;; End of lisp/core/uninstall.lisp

@@ -46,23 +46,24 @@
   (qob-info "(Total of ~A system~A built)" qob-build--count
             (qob--sinr qob-build--count "" "s")))
 
-(let* ((systems (qob-args))
-       (systems-len (length systems))
-       (default-name (qob-only-system)))
-  (cond
-    ;; If only specified one system.
-    (default-name
-     (qob-build--print-header 1)
-     (qob-build--system-by-name (car default-name))
-     (qob-build--print-footer))
-    ;; If no system(s) specified.
-    ((zerop systems-len)
-     (qob-help "core/build"))
-    ;; Build system for all specify systems.
-    (t
-     (qob-build--print-header systems-len)
-     (dolist (name systems)
-       (qob-build--system-by-name name))
-     (qob-build--print-footer))))
+(qob-start
+ (let* ((systems (qob-args))
+        (systems-len (length systems))
+        (default-name (qob-only-system)))
+   (cond
+     ;; If only specified one system.
+     (default-name
+      (qob-build--print-header 1)
+      (qob-build--system-by-name (car default-name))
+      (qob-build--print-footer))
+     ;; If no system(s) specified.
+     ((zerop systems-len)
+      (qob-help "core/build"))
+     ;; Build system for all specify systems.
+     (t
+      (qob-build--print-header systems-len)
+      (dolist (name systems)
+        (qob-build--system-by-name name))
+      (qob-build--print-footer)))))
 
 ;;; End of lisp/core/build.lisp

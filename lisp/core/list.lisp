@@ -31,35 +31,36 @@
       (let ((name    (ql-dist:name system)))
         (qob-println "   [+] ~A" name)))))
 
-(let* ((pre-systems (asdf:registered-systems))
-       (pre-systems (reverse pre-systems))
-       (post-systems)
-       (local-p (qob-local-p)))
-  (when local-p
-    (qob-init-systems))
+(qob-start
+ (let* ((pre-systems (asdf:registered-systems))
+        (pre-systems (reverse pre-systems))
+        (post-systems)
+        (local-p (qob-local-p)))
+   (when local-p
+     (qob-init-systems))
 
-  (setq post-systems (remove-if (lambda (system)
-                                  (qob-memq system pre-systems))
-                                (asdf:registered-systems))
-        post-systems (reverse post-systems))
+   (setq post-systems (remove-if (lambda (system)
+                                   (qob-memq system pre-systems))
+                                 (asdf:registered-systems))
+         post-systems (reverse post-systems))
 
-  (qob-println "Pre-built systems:")
-  (qob-msg "")
-  (mapc #'qob-list--print-system-by-name pre-systems)
-  (qob-msg "")
-  (qob-info "(Total of ~A system registered)" (length pre-systems)
-            (qob--sinr pre-systems "" "s"))
+   (qob-println "Pre-built systems:")
+   (qob-msg "")
+   (mapc #'qob-list--print-system-by-name pre-systems)
+   (qob-msg "")
+   (qob-info "(Total of ~A system registered)" (length pre-systems)
+             (qob--sinr pre-systems "" "s"))
 
-  (when local-p
-    (qob-msg "")
-    (qob-println "User systems:")
-    (qob-msg "")
-    (mapc #'qob-list--print-system-by-name post-systems)
-    (qob-msg "")
-    (qob-info "(Total of ~A system~A registered)" (length post-systems)
-              (qob--sinr post-systems "" "s")))
+   (when local-p
+     (qob-msg "")
+     (qob-println "User systems:")
+     (qob-msg "")
+     (mapc #'qob-list--print-system-by-name post-systems)
+     (qob-msg "")
+     (qob-info "(Total of ~A system~A registered)" (length post-systems)
+               (qob--sinr post-systems "" "s")))
 
-  (when (qob-all-p)
-    (mapc #'qob-list--print-dist (ql-dist:all-dists))))
+   (when (qob-all-p)
+     (mapc #'qob-list--print-dist (ql-dist:all-dists)))))
 
 ;;; End of lisp/core/list.lisp

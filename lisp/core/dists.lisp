@@ -23,12 +23,13 @@
                        (qob-ansi-green "(enabled)")
                        (qob-ansi-red "(disabled)"))))))
 
-(let ((dists (ql-dist:all-dists)))
-  (qob-info "Available dists:")
-  (qob-msg "")
-  (qob-dists--print dists)
-  (qob-msg "")
-  (qob-info "(Total of ~A dist~A available)" (length dists)
-            (qob--sinr dists "" "s")))
+(qob-start
+ (let ((dists (ql-dist:all-dists)))
+   (qob-info "Available dists:")
+   (qob-msg "")
+   (qob-dists--print dists)
+   (qob-msg "")
+   (qob-info "(Total of ~A dist~A available)" (length dists)
+             (qob--sinr dists "" "s"))))
 
 ;;; End of lisp/core/dists.lisp

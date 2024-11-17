@@ -16,10 +16,11 @@
 
 (qob-load "shared")
 
-(let ((names (qob-args)))
-  (cond ((zerop (length names))
-         (qob-help "core/install"))
-        (t
-         (qob-install-systems names))))
+(qob-start
+ (let ((names (qob-args)))
+   (cond ((zerop (length names))
+          (qob-help "core/install"))
+         (t
+          (qob-install-systems names)))))
 
 ;;; End of lisp/core/install.lisp

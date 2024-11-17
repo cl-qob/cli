@@ -14,6 +14,8 @@
 
 ;;; Code
 
-;; TODO: ..
+(qob-start
+ ;; TODO: ..
+ )
 
 ;;; End of lisp/core/compile.lisp
