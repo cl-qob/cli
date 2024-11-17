@@ -43,6 +43,12 @@ We have incorporated a range of tests to ensure Qob remains stable throughout it
 |-------------------|------|---------------------------------------------------------------------------------------------------------------------------------------------|
 | Build executables | ✔    | [![Build](https://github.com/cl-qob/cli/actions/workflows/build.yml/badge.svg)](https://github.com/cl-qob/cli/actions/workflows/build.yml) |
 
+###### Commands
+
+| Description                              | Done | Status                                                                                                                                        |
+|------------------------------------------|------|-----------------------------------------------------------------------------------------------------------------------------------------------|
+| Test commands in global (`~/.qob/`) mode | ✔    | [![Global](https://github.com/cl-qob/cli/actions/workflows/global.yml/badge.svg)](https://github.com/cl-qob/cli/actions/workflows/global.yml) |
+
 ###### Others
 
 | Description | Done | Status                                                                                                                                                     |
