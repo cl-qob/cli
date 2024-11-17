@@ -5,70 +5,55 @@ weight: 400
 
 {{< toc >}}
 
-`Eask` is just a regular Emacs Lisp file and should be read from Emacs itself!
-You can do:
+`Qob` is just a regular Common Lisp file and should be read from Lisp
+implementation itself! You can do:
 
-```elisp
-; Regular Eask file content...
+```cl
+; Regular Qob file content...
 
-(setq byte-compile-error-on-warn t)  ; Signal error if warning occurred
+(setq qob-enable-color t)  ; Display color
 ```
 
 # 🪝 Hooks
 
-`eask` provides some hooks which enable you to execute code before and after
+`qob` provides some hooks which enable you to execute code before and after
 each command. The hooks look like so:
 
-- `eask-before-COMMAND-hook`
-- `eask-after-COMMAND-hook`
+- `qpb-before-COMMAND-hook`
+- `qob-after-COMMAND-hook`
 
-For example, to consider warnings as errors when byte-compiling with the command
-`eask compile`:
+For example, execute certain tasks after the command `qob build`:
 
-```elisp
-(add-hook 'eask-before-compile-hook
-          (lambda () (setq byte-compile-error-on-warn t)))
-```
-
-This is also equivalent to option `--strict`:
-
-```sh
-$ eask compile [FILES..] --strict
+```cl
+(qob-add-hook 'qob-after-build-hook
+              (lambda ()
+                ;; Do tasks after build
+                ))
 ```
 
 Or hooks that run on every command:
 
-- `eask-before-command-hook`
-- `eask-after-command-hook`
+- `qob-before-command-hook`
+- `qob-after-command-hook`
 
-```elisp
-(add-hook 'eask-before-command-hook
-           (lambda ()
-             (message "%s" (eask-command))))  ; print the current command
+```cl
+(qob-add-hook 'qob-before-command-hook
+              (lambda ()
+                (format T "~A" (qob-command))))  ; print the current command
 ```
 
 For subcommands that contain spaces, will concatenate with `/`:
 
 ```sh
-$ eask lint checkdoc     # lint/checkdoc
-$ eask generate license  # generate/license
+$ qob clean workspace    # clean/workspace
+$ qob create cl-project  # create/cl-project
 ```
 
 therefore,
 
-```elisp
-(add-hook 'eask-before-lint/checkdoc-hook
-           (lambda ()
-             ;; do stuff before checkdoc linting...
-             ))
-```
-
-# 📇 Adding your own command
-
-You can add your own command through our command interface:
-
-```elisp
-(eask-defcommand my-test-command
-  "A test command that prints out useless message."
-  (message "This is a test command!"))
+```cl
+(qob-add-hook 'qob-before-clean/workspace-hook
+              (lambda ()
+                ;; do stuff before clean workspace...
+                ))
 ```

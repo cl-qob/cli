@@ -634,9 +634,9 @@ Set up the systems; on contrary, you should use the function
          (after   (concatenate 'string "qob-after-" command "-hook")))
     (qob--form-command-var after)))
 
-;; Define variable
-(let ((before  (qob--before-command-var))
-      (after   (qob--after-command-var)))
+;; Declare variables
+(let ((before (qob--before-command-var))
+      (after  (qob--after-command-var)))
   (set before nil)
   (set after nil))
 

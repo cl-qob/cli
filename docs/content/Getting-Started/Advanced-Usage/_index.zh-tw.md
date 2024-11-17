@@ -5,67 +5,53 @@ weight: 400
 
 {{< toc >}}
 
-`Eask` 只是一個普通的 Emacs Lisp 文件，應該從 Emacs 本身讀取！ 你可以做：
+`Qob` 只是一個普通的 Common Lisp 文件，應該從 Lisp 實踐本身讀取！ 你可以做：
 
-```elisp
-; 常規 Eask 文件內容...
+```cl
+; 常規 Qob 文件內容...
 
-(setq byte-compile-error-on-warn t)  ; 出現警告時信號錯誤
+(setq qob-enable-color t)  ; 顯示顏色
 ```
 
 # 🪝 Hooks
 
-`eask` 提供了一些 hooks，使您能夠在每個命令之前和之後執行代碼。 hook 看起來像這樣：
+`qob` 提供了一些 hooks，使您能夠在每個命令之前和之後執行代碼。 hook 看起來像這樣：
 
-- `eask-before-COMMAND-hook`
-- `eask-after-COMMAND-hook`
+- `qob-before-COMMAND-hook`
+- `qob-after-COMMAND-hook`
 
-例如，在使用命令 `eask compile` 進行字節編譯時將警告視為錯誤：
+例如，在使用命令 `qob build` 進行建構時執行某些任務：
 
-```elisp
-(add-hook 'eask-before-compile-hook
-          (lambda () (setq byte-compile-error-on-warn t)))
-```
-
-這也等同於選項 `--strict`：
-
-```sh
-$ eask compile [FILES..] --strict
+```cl
+(qob-add-hook 'qob-after-build-hook
+              (lambda ()
+                ;; Do tasks after build
+                ))
 ```
 
 或者在每個命令上運行的 hooks：
 
-- `eask-before-command-hook`
-- `eask-after-command-hook`
+- `qob-before-command-hook`
+- `qob-after-command-hook`
 
-```elisp
-(add-hook 'eask-before-command-hook
-           (lambda ()
-             (message "%s" (eask-command))))  ; print the current command
+```cl
+(qob-add-hook 'qob-before-command-hook
+              (lambda ()
+                (format T "~A" (qob-command))))  ; print the current command
 ```
 
 對於包含空格的子命令，將與`/`連接：
 
 ```sh
-$ eask lint checkdoc     # lint/checkdoc
-$ eask generate license  # generate/license
+$ qob clean workspace    # clean/workspace
+$ qob create cl-project  # create/cl-project
 ```
 
 所以，
 
-```elisp
-(add-hook 'eask-before-lint/checkdoc-hook
-           (lambda ()
-             ;; 在 checkdoc linting 之前做一些事情...
-             ))
-```
-
-# 📇 加入你自己的指令
-
-您可以透過我們的 command 介面添加自己的命令：
-
-```elisp
-(eask-defcommand my-test-command
-  "測試指令印出無用的訊息。"
-  (message "這是一個測試指令!"))
+```cl
+(qob-add-hook 'qob-before-clean/workspace-hook
+              (lambda ()
+                ;; 在 clean workspace 之前做一些事情...
+                ))
 ```
