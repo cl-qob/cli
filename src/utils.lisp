@@ -191,11 +191,14 @@ arguments in the command list."
 
 (defun quicklisp-lisp (cmd)
   "Return Quicklisp's file location."
-  (concatenate 'string (dot cmd) "quicklisp.lisp"))
+  (if (global-p cmd)
+      (concatenate 'string (el-lib:el-2str (user-homedir-pathname))
+                   "quicklisp/")
+      (concatenate 'string (dot cmd) "quicklisp.lisp")))
 
 (defun quicklisp-installed-p (cmd)
   "Return non-nil if Quicklisp is already installed."
-  (uiop:file-exists-p (quicklisp-lisp cmd)))
+  (probe-file (quicklisp-lisp cmd)))
 
 (defun quicklisp-download (cmd)
   "Download quicklisp."
