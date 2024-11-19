@@ -5,7 +5,7 @@ weight: 100
 
 {{< toc >}}
 
-Using Eask as your Emacs package management tool.
+Using Qob as your Lisp system management tool.
 
 {{< hint info >}}
 The installation are cross-platform, using [npm](https://www.npmjs.com/).

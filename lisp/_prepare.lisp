@@ -462,7 +462,7 @@ to actually set up the systems."
                   (asdf:load-asd file)
                   (qob-println "Loaded ASD file ~A" file)
                   (dolist (new-system (qob-newly-loaded-systems pre-systems))
-                    (push (list new-system file) qob-loaded-asds))))
+                    (push (cons new-system file) qob-loaded-asds))))
               files)))
      (qob-ansi-green "done ✓"))
     (setq qob--asds-init-p t)))
@@ -472,12 +472,19 @@ to actually set up the systems."
   (qob-init-asds)
   (unless qob-loaded-asds
     (qob-error "There is no specified ASDF system"))
-  (asdf:primary-system-name (car (nth 0 qob-loaded-asds))))
+  (some (lambda (asd)
+          (asdf:primary-system-name (car asd)))
+        qob-loaded-asds))
 
 (defun qob-primary-system-entry ()
   "Return the primary system."
   (let ((name (qob-primary-system-name)))
-    (assoc name qob-loaded-asds)))
+    ;; NOTE: Not sure why function `assoc' isn't working here;
+    ;; use some and return the value instead.
+    (some (lambda (asd)
+            (when (equal (car asd) name)
+              asd))
+          qob-loaded-asds)))
 
 (defun qob-primary-system ()
   "Return the primary system."
@@ -495,7 +502,7 @@ to actually set up the systems."
   (let ((result))
     (dolist (system qob-loaded-asds)
       (when (equal name (car system))
-        (setq result (nth 1 system))))
+        (setq result (cdr system))))
     result))
 
 (defun qob-system-files ()
