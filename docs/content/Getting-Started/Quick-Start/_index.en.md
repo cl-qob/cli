@@ -8,40 +8,32 @@ weight: 100
 Using Qob as your Lisp system management tool.
 
 {{< hint info >}}
-The installation are cross-platform, using [npm](https://www.npmjs.com/).
-For instructions about how to install Eask with other methods, see [install](https://emacs-eask.github.io/Getting-Started/Install-Eask/).
+The installation are not cross-platform, using [npm](https://www.npmjs.com/).
+For instructions about how to install Qob with other methods, see
+[install](https://cl-qob.github.io/Getting-Started/Install-Qob/).
 
 It is required to have [Git installed](https://git-scm.com/downloads)
 to run this tutorial.
 {{< /hint >}}
 
-## Step 1: Setup NodeJS runtime and `npm`
+## Step 1: Download prebuilt binary
 
-Please check out their official site
-[here](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm#using-a-node-installer-to-install-nodejs-and-npm)
-and install `NodeJS` and `npm` corresponds to your current operating system
+See the [Prebuilt binaries](https://cl-qob.github.io/Getting-Started/Install-Qob/#-prebuilt-binaries) section.
 
 {{< hint ok >}}
-💡 If you don't prefer **NodeJS** and **npm**, you can install with [binary](https://emacs-eask.github.io/Getting-Started/Install-Eask/#binary-cross-platform)
-from our [release](https://github.com/emacs-eask/cli/releases) page.
+💡 If you encounter any issue, try [Build from source](https://cl-qob.github.io/Getting-Started/Install-Qob/#-build-from-source).
 {{< /hint >}}
-
-## Step 2: Install Eask
-
-```sh
-$ npm install -g @emacs-eask/cli
-```
 
 To verify your new installation:
 
 ```sh
-$ eask --version
+$ qob --version
 ```
 
-## Step 3: Navigate to an existing project or create a new project
+## Step 2: Navigate to an existing project or create a new project
 
-If you already have an existing elisp project, navigate to the project root
-folder.
+If you already have an existing common lisp project, navigate to the project
+root folder.
 
 ```sh
 $ cd /path/to/project/dir/
@@ -50,77 +42,38 @@ $ cd /path/to/project/dir/
 To create one:
 
 ```sh
-$ eask create package project-name
+$ qob create cl-project <your-project>
 ```
 
-It should create a folder named `project-name` in your current working directory.
+It should create a folder named `<your-project>` in your current working directory.
 
-## Step 4: Create `Eask`-file
+## Step 4: Create `Qob`-file
 
-Skip this step if you chose to create the project with **`eask create`**!
-
-Otherwise, to create Eask-file in the existing project:
+Then, to create Qob-file in the project:
 
 ```sh
-$ eask init
+$ qob init
 ```
 
-You will be asked some questions about the package you are going to create:
-
-```
-package name: (your-project)
-version: (1.0.0)
-description: Your project description!
-entry point: (your-project.el)
-emacs version: (26.1)
-website: https://example.com/project-url/
-keywords: tools example
-About to write to /path/to/project/Eask:
-
-(package "your-project"
-         "1.0.0"
-         "Your project description!")
-
-(website-url "https://example.com/project-url/")
-(keywords "tools" "example")
-
-(package-file "your-project.el")
-
-(script "test" "echo \"Error: no test specified\" && exit 1")
-
-(source "gnu")
-
-(depends-on "emacs" "26.1")
-
-
-Is this OK? (yes) yes ⏎
-```
-
-You should be able to see an `Eask` file in your project folder. 🎉🎊
+You should be able to see an `Qob` file in your project folder. 🎉🎊
 
 ## Step 5: Start the package development
 
 To check your package information, run:
 
 ```sh
-$ eask info
+$ qob info
 ```
 
 You should be able to see the following information:
 
 ```
-your-package (1.0.0) | deps: 0 | devDeps: 0
+your-package (1.0.0) | deps: 0
 Your project description!
 https://example.com/project-url/
 
-keywords: tools, example
-
-entry: your-package-file.el
-kind: single
-
-dist
-.total-files: 0
-.unpacked-size: 0
+Author: Your Name
+License: MIT
 ```
 
 From the start, you would not have any `dependencies` and `devDependencies` (`0` by default)!

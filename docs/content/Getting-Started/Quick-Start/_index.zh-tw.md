@@ -14,29 +14,21 @@ weight: 100
 需要安裝 [Git](https://git-scm.com/downloads) 才能運行本教程。
 {{< /hint >}}
 
-## 步驟 1: 設置 NodeJS runtime 和 `npm`
+## 步驟 1: 下載預先建立的檔案
 
-請在 [此處](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm#using-a-node-installer-to-install-nodejs-and- npm)
-並安裝 `NodeJS` 和 `npm` 對應你當前的操作系統
+請參閱[預建置檔案](https://cl-qob.github.io/Getting-Started/Install-Qob/#-prebuilt-binaries)部分。
 
 {{< hint ok >}}
-💡 如果您不喜歡 **NodeJS** 和 **npm**，您可以使用 [binary](https://emacs-eask.github.io/Getting-Started/Install-Eask/#binary-cross -platform）
-來自我們的 [release](https://github.com/emacs-eask/cli/releases) 頁面。
+💡 如果遇到任何問題，請嘗試 [從原始碼建立](https://cl-qob.github.io/Getting-Started/Install-Qob/#-build-from-source)。
 {{< /hint >}}
 
-## 步驟 2: 安裝 Eask
+驗證您的新安裝：
 
 ```sh
-$ npm install -g @emacs-eask/cli
+$ qob --version
 ```
 
-要驗證您的新安裝：
-
-```sh
-$ eask --version
-```
-
-## 步驟 3: 導航到現有項目或創建新項目
+## 步驟 2: 導航到現有項目或創建新項目
 
 如果您已有一個現有的 elisp 項目，請導航到項目根文件夾。
 
@@ -47,77 +39,38 @@ $ cd /path/to/project/dir/
 創建一個：
 
 ```sh
-$ eask create package project-name
+$ eask create package <your-project>
 ```
 
-它應該在您當前的工作目錄中創建一個名為 `project-name` 的文件夾。
+它應該在您當前的工作目錄中創建一個名為 `<your-project>` 的文件夾。
 
-## 步驟 4： 創建 `Eask` 文件
+## 步驟 4： 創建 `Qob` 文件
 
-如果您選擇使用 **`eask create`** 創建項目，請跳過此步驟！
-
-否則，在現有項目中創建 Eask 文件：
+接著創建項目中創建 Qob 文件：
 
 ```sh
-$ eask init
+$ qob init
 ```
 
-您將被問到一些關於您將要創建的包的問題：
-
-```
-package name: (your-project)
-version: (1.0.0)
-description: Your project description!
-entry point: (your-project.el)
-emacs version: (26.1)
-website: https://example.com/project-url/
-keywords: tools example
-About to write to /path/to/project/Eask:
-
-(package "your-project"
-         "1.0.0"
-         "Your project description!")
-
-(website-url "https://example.com/project-url/")
-(keywords "tools" "example")
-
-(package-file "your-project.el")
-
-(script "test" "echo \"Error: no test specified\" && exit 1")
-
-(source "gnu")
-
-(depends-on "emacs" "26.1")
-
-
-Is this OK? (yes) yes ⏎
-```
-
-您應該能夠在項目文件夾中看到一個 `Eask` 文件。 🎉🎊
+您應該能夠在項目文件夾中看到一個 `Qob` 文件。 🎉🎊
 
 ## 步驟 5: 開始包開發
 
 要檢查您的包裹信息，請運行：
 
 ```sh
-$ eask info
+$ qob info
 ```
 
 您應該能夠看到以下信息：
 
 ```
-your-package (1.0.0) | deps: 0 | devDeps: 0
+your-package (1.0.0) | deps: 0
 Your project description!
 https://example.com/project-url/
 
-keywords: tools, example
-
-entry: your-package-file.el
-kind: single
-
-dist
-.total-files: 0
-.unpacked-size: 0
+Author: Your Name
+License: MIT
 ```
 
 從一開始，您就不會有任何 `dependencies` 和 `devDependencies`（默認為 `0`）！
