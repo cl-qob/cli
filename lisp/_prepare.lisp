@@ -490,12 +490,6 @@ to actually set up the systems."
   (let ((path (car (cdr (qob-primary-system-entry)))))
     (qob-file-name-directory path)))
 
-(defun qob-only-system ()
-  "Return the default system if only one system is loaded in the workspace."
-  (qob-init-asds)
-  (when (= (length qob-loaded-asds) 1)
-    (qob-primary-system-entry)))
-
 (defun qob-find-asd-file (name)
   "Return the ASD file by system's NAME."
   (let ((result))

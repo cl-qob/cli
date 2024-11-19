@@ -54,17 +54,17 @@
 
 (qob-start
  (let ((names (qob-args))
-       (default-system (qob-only-system)))
+       (primary-system (qob-primary-system-entry)))
    (cond
-     ;; If only specified one system.
-     (default-system
-      (qob-info--print-system (car default-system)))
-     ;; If no system(s) specified.
-     ((zerop (length names))
-      (qob-help "core/info"))
-     ;; Print all systems information.
-     (t
+     ;; If specified system(s).
+     (names
       (dolist (name names)
-        (qob-info--print-system name))))))
+        (qob-info--print-system name)))
+     ;; Print primary system.
+     (primary-system
+      (qob-info--print-system (car primary-system)))
+     ;; Print help.
+     (t
+      (qob-help "core/info")))))
 
 ;;; End of lisp/core/info.lisp

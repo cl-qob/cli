@@ -57,17 +57,17 @@
 
 (qob-start
  (let ((systems (qob-args))
-       (default-name (qob-only-system)))
+       (primary-system (qob-primary-system-entry)))
    (cond
-     ;; If only specified one system.
-     (default-name
-      (qob-install-deps--by-system-name (car default-name)))
-     ;; If no system(s) specified.
-     ((zerop (length systems))
-      (qob-help "core/install-deps"))
-     ;; Install depedencies for all specify systems.
-     (t
+     ;; If specified system(s).
+     (systems
       (dolist (system-name systems)
-        (qob-install-deps--by-system-name system-name))))))
+        (qob-install-deps--by-system-name system-name)))
+     ;; Print primary system.
+     (primary-system
+      (qob-install-deps--by-system-name (car primary-system)))
+     ;; Print help.
+     (t
+      (qob-help "core/install-deps")))))
 
 ;;; End of lisp/core/install-deps.lisp

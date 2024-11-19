@@ -49,21 +49,21 @@
 (qob-start
  (let* ((systems (qob-args))
         (systems-len (length systems))
-        (default-name (qob-only-system)))
+        (primary-system (qob-primary-system-entry)))
    (cond
-     ;; If only specified one system.
-     (default-name
-      (qob-build--print-header 1)
-      (qob-build--system-by-name (car default-name))
-      (qob-build--print-footer))
-     ;; If no system(s) specified.
-     ((zerop systems-len)
-      (qob-help "core/build"))
-     ;; Build system for all specify systems.
-     (t
+     ;; If specified system(s).
+     (systems
       (qob-build--print-header systems-len)
       (dolist (name systems)
         (qob-build--system-by-name name))
-      (qob-build--print-footer)))))
+      (qob-build--print-footer))
+     ;; Print primary system.
+     (primary-system
+      (qob-build--print-header 1)
+      (qob-build--system-by-name (car primary-system))
+      (qob-build--print-footer))
+     ;; Print help.
+     (t
+      (qob-help "core/build")))))
 
 ;;; End of lisp/core/build.lisp
