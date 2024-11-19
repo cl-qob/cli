@@ -8,15 +8,11 @@ weight: 100
 Using Qob as your Lisp system management tool.
 
 {{< hint info >}}
-The installation are not cross-platform, using [npm](https://www.npmjs.com/).
-For instructions about how to install Qob with other methods, see
-[install](https://cl-qob.github.io/Getting-Started/Install-Qob/).
-
 It is required to have [Git installed](https://git-scm.com/downloads)
 to run this tutorial.
 {{< /hint >}}
 
-## Step 1: Download prebuilt binary
+## 🔍 Step 1: Download prebuilt binary
 
 See the [Prebuilt binaries](https://cl-qob.github.io/Getting-Started/Install-Qob/#-prebuilt-binaries) section.
 
@@ -30,7 +26,7 @@ To verify your new installation:
 $ qob --version
 ```
 
-## Step 2: Navigate to an existing project or create a new project
+## 🔍 Step 2: Navigate to an existing project or create a new project
 
 If you already have an existing common lisp project, navigate to the project
 root folder.
@@ -47,7 +43,7 @@ $ qob create cl-project <your-project>
 
 It should create a folder named `<your-project>` in your current working directory.
 
-## Step 4: Create `Qob`-file
+## 🔍 Step 3: Create `Qob`-file
 
 Then, to create Qob-file in the project:
 
@@ -57,7 +53,7 @@ $ qob init
 
 You should be able to see an `Qob` file in your project folder. 🎉🎊
 
-## Step 5: Start the package development
+## 🔍 Step 4: Start the package development
 
 To check your package information, run:
 
@@ -76,59 +72,72 @@ Author: Your Name
 License: MIT
 ```
 
-From the start, you would not have any `dependencies` and `devDependencies` (`0` by default)!
+From the start, you would not have any `dependencies` (`0` by default)!
 
-## Step 6: Manage package archives
+## 🔍 Step 5: Manage system dist
 
-You can manage package archives by using the `source` directive in your **Eask**-file.
+You can manage dist by using the `source` directive in your **Qob**-file.
 
-```elisp
-(source "gnu")    ; default
-(source "melpa")  ; Add package archives
+```cl
+(source "quicklisp")  ; default dist
+(source "ultralisp")  ; Addition dist
 ```
 
 {{< hint info >}}
-💡 See [DSL/source](https://emacs-eask.github.io/DSL/#-source-alias) for more information!
+💡 See [DSL/source](https://cl-qob.github.io/DSL/#-source-alias) for more information!
 {{< /hint >}}
 
-## Step 7: Add some dependencies
+## 🔍 Step 6: Add some dependencies
 
-You can add dependencies by using `depends-on` directive in your **Eask**-file.
+You can now add dependencies in your ASD file.
 
-```elisp
+```cl
+(defsystem "your-project"
+  ...
+  :depends-on (flx str clingon)  ; Add dependencies here!
+  ...
+```
+
+You can add local dependencies by using `depends-on` directive in your **Qob**-file.
+
+```cl
 ...
 
-(depends-on "f")
-(depends-on "ht")
+(depends-on "fsdb" "https://github.com/billstclair/fsdb" :git)
 ```
 
 {{< hint danger >}}
-💡 Make sure the dependencies you add are available in the package archives!
-
-Or else you would get an error **`package-name-' is unavailable**!
+💡 Make sure the dependencies you add are available in one of those dist!
 {{< /hint >}}
 
-## Step 8: Install dependencies
+## 🔍 Step 7: Install dependencies
 
-Now we can install the dependencies we have specified in the **Eask**-file:
+Now we can install the dependencies we have specified in **ASD** and **Qob** files:
 
-```elisp
-$ eask install-deps
+```sh
+$ qob install-deps
 ```
 
-You should see Eask executed correctly with the similar output below:
+You should see Qob executed correctly with the similar output below:
 
 ```
-Loading package information... done
-Installing 2 package dependencies...
-  - Installing f (20220405.1534)... done
-  - Installing ht (20210119.741)... done
+Loading ASDF files... done ✓
+Installing 1 system...
 
-(Total of 2 dependencies installed, 0 skipped)
+  - [1/1] Installing fsdb from https://github.com/billstclair/fsdb... done ✓
+
+(Total of 1 system installed; 0 skipped)
+Installing 3 systems...
+
+  - [1/3] Installing flx (0)... done ✓
+  - [2/3] Installing str (0)... done ✓
+  - [3/3] Installing clingon (0)... done ✓
+
+(Total of 3 systems installed; 0 skipped)
 ```
 
-## See Also
+## 🔗 See Also
 
-- [Commands and options](https://emacs-eask.github.io/Getting-Started/Commands-and-options/)
-- [Domain Specific Language](https://emacs-eask.github.io/DSL/)
-- [Basic Usage](https://emacs-eask.github.io/Getting-Started/Basic-Usage/)
+- [Commands and options](https://cl-qob.github.io/Getting-Started/Commands-and-options/)
+- [Domain Specific Language](https://cl-qob.github.io/DSL/)
+- [Basic Usage](https://cl-qob.github.io/Getting-Started/Basic-Usage/)

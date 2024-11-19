@@ -20,6 +20,6 @@ a directory with the following structure:
    └─ main.lisp
 ```
 
-## Directory Structure Explained
+## 📂 Directory Structure Explained
 
 See https://github.com/fukamachi/cl-project for more information.
