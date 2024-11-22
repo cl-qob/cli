@@ -17,7 +17,6 @@
            el-expand-file-name
            el-executable-find
            el-move-path
-           el-delete-directory
            el-directory-files
            el-file-name-directory))
 
@@ -68,10 +67,6 @@
 (defun el-expand-file-name (path &optional (dir-name (uiop:getcwd)))
   "Like `expand-file-name' function; returns a string."
   (namestring (el-expand-fn path dir-name)))
-
-(defun el-delete-directory (dir)
-  "Delete the DIR."
-  (sb-ext:delete-directory (el-lib:el-expand-fn dir) :recursive t))
 
 (defun el-directory-files (dir)
   "Return a list of names of files in DIR."

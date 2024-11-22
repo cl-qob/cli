@@ -10,12 +10,16 @@
 ;;; Code
 
 (qob-start
- (qob-with-progress
-  (qob-format "Deleting ~A... " qob-dot)
-  (uiop:delete-directory-tree (pathname qob-dot) :validate t)
-  "done ✓")
-
- (qob-println "")
- (qob-info "(Workspace is now cleaned)"))
+ (let ((deleted))
+   (qob-with-progress
+    (qob-format "Deleting ~A... " qob-dot)
+    (setq deleted (ignore-errors (delete-directory qob-dot :recursive t)))
+    (if deleted "done ✓" "skipped ✗"))
+   (qob-println "")
+   (if deleted
+       (qob-info "(Workspace is now cleaned)")
+       (progn
+         (qob-info "(Failed to clean up workspace)")
+         (setq qob-no-cleaning-operation-p t)))))
 
 ;;; End of lisp/clean/workspace.lisp

@@ -19,7 +19,7 @@
 (defun qob-copy-lisp-dir ()
   "Copy `lisp' directory over."
   (when (probe-file "bin/lisp/")
-    (el-lib:el-delete-directory "bin/lisp/"))
+    (delete-directory "bin/lisp/" :recursive t))
   (copy-directory:copy (el-lib:el-expand-fn "lisp/")
                        (el-lib:el-expand-fn "bin/lisp/")))
 

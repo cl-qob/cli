@@ -196,6 +196,9 @@ Argument ENV-NAME is used to get the argument string."
 (defvar qob-quicklisp-installed-p (uiop:getenv "QOB_QUICKLISP_INSTALLED")
   "Return non-nil if Quicklisp is already installed.")
 
+(defvar qob-inhibit-ql-download-p (uiop:getenv "QOB_INHIBIT_QL_DOWNLOAD")
+  "Return non-nil if Quicklisp is inhibit to be downloaded.")
+
 (defun qob-dot-impls ()
   "Return the directory path to `.qob/type/version'.
 

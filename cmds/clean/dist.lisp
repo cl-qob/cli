@@ -19,7 +19,7 @@
 
 (defun handler (cmd)
   "Handler for `clean dist' command."
-  (let ((qob-cli:inhibit-ql-download t))
+  (let ((qob-cli:inhibit-ql-download-p t))
     (qob-cli:call-script "clean/dist" cmd)))
 
 (defun command ()

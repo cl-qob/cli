@@ -29,7 +29,8 @@
    :usage "<type>"
    :options (options)
    :handler #'handler
-   :sub-commands `(,(qob-cli/clean/dist:command)
+   :sub-commands `(,(qob-cli/clean/all:command)
+                   ,(qob-cli/clean/dist:command)
                    ,(qob-cli/clean/workspace:command))))
 
 ;;; End of cmds/core/clean.lisp

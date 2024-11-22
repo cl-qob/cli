@@ -11,7 +11,7 @@
   (:use cl)
   (:export
    ;; src/utils.lsip
-   inhibit-ql-download
+   inhibit-ql-download-p
    force-global-p
    exec-dir
    call-script
