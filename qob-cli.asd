@@ -19,6 +19,7 @@
                (:file "cmds/core/clean")
                (:file "cmds/core/create")
                (:file "cmds/core/dists")
+               (:file "cmds/core/eval")
                (:file "cmds/core/files")
                (:file "cmds/core/package")
                (:file "cmds/core/info")

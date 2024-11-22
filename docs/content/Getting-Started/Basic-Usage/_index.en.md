@@ -44,6 +44,7 @@ COMMANDS:
   clean          Delete various files produced during building
   create         Create a new Common Lisp project
   dists          List out all installed dists
+  eval           Evaluate lisp form with a proper PATH
   files          Print all system files
   package        Build a system artifact
   info           Display information about the current system(s)
