@@ -19,7 +19,8 @@
 
 (defun handler (cmd)
   "Handler for `clean all' command."
-  (qob-cli:call-script "clean/all" cmd))
+  (let ((qob-cli:inhibit-ql-download-p t))
+    (qob-cli:call-script "clean/all" cmd)))
 
 (defun command ()
   "The `clean all' command."

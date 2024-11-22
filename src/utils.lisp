@@ -103,9 +103,10 @@ Argument CMD is used to extract positional arguments and options."
   (setf (uiop:getenv "QOB_TEMP_FILE") (el-lib:el-expand-file-name "tmp" (dot-global)))
   (setf (uiop:getenv "QOB_LISP_ROOT") (lisp-root))
   (setf (uiop:getenv "QOB_USER_INIT") (user-init cmd))
-  (if (quicklisp-installed-p cmd)
-      (setf (uiop:getenv "QOB_QUICKLISP_INSTALLED") "t")
-      (quicklisp-download cmd)))
+  (unless inhibit-ql-download-p
+    (if (quicklisp-installed-p cmd)
+        (setf (uiop:getenv "QOB_QUICKLISP_INSTALLED") "t")
+        (quicklisp-download cmd))))
 
 (defun program-name ()
   "Lisp program we target to run."

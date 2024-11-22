@@ -231,6 +231,25 @@ Alias: `.qob`
 $ qob [GLOBAL-OPTIONS] clean workspace
 ```
 
+## 🔍 qob clean dist
+
+Delete dist subdirectory.
+
+```sh
+$ qob [GLOBAL-OPTIONS] clean dist
+```
+
+## 🔍 qob clean all
+
+This command is the combination of all other clean commands.
+
+- `clean workspace`
+- `clean dist`
+
+```sh
+$ qob [GLOBAL-OPTIONS] clean all
+```
+
 # 🚩 Utilities
 
 Other helper commands.

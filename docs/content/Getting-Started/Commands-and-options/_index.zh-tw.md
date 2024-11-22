@@ -230,6 +230,25 @@ $ qob [GLOBAL-OPTIONS] link list
 $ qob [GLOBAL-OPTIONS] clean workspace
 ```
 
+## 🔍 qob clean dist
+
+刪除 dist 子目錄。
+
+```sh
+$ qob [GLOBAL-OPTIONS] clean dist
+```
+
+## 🔍 qob clean all
+
+此指令是所有其他清除指令的組合。
+
+- `clean workspace`
+- `clean dist`
+
+```sh
+$ qob [GLOBAL-OPTIONS] clean all
+```
+
 # 🚩 實用工具
 
 其他輔助指令。
