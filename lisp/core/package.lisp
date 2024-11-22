@@ -23,6 +23,7 @@
     (ignore-errors (delete-directory f-dir :recursive t))
     (ensure-directories-exist f-dir)
 
+    ;; Copy files over
     (dolist (path (qob-system-files))
       (let* ((path (qob-2str path))
              (rel-path (qob-s-replace root "" path))
@@ -41,12 +42,14 @@
                              (qob-s-remove-prefix
                               (qob-2str qob-dist-path)
                               tar))))
+    ;; Delete cache folder
+    (ignore-errors (delete-directory f-dir :recursive t))
+
     (qob-msg "")
     (qob-info "(Built in ~A.tar)" tar)))
 
 (qob-start
- (let* ((qob-dist-path (or (qob-args 0) qob-dist-path))
-        (qob-dist-path (qob-expand-fn qob-dist-path)))
+ (let ((qob-dist-path (qob-dist-path)))
    (ensure-directories-exist qob-dist-path)
 
    (let ((name   (qob-primary-system-name))

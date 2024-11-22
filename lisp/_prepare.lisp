@@ -494,7 +494,7 @@ to actually set up the systems."
 ;; NOTE: Use this as project root?
 (defun qob-primary-root ()
   "Return the primary system path."
-  (let ((path (car (cdr (qob-primary-system-entry)))))
+  (let ((path (cdr (qob-primary-system-entry))))
     (qob-file-name-directory path)))
 
 (defun qob-find-asd-file (name)
@@ -608,6 +608,11 @@ Set up the systems; on contrary, you should use the function
 (defvar qob-dist-path "dist/"
   "Default path where to place the package artifact.")
 
+(defun qob-dist-path ()
+  "Path to dist path."
+  (let ((path (or (qob-args 0) qob-dist-path)))
+    (qob-expand-fn path)))
+
 ;;
 ;;; Entry
 
@@ -692,5 +697,11 @@ Set up the systems; on contrary, you should use the function
         'debug (if (qob-file-load (uiop:getcwd))
                    (qob-msg "✓ Loading Qob file in ~A... done!" qob-file)
                    (qob-msg "✗ Loading Qob file... missing!")))))
+
+;;
+;;; Commad variables
+
+(defvar qob-no-cleaning-operation-p nil
+  "Set to non-nil if there is no cleaning operation done.")
 
 ;;; End of lisp/_prepare.lisp
