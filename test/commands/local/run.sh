@@ -38,7 +38,7 @@ qob dists
 qob list
 
 # Preparation
-qob install-deps
+qob install-deps --dev
 qob package
 
 # Development

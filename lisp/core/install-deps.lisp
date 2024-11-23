@@ -51,13 +51,15 @@
 
 (defun qob-install-deps--by-system-name (name)
   "Install dependencies by system's NAME."
-  (let* ((system (asdf:find-system name))
-         (deps   (asdf:system-depends-on system)))
-    (qob-install-systems deps)))
+  (when name
+    (let* ((system (asdf:find-system name))
+           (deps   (asdf:system-depends-on system)))
+      (qob-install-systems deps))))
 
 (qob-start
  (let ((systems (qob-args))
-       (primary-system (qob-primary-system-entry)))
+       (primary-system (qob-primary-system-entry))
+       (primary-test-system (qob-primary-test-system-entry)))
    (cond
      ;; If specified system(s).
      (systems
@@ -65,7 +67,9 @@
         (qob-install-deps--by-system-name system-name)))
      ;; Print primary system.
      (primary-system
-      (qob-install-deps--by-system-name (car primary-system)))
+      (qob-install-deps--by-system-name (car primary-system))
+      (when (qob-dev-p)
+        (qob-install-deps--by-system-name (car primary-test-system))))
      ;; Print help.
      (t
       (qob-help "core/install-deps")))))

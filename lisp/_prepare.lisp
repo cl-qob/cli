@@ -292,6 +292,10 @@ the `qob-start' execution.")
   "Non-nil when flag is on (`-a', `--all')."
   (qob--flag "--all"))
 
+(defun qob-dev-p ()
+  "Non-nil when flag is on (`--dev')."
+  (qob--flag "--dev"))
+
 (defun qob-no-color-p ()
   "Non-nil when flag is on (`--no-color')."
   (qob--flag "--no-color"))

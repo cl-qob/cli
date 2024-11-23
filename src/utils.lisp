@@ -72,6 +72,8 @@
       (nconc opts `("--global")))
     (when (clingon:getopt cmd :all)
       (nconc opts `("--all")))
+    (when (clingon:getopt cmd :dev)
+      (nconc opts `("--dev")))
     (when (clingon:getopt cmd :no-color)
       (nconc opts `("--no-color")))
     (when (clingon:getopt cmd :compression)
