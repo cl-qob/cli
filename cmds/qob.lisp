@@ -71,6 +71,7 @@
                    ,(qob-cli/load:command)
                    ,(qob-cli/locate:command)
                    ,(qob-cli/status:command)
+                   ,(qob-cli/test:command)
                    ,(qob-cli/uninstall:command))))
 
 ;;; End of cmds/qob.lisp

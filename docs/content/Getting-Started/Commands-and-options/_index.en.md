@@ -170,6 +170,14 @@ List out all installed dists.
 $ qob [GLOBAL-OPTIONS] dists
 ```
 
+## 🔍 qob install-dists
+
+Install dists.
+
+```sh
+$ qob [GLOBAL-OPTIONS] install-dists [NAMES..]
+```
+
 ## 🔍 qob search
 
 Search systems from archives.

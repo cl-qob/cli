@@ -24,3 +24,6 @@ install-ql: download-ql
 
 command-global:
 	./test/commands/global/run.sh
+
+command-local:
+	./test/commands/local/run.sh

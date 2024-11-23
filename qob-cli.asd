@@ -31,6 +31,7 @@
                (:file "cmds/core/load")
                (:file "cmds/core/locate")
                (:file "cmds/core/status")
+               (:file "cmds/core/test")
                (:file "cmds/core/uninstall")
                (:file "cmds/qob")
                ;; Program

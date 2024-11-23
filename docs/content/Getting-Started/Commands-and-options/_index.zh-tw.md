@@ -169,6 +169,14 @@ $ qob [GLOBAL-OPTIONS] eval [FORM] 。
 $ qob [GLOBAL-OPTIONS] dists
 ```
 
+## 🔍 qob install-dists
+
+安裝 dists.
+
+```sh
+$ qob [GLOBAL-OPTIONS] install-dists [NAMES..]
+```
+
 ## 🔍 qob search
 
 從歸檔中搜尋系統。

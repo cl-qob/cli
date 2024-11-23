@@ -479,9 +479,25 @@ to actually set up the systems."
           (asdf:primary-system-name (car asd)))
         qob-loaded-asds))
 
+(defun qob-primary-test-system-name ()
+  "Return the primary test system name."
+  (let* ((name (qob-primary-system-name))
+         (name (concatenate 'string name "/tests")))
+    name))
+
 (defun qob-primary-system-entry ()
-  "Return the primary system."
+  "Return the primary system entry."
   (let ((name (qob-primary-system-name)))
+    ;; NOTE: Not sure why function `assoc' isn't working here;
+    ;; use some and return the value instead.
+    (some (lambda (asd)
+            (when (equal (car asd) name)
+              asd))
+          qob-loaded-asds)))
+
+(defun qob-primary-test-system-entry ()
+  "Return the primary test system entry."
+  (let ((name (qob-primary-test-system-name)))
     ;; NOTE: Not sure why function `assoc' isn't working here;
     ;; use some and return the value instead.
     (some (lambda (asd)
@@ -492,6 +508,11 @@ to actually set up the systems."
 (defun qob-primary-system ()
   "Return the primary system."
   (let ((name (qob-primary-system-name)))
+    (asdf:find-system name)))
+
+(defun qob-primary-test-system ()
+  "Return the primary test system."
+  (let ((name (qob-primary-test-system-name)))
     (asdf:find-system name)))
 
 ;; NOTE: Use this as project root?
