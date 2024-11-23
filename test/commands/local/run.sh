@@ -49,3 +49,4 @@ qob eval "(progn )"
 
 # Testing
 qob test
+qob test mini.system.1/tests

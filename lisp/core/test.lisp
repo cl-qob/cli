@@ -9,17 +9,23 @@
 
 ;;; Code
 
+(defun qob-test--by-name (name)
+  "Test the system's NAME."
+  (let ((system (ignore-errors (asdf:find-system name))))
+    (if system
+        (asdf:test-system name)
+        (qob-println "✗ The test system ~A not found, skipped" (qob-ansi-green name)))))
+
 (qob-start
  (let ((names (qob-args))
        (primary-test-system (qob-primary-test-system-entry)))
    (cond
      ;; If specified system(s).
      (names
-      (dolist (name names)
-        (asdf:test-system name)))
+      (mapc #'qob-test--by-name names))
      ;; Print primary system.
      (primary-test-system
-      (asdf:test-system (car primary-test-system)))
+      (qob-test--by-name (car primary-test-system)))
      ;; Print help.
      (t
       (qob-help "core/test")))))
