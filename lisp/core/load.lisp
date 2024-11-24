@@ -13,6 +13,6 @@
  (let ((files (qob-expand-file-specs (qob-args))))
    (if files
        (mapc #'load files)
-       (eask-info "(Nothing to load.)"))))
+       (qob-info "(Nothing to load.)"))))
 
 ;;; End of lisp/core/load.lisp
