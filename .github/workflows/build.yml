@@ -242,9 +242,7 @@ jobs:
         args: install sbcl
 
     - name: Install Zip
-      uses: crazy-max/ghaction-chocolatey@v3
-      with:
-        args: install zip
+      uses: montudor/action-zip@master
 
     - name: Install Quicklisp
       run: |
