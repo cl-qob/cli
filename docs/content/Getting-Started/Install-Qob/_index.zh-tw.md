@@ -84,14 +84,6 @@ snap 套件適用於大多數發行版，安裝簡單且會自動更新。
 $ sudo snap install qob-cli
 ```
 
-### 📦 Arch (Linux)
-
-有一個 `PKGBUILD` 可以從原始程式碼建立 `qob` 並建立一個包，因此在儲存庫的最上層目錄中您可以簡單地運行：
-
-```sh
-$ makepkg -i
-```
-
 ### 📦 Chocolatey (Windows)
 
 如果您的計算機上安裝了 [Chocolatey][]，則可以使用以下一行代碼安裝 Qob：

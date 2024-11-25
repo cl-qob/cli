@@ -88,15 +88,6 @@ automatically updated.
 $ sudo snap install qob-cli
 ```
 
-### 📦 Arch (Linux)
-
-There's a `PKGBUILD` that builds `qob` from sources and creates a package, so
-inside the top directory of the repository you can simply run:
-
-```sh
-$ makepkg -i
-```
-
 ### 📦 Chocolatey (Windows)
 
 If you have [Chocolatey][] installed on your machine, you can
