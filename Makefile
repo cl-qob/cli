@@ -14,6 +14,8 @@ build-deploy:
 	@echo "Building... (with Deploy)"
 	$(LISP) $(LISP_ARGS) --script './scripts/deploy.lisp'
 
+build-nix: install-ql build
+
 download-ql:
 	@echo "Downloading Quicklisp..."
 	curl -O https://beta.quicklisp.org/quicklisp.lisp
@@ -21,6 +23,7 @@ download-ql:
 install-ql: download-ql
 	@echo "Installing Quicklisp..."
 	$(LISP) $(LISP_ARGS) --load './quicklisp.lisp' --script './scripts/install-ql.lisp'
+	rm './quicklisp.lisp'
 
 command-global:
 	./test/commands/global/run.sh
