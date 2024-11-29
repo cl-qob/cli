@@ -1,5 +1,5 @@
 (defsystem "qob-cli"
-  :version "0.1.1"
+  :version "0.1.2"
   :author "Jen-Chieh Shen"
   :license "MIT"
   :description "CLI for building, running, testing, and managing your Common Lisp dependencies"

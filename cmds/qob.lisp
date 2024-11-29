@@ -50,7 +50,7 @@
   (clingon:make-command
    :name "qob"
    :description "CLI for building, running, testing, and managing your Common Lisp dependencies"
-   :version "0.1.1"
+   :version "0.1.2"
    :authors '("Jen-Chieh Shen <jcs090218@gmail.com>")
    :license "MIT"
    :options (options)
