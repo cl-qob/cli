@@ -24,7 +24,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  VERSION: 0.1.3
+  VERSION: 0.1.4
   REPO_BIN: 'cl-qob/binaries'
 
 jobs:
