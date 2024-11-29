@@ -8,7 +8,7 @@
 
 (defun this-load-system (name)
   "Load the system by NAME."
-  (if (asdf:find-system name)
+  (if (ignore-errors (asdf:find-system name))
       (asdf:load-system name)
       (ql:quickload name)))
 
