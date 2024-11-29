@@ -5,13 +5,20 @@
 (require 'asdf)
 
 (load "~/quicklisp/setup.lisp")
-(ql:quickload "deploy")
-(ql:quickload "clingon")
-(ql:quickload "copy-directory")
+
+(defun this-load-system (name)
+  "Load the system by NAME."
+  (if (asdf:find-system name)
+      (asdf:load-system name)
+      (ql:quickload name)))
+
+(this-load-system "deploy")
+(this-load-system "clingon")
+(this-load-system "copy-directory")
 
 (push '*default-pathname-defaults* asdf:*central-registry*)
-(asdf:load-system "qob-cli")
-(asdf:load-system "copy-directory")
+(this-load-system "qob-cli")
+(this-load-system "copy-directory")
 
 ;;
 ;;; Util
