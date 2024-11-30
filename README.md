@@ -15,7 +15,7 @@ We aim to make Qob an all-in-one tool so users no longer need to install tools l
 
 ## 🚧 State of the project
 
-We are currently in a *early-development* phase.  API, and commands are not stable.
+We are currently in a *alpha* phase.  API, and commands are not stable.
 
 Things might still break at any point.
 
