@@ -14,14 +14,20 @@ tools like [Roswell][] and [Qlot][], which only serve specific goals.
 
 ## ❓ Why Qob?
 
-Qob is an Common Lisp project management tool, similar to Maven or Leiningen.
-It aims to control and automate the entire life cycle of an Common Lisp system,
-including dependency management, packaging, distribution and testing.
+For many newcomers, getting started with Common Lisp can feel relatively
+easy compared to other advanced languages like Python or Rust.
+However, it is also perceived as a challenging language to begin with.
+This difficulty doesn't stem from the language itself but rather from the
+ecosystem: the environment, toolchain, sparse documentation, limited search
+results, and other complexities can create obstacles.
 
-- Ruby projects have a `gemspec` file?
-- Node.js projects have a `package.json` file?
-- Clojure projects have a `project.clj` file?
-- Common Lisp projects have a `Qob` file?
+Qob aims to address these challenges by making the environment more accessible.
+It simplifies tasks such as building executables and determining which functions
+to call for specific commands. Qob allows users to perform various Lisp
+operations without directly interacting with a Lisp implementation (e.g., SBCL).
+By using Qob, you can enjoy a user experience closer to that of modern
+high-level programming languages, avoiding the reliance on the traditional
+`eval`-based workflows.
 
 ## 📰 News
 

@@ -14,14 +14,15 @@ Qob 嘗試在這些事情上做得很好：
 
 ## ❓ 為什麼選擇 Qob？
 
-Qob 是一個 Common Lisp 專案管理工具，類似於 Maven 或 Leiningen。
-它的目標是控制 Common Lisp 系統的整個生命週期並使其自動化，
-包括相依性管理、打包、發行和測試。
+對於很多新手來說, 相比其他高階語言像是 Python, Rust, 等等.
+Common Lisp 的入門難度是相對算高的. 主要原因並不是因為 Common Lisp
+這個語言本身有多難, 困難的地方通常是指它的語言環境,
+工具鏈不齊全, 文檔太少或不完善, 網路搜尋時常無果, 等等其他疑難雜症.
 
-- Ruby 專案有 `gemspec` 檔案嗎？
-- Node.js 專案有 `package.json` 檔案嗎？
-- Clojure 專案有 `project.clj` 檔案嗎？
-- Common Lisp 專案有 `Qob` 檔案嗎？
+Qob 嘗試解決環境不友善的問題. 像是如何建構執行檔, 應該呼叫那些函式
+去做那些指令. 不需要進 Lisp 實踐 (ex: SBCL) 也能夠執行一系列的 Lisp 任務.
+相比過去 `eval` 需要執行的函式, 使用 Qob 能讓你擁有更接近現代高階程式語言
+的使用者體驗.
 
 ## 📰 消息
 
