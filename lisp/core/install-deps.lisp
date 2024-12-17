@@ -54,8 +54,11 @@
   (when name
     (let* ((system (asdf:find-system name))
            (deps   (asdf:system-depends-on system)))
-      (if deps (qob-install-systems deps)
-          (qob-info "(The system `~A' has no dependencies specified, skipped)" name)))))
+      (cond
+        (deps (qob-install-systems deps))
+        (t
+         (qob-msg "")
+         (qob-info "(The system `~A' has no dependencies specified, skipped)" name))))))
 
 (qob-start
  (let ((systems (qob-args))
