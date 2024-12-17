@@ -60,6 +60,7 @@ jobs:
       run: |
         mkdir dist
         mv bin/qob dist
+        mv lisp dist
         mv LICENSE dist
         mv README.md dist
 
