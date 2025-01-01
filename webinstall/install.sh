@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright (C) 2024 the Qob authors.
+# Copyright (c) 2024-2025 the Qob authors.
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

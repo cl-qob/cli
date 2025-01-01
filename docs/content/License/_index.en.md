@@ -6,7 +6,7 @@ weight: 1000
 Licensed under MIT. See below for details.
 
 ```
-Copyright (c) 2024 Jen-Chieh Shen
+Copyright (c) 2024-2025 Jen-Chieh Shen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy 
 of this software and associated documentation files (the "Software"), to deal 
