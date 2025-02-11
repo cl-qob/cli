@@ -22,5 +22,5 @@
 *.wx64fsl
 *.wx32fsl
 
-# macOS specific
+# OS generated
 .DS_Store
