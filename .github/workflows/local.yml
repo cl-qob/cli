@@ -5,13 +5,15 @@ on:
     branches:
       - master
     paths:
-      - '**.yml'
       - lisp/**
       - cmds/**
       - src/**
       - scripts/**
       - test/**
       - '**.asd'
+      - '**.yml'
+      # ignore
+      - '!**/docs.yml'
   pull_request:
     branches:
       - master
