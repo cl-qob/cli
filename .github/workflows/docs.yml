@@ -53,6 +53,11 @@ jobs:
         path: ${{ env.PATH_DOC }}
         token: ${{ secrets.PAT }}
 
+    - name: Clean up before the build
+      working-directory: ${{ env.PATH_DOC }}
+      continue-on-error: true
+      run: git rm -r '*'
+
     - name: Build doc artifacts with Hugo
       run: hugo --destination ${{ env.PATH_DOC }} --minify
       working-directory: docs
