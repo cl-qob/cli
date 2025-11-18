@@ -7,10 +7,6 @@
   box-shadow: 0 0 1rem #202020;
 }
 
-.gdoc-brand__title {
-  display: none;
-}
-
 .gdoc-brand {
   font-size: 2rem;
   font-family: serif;
@@ -22,6 +18,18 @@
   margin-bottom: 0.8rem;
   width: 7.5rem;
   height: 4.0rem;
+}
+
+.gdoc-brand__title {
+  margin-top: 0.8rem;
+  margin-bottom: 0.8rem;
+    font-size: 1.8rem;
+}
+
+.gdoc-brand__subtitle {
+  margin-top: 0.2rem;
+  color: #B5B5B5;
+  font-size: 1.0rem;
 }
 
 /* Icons */
@@ -59,4 +67,23 @@
 	--accent-color-lite: #2E2E2E;
     --footer-background: #222C37;
   }
+}
+
+/*
+ * Typewriter Effect
+ *
+ * Copied from https://css-tricks.com/snippets/css/typewriter-effect/
+ */
+
+.gdoc-brand__subtitle {
+  overflow: hidden;
+  white-space: nowrap;
+  animation:
+	typing 1.0s steps(40, end),
+	blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
 }
