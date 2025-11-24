@@ -13,12 +13,15 @@ on:
       - '**.asd'
       - '**.yml'
       # ignore
+      - '!**/build.yml'
       - '!**/docs.yml'
   pull_request:
     branches:
       - master
     paths-ignore:
-    - '**.md'
+      - '**/build.yml'
+      - '**/docs.yml'
+      - '**.md'
   workflow_dispatch:
 
 concurrency:

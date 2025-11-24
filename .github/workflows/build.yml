@@ -18,6 +18,7 @@ on:
     branches:
       - master
     paths-ignore:
+      - '**/docs.yml'
       - '**.md'
   workflow_dispatch:
 
