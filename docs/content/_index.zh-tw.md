@@ -12,7 +12,7 @@ geekdocAnchor: false
 </p>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-[![SBCL Version](https://img.shields.io/badge/SBCL-2.2.9+-white.svg?logo=awslambda&logoColor=white)](https://www.sbcl.org/)
+[![SBCL Version](https://img.shields.io/badge/SBCL-2.2.9+-white.svg?logo=commonlisp&logoColor=white)](https://www.sbcl.org/)
 [![Release](https://img.shields.io/github/tag/cl-qob/cli.svg?label=release&logo=github)](https://github.com/cl-qob/cli/releases/latest)
 
 安裝 Qob 之後, 你就可以很輕鬆的開發任何 Common Lisp 包.

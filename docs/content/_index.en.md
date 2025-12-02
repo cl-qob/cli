@@ -12,7 +12,7 @@ geekdocAnchor: false
 </p>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-[![SBCL Version](https://img.shields.io/badge/SBCL-2.2.9+-white.svg?logo=awslambda&logoColor=white)](https://www.sbcl.org/)
+[![SBCL Version](https://img.shields.io/badge/SBCL-2.2.9+-white.svg?logo=commonlisp&logoColor=white)](https://www.sbcl.org/)
 [![Release](https://img.shields.io/github/tag/cl-qob/cli.svg?label=release&logo=github)](https://github.com/cl-qob/cli/releases/latest)
 
 After installing Qob, you can easily develop any Common Lisp package.
