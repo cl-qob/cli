@@ -31,7 +31,21 @@ env:
   REPO_BIN: 'cl-qob/binaries'
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: jcs-actions/delete-tag-and-release@master
+      if: github.ref == 'refs/heads/master'
+      continue-on-error: true
+      with:
+        delete_release: true
+        tag_name: ${{ env.VERSION }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAT }}
+
   build-linux:
+    needs: [prepare]
     runs-on: ubuntu-latest
     env:
       _EXT: tar.gz
@@ -85,6 +99,7 @@ jobs:
         tag_name: ${{ env.VERSION }}
         token: ${{ secrets.PAT }}
         prerelease: true
+        draft: false
         files: qob_${{ env.VERSION }}_${{ matrix.target }}.${{ env._EXT }}
 
     #### Prepare to push to `binaries` repository!
@@ -129,6 +144,7 @@ jobs:
         retry: 7
 
   build-macos:
+    needs: [prepare]
     runs-on: macos-latest
     env:
       _EXT: tar.gz
@@ -182,6 +198,7 @@ jobs:
         tag_name: ${{ env.VERSION }}
         token: ${{ secrets.PAT }}
         prerelease: true
+        draft: false
         files: qob_${{ env.VERSION }}_${{ matrix.target }}.${{ env._EXT }}
 
     #### Prepare to push to `binaries` repository!
@@ -226,6 +243,7 @@ jobs:
         retry: 7
 
   build-windows:
+    needs: [prepare]
     runs-on: windows-latest
     env:
       _EXT: zip
@@ -281,6 +299,7 @@ jobs:
         tag_name: ${{ env.VERSION }}
         token: ${{ secrets.PAT }}
         prerelease: true
+        draft: false
         files: qob_${{ env.VERSION }}_${{ matrix.target }}.${{ env._EXT }}
 
     #### Prepare to push to `binaries` repository!
