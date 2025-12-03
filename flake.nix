@@ -27,6 +27,7 @@
                 buildInputs = [
                   pkgs.sbcl
                   pkgs.gnumake
+                  pkgs.curl
                 ];
 
                 shellHook = ''
@@ -37,7 +38,7 @@
 
                     # Install if `bin/qob` is missing
                     if [ ! -e bin/qob ]; then
-                      make install-ql-no-network
+                      make install-ql
                       make build
                     fi
                     '';
