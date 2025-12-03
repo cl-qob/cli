@@ -7,7 +7,7 @@ RUN nix-env -iA nixpkgs.sbcl
 WORKDIR /cli
 COPY . .
 
-# Install package dependencies.
+# Start the build process.
 WORKDIR /cli
 RUN make build
 
