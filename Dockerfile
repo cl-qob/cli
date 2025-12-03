@@ -10,6 +10,7 @@ COPY . .
 
 # Start the build process.
 WORKDIR /cli
+RUN make install-ql
 RUN make build
 
 # Expose it.
