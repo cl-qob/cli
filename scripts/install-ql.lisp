@@ -7,7 +7,7 @@
 
 ;;; Code
 
-(quicklisp-quickstart:install)
+(ignore-errors (quicklisp-quickstart:install))
 
 ;;(ql:add-to-init-file)
 
