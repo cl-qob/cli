@@ -3,6 +3,7 @@ FROM nixos/nix
 # Install SBCL
 RUN nix-env -iA nixpkgs.sbcl
 RUN nix-env -iA nixpkgs.gnumake
+RUN nix-env -iA nixpkgs.curl
 
 # Move the whole project in.
 WORKDIR /cli
