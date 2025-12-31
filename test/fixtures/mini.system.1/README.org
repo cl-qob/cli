@@ -10,7 +10,7 @@
 
 ** Copyright
 
-Copyright (c) 2024-2025 JenChieh (jcs090218@gmail.com)
+Copyright (c) 2024-2026 JenChieh (jcs090218@gmail.com)
 
 ** License
 
