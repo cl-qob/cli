@@ -92,15 +92,16 @@ jobs:
         tar czf ${{ matrix.target }}.${{ env._EXT }} -C ./dist/ .
         cp ${{ matrix.target }}.${{ env._EXT }} qob_${{ env.VERSION }}_${{ matrix.target }}.${{ env._EXT }}
 
-    - name: Uploading...
+    - name: Upload for prerelease
       if: github.ref == 'refs/heads/master'
-      uses: softprops/action-gh-release@v2.5.0
+      uses: ncipollo/release-action@v1.20.0
       with:
-        tag_name: ${{ env.VERSION }}
         token: ${{ secrets.PAT }}
+        tag: ${{ env.VERSION }}
+        allowUpdates: true
         prerelease: true
         draft: false
-        files: qob_${{ env.VERSION }}_${{ matrix.target }}.${{ env._EXT }}
+        artifacts: qob_${{ env.VERSION }}_${{ matrix.target }}.${{ env._EXT }}
 
     #### Prepare to push to `binaries` repository!
 
