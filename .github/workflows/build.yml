@@ -22,10 +22,6 @@ on:
       - '**.md'
   workflow_dispatch:
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 env:
   VERSION: 0.1.4
   REPO_BIN: 'cl-qob/binaries'
