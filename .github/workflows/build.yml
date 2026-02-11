@@ -103,6 +103,14 @@ jobs:
         draft: false
         artifacts: qob_${{ env.VERSION }}_${{ matrix.target }}.${{ matrix.ext }}
 
+    #### Upload an artifact for testing purposes
+
+    - name: Upload for tests
+      uses: actions/upload-artifact@v6
+      with:
+        name: ${{ matrix.target }}
+        path: dist
+
     #### Prepare to push to `binaries` repository!
 
     - name: Move tar to HOME
