@@ -53,7 +53,7 @@ jobs:
           ext: tar.gz
 
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
 
     - name: Setup SBCL (Ubuntu)
       if: runner.os == 'Linux'
@@ -113,7 +113,7 @@ jobs:
       run: mv ${{ matrix.target }}.${{ matrix.ext }} ~/
 
     - name: Checkout binaries repository
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         repository: ${{ env.REPO_BIN }}
         persist-credentials: false
@@ -161,7 +161,7 @@ jobs:
           ext: tar.gz
 
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
 
     - name: Setup SBCL (macOS)
       if: runner.os == 'macOS'
@@ -221,7 +221,7 @@ jobs:
       run: mv ${{ matrix.target }}.${{ matrix.ext }} ~/
 
     - name: Checkout binaries repository
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         repository: ${{ env.REPO_BIN }}
         persist-credentials: false
@@ -269,7 +269,7 @@ jobs:
           ext: zip
 
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
 
     - name: Setup SBCL (Windows)
       if: runner.os == 'Windows'
@@ -331,7 +331,7 @@ jobs:
       run: mv ${{ matrix.target }}.${{ matrix.ext }} ~/
 
     - name: Checkout binaries repository
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         repository: ${{ env.REPO_BIN }}
         persist-credentials: false
